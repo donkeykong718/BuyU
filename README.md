@@ -1,23 +1,14 @@
 # Project Overview
 
-## Project Name: "Made By U"
+## Project Name: "Buy U"
 ***URL TBD***
 
 ## Project Description
 Database of products used to identify which are made with union labor.
 
-## Schema
+## API 
 
-```js
-const productSchema = new mongoose.Schema {
-  UPC: Number,
-  productName: String,
-  manufacturer: String,
-  isUnion: Boolean,
-  unionName: String,
-  lastUpdated: Date
-}
-```
+## API Snippet
 
 ### MVP/PostMVP
 
@@ -31,3 +22,19 @@ const productSchema = new mongoose.Schema {
 - Split authorization between users (Read-Only) and administraters (full CRUD)
 - Build models for union & company databases
 - Build out a GUI
+
+### Goals 
+What you plan to accomplish for each day of the project week.
+
+## Data Model
+
+```js
+const productSchema = new mongoose.Schema {
+  UPC: Number,
+  productName: String,
+  manufacturer: String,
+  isUnion: Boolean,
+  unionName: String,
+  lastUpdated: Date
+}
+```
