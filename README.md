@@ -6,9 +6,13 @@
 ## Project Description
 Database of products used to identify which are made with union labor.
 
-## API 
+### API 
 
-## API Snippet
+Unsure. Most likely using one (or a combination) of the following:
+
+- upcdatabase.org
+- barcodelookup.com
+- CSV file of Union-made products provided by the AFL-CIO
 
 ### MVP/PostMVP
 
@@ -24,7 +28,12 @@ Database of products used to identify which are made with union labor.
 - Build out a GUI
 
 ### Goals 
-What you plan to accomplish for each day of the project week.
+Tuesday, Feb 21 - Get proposal approved. Research data & build model.
+Wednesday, Feb 22 - Build database, controllers, routers etc. (MVP)
+Thursday, Feb 23 - Build a bare bones front-end (post-MVP) 
+Friday, Feb 24 - Explore data authorization to set up users & admins with split CRUD functionality 
+Monday, Feb 27 - Improve front-end etc.
+Tuesday, Feb 28 - Presentation
 
 ## Data Model
 
