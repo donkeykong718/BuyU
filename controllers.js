@@ -15,11 +15,21 @@ export const searchProducts = async (request, response) => {
 export const createProduct = async (request, response) => {
   const { UPC, productName, manufacturer, isUnion, unionName } = request.body;
 
-  console.log(`The UPC is ${UPC}`)
-  console.log(`The product is ${productName}`)
-  console.log(`It's made by ${manufacturer}`)
-  console.log(`It is union? ${isUnion}`);
-  console.log(`The union is ${unionName}`);
+  console.log(`The request body looks like:`)
+  console.log(request.body);
+
+  // const newEntry = request.body;
+  // console.log(newEntry);
+  // Products.create(newEntry)
+  //   .then(entry => {
+  //     response.json(entry)
+  //   });
+
+  // console.log(`The UPC is ${UPC}`)
+  // console.log(`The product is ${productName}`)
+  // console.log(`It's made by ${manufacturer}`)
+  // console.log(`It is union? ${isUnion}`);
+  // console.log(`The union is ${unionName}`);
   
   const newProduct = await Products.create({
     UPC: UPC,
@@ -44,7 +54,7 @@ export const updateProduct = async (request, response) => {
 
 export const deleteProduct = async (request, response) => {
   const UPC = request.params.upc;
-  const deletedProduct = await Products.findOneAndDelete({ UPC: UPC })
+  const deletedProduct = await Products.deleteMany({ UPC: UPC })
   response.json(deletedProduct);
 }
 

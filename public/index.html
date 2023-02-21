@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuyU</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js" defer type="module"></script>
+</head>
+<body>
+  <div id="allproducts"></div>
+  <div id="searches">
+    <div class="CRUDbox">Search by UPC
+      <form id="searchform">
+        Enter 12-digit UPC: <input id="search" type="text"> 
+        <button>Click me to search</button>
+      </form>
+    </div>
+    <div class="CRUDbox">Create
+      <form id="createform">
+        UPC: <input id="createUPC" type="text"> 
+        Product Name: <input id="createProduct" type="text"> 
+        Manufacturer: <input id="createManu" type="text"> 
+        Union (Y/N)?: <input id="createUStatus" type="text">
+        Union (if applicable): <input id="createUName" type="text"> 
+        <button>Click me to create</button>
+      </form>
+    </div>
+    <div class="CRUDbox">Edit
+      <form id="editform">
+        UPC: <input id="editUPC" type="text"> 
+        Product Name: <input id="editProduct" type="text"> 
+        Manufacturer: <input id="editManu" type="text"> 
+        Union (Y/N)?: <input id="editUStatus" type="text"> 
+        Union (if applicable): <input id="editUName" type="text"> 
+        <button>Click me to edit</button>
+      </form>
+    </div>
+    <div class="CRUDbox">Delete
+      <form id="deleteform">
+        Enter 12-digit UPC: <input id="delete" type="text"> 
+        <button>Click me to delete</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
