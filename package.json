@@ -1,0 +1,25 @@
+{
+  "name": "buyu",
+  "version": "1.0.0",
+  "description": "## Project Name: \"Buy U\" ***URL TBD***",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donkeykong718/BuyU.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/donkeykong718/BuyU/issues"
+  },
+  "homepage": "https://github.com/donkeykong718/BuyU#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.9.2"
+  }
+}

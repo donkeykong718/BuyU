@@ -1,0 +1,41 @@
+@url = http://localhost:8080
+
+# @name GetProducts
+
+GET {{url}}/
+
+###
+
+# @name SearchProducts
+@productCode = {{GetProducts.response.body.0.UPC}}
+GET {{url}}/{{productCode}}
+###
+
+# @name CreateProduct
+POST {{url}}/
+Content-Type: application/json
+
+  {
+  "UPC": 887227816615,
+  "productName": "New fake product",
+  "manufacturer": "Union Shop",
+  "isUnion": true,
+  "unionName": "WGA"
+}
+###
+
+# @name UpdateProject
+PATCH {{url}}/{{productCode}}
+Content-Type: application/json
+
+{
+  "isUnion": false,
+  "unionName": "N/A"
+}
+
+###
+
+# @name DeleteProduct
+
+DELETE {{url}}/{{productCode}}
+###

@@ -1,0 +1,28 @@
+[
+  {
+  "UPC": 887227816610,
+  "productName": "Nike T-Lite XI Womens Training Shoes",
+  "manufacturer": "Nike",
+  "isUnion": false
+},
+{
+  "UPC": 887227816611,
+  "productName": "Fake product 1",
+  "manufacturer": "Union Shop",
+  "isUnion": true,
+  "unionName": "UAW"
+},
+{
+  "UPC": 887227816612,
+  "productName": "Fake product 2",
+  "manufacturer": "Other Union Shop",
+  "isUnion": true,
+  "unionName": "SEIU"
+},
+{
+  "UPC": 887227816613,
+  "productName": "Nike T-Lite XI Mens Training Shoes",
+  "manufacturer": "Nike",
+  "isUnion": false
+}
+]
