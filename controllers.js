@@ -6,10 +6,28 @@ export const getProducts = async (request, response) => {
 }
 
 export const searchProducts = async (request, response) => {
-  const UPC = request.params.upc;
-  const product = await Products.find({ UPC: UPC });
-  console.log(`UPC: ${UPC} belongs to product: ${ product }`);
+  const searchTerm = request.params.search;
+
+  const product = await searchFor(searchTerm);
+    
+  async function searchFor(searchTerm) {
+    if (isNaN(searchTerm) === false) {
+      const product = await Products.find({ UPC: searchTerm });
+      return product;
+    }
+    else if (searchTerm === "true" || searchTerm === "false") {
+      const product = await Products.find({ isUnion: searchTerm });
+      return product;
+    }
+    else {
+      const product = await Products.find({ $or: [{ productName: searchTerm }, { manufacturer: searchTerm }, { unionName: searchTerm }] });
+      console.log(`${searchTerm} belongs to product: ${product}`);
+      return product;
+    }
+  };
+
   response.json(product);
+
 }
 
 export const createProduct = async (request, response) => {
@@ -53,8 +71,9 @@ export const updateProduct = async (request, response) => {
 }
 
 export const deleteProduct = async (request, response) => {
-  const UPC = request.params.upc;
-  const deletedProduct = await Products.deleteMany({ UPC: UPC })
+  const objID = request.params.id;
+  console.log(`The object to delete is ${objID}`);
+  const deletedProduct = await Products.findByIdAndDelete({"_id":objID})
   response.json(deletedProduct);
 }
 
