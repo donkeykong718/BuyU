@@ -34,3 +34,7 @@ form {
 input {
   display: block;
 }
+
+label {
+  display: block;
+}

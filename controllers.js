@@ -8,7 +8,13 @@ export const getProducts = async (request, response) => {
 export const searchProducts = async (request, response) => {
   const searchTerm = request.params.search;
 
-  const product = await searchFor(searchTerm);
+  if (searchTerm.length === 24) {
+    const product = await Products.find({ _id: searchTerm });
+    response.json(product);
+  }
+  else {
+    const product = await searchFor(searchTerm);
+    response.json(product)};
     
   async function searchFor(searchTerm) {
     if (isNaN(searchTerm) === false) {
@@ -25,8 +31,6 @@ export const searchProducts = async (request, response) => {
       return product;
     }
   };
-
-  response.json(product);
 
 }
 
@@ -60,12 +64,12 @@ export const createProduct = async (request, response) => {
 }
 
 export const updateProduct = async (request, response) => {
-  const UPC = request.params.upc;
+  const searchID = request.params.id;
 
   const { productName, manufacturer, isUnion, unionName } = request.body;
   const updateDetails = { productName, manufacturer, isUnion, unionName }
 
-  const updatedProduct = await Products.findOneAndUpdate({ UPC: UPC }, updateDetails);
+  const updatedProduct = await Products.findByIdAndUpdate({ "_id": searchID }, updateDetails);
 
   response.json(updatedProduct);
 }

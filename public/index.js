@@ -97,38 +97,38 @@ createform.addEventListener(`submit`, async (e) => {
 
 ////EDIT FORM (UPDATE)
 
-const editform = document.getElementById('editform');
+// const editform = document.getElementById('editform');
 
-const editUPCinput = document.getElementById('editUPC');
-const editProductinput = document.getElementById('editProduct');
-const editManuinput = document.getElementById('editManu');
-const editUStatusinput = document.getElementById('editUStatus');
-const editUNameinput = document.getElementById('editUName');
+// const editUPCinput = document.getElementById('editUPC');
+// const editProductinput = document.getElementById('editProduct');
+// const editManuinput = document.getElementById('editManu');
+// const editUStatusinput = document.getElementById('editUStatus');
+// const editUNameinput = document.getElementById('editUName');
 
-editform.addEventListener(`submit`, async (e) => {
-  e.preventDefault();
+// editform.addEventListener(`submit`, async (e) => {
+//   e.preventDefault();
 
-  const searchUPC = parseInt(editUPCinput.value);
+//   const searchUPC = parseInt(editUPCinput.value);
 
-  const editProduct = editProductinput.value;
-  const editManu = editManuinput.value;
-  let editUStatus = editUStatusinput.value;
-  const editUName = editUNameinput.value;
+//   const editProduct = editProductinput.value;
+//   const editManu = editManuinput.value;
+//   let editUStatus = editUStatusinput.value;
+//   const editUName = editUNameinput.value;
 
-  if ( editUStatus === `Y`) { editUStatus = true }
-  if ( editUStatus === 'N') { editUStatus = false }
+//   if ( editUStatus === `Y`) { editUStatus = true }
+//   if ( editUStatus === 'N') { editUStatus = false }
 
-  const editDetails = {
-    "productName": editProduct,
-    "manufacturer": editManu,
-    "isUnion": editUStatus,
-    "unionName": editUName
-  };
+//   const editDetails = {
+//     "productName": editProduct,
+//     "manufacturer": editManu,
+//     "isUnion": editUStatus,
+//     "unionName": editUName
+//   };
 
-  const updatedEntry = await updateProduct(searchUPC, editDetails);
+//   const updatedEntry = await updateProduct(searchUPC, editDetails);
 
-  await displayProducts(updatedEntry, "edit");
-})
+//   await displayProducts(updatedEntry, "edit");
+// })
 
 // DELETE FORM (DELETE)
 
@@ -157,6 +157,7 @@ await displayProducts(productList);
 async function displayProducts(productList, method) {
   
   allproducts.innerHTML = "";
+  let hasButtons = true;
 
   switch (true) {
     case (method === "search"):
@@ -167,19 +168,21 @@ async function displayProducts(productList, method) {
       break;
     case (method === "delete"):
       header.textContent = "Deleted Entry:"
+      hasButtons = false;
       break;
     case (method === "edit"):
       header.textContent = "Updated Entry:"
+      hasButtons = false;
       break;
     default:
       header.textContent = "Database Display"
       break;
   }
 
-  if (productList.length === undefined) { displayProduct(productList) }
+  if (productList.length === undefined) { displayProduct(productList, hasButtons)}
   else {
     for (let i = 0; i < productList.length; i++) {
-      await displayProduct(productList[i])
+      await displayProduct(productList[i], hasButtons)
       
       // const { UPC, productName, manufacturer, isUnion, unionName } = productList[i]
       // const productCard = document.createElement('div');
@@ -223,7 +226,7 @@ async function displayProducts(productList, method) {
   }
 };
 
-async function displayProduct(productList) {
+async function displayProduct(productList, hasButtons) {
   const { UPC, productName, manufacturer, isUnion, unionName } = productList
 
   const productCard = document.createElement('div');
@@ -255,19 +258,147 @@ async function displayProduct(productList) {
   productCard.appendChild(pBoolean);
   productCard.appendChild(pUnion);
 
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = `Delete`
-  productCard.appendChild(deleteButton)
+  if (hasButtons === true) {
 
-  deleteButton.addEventListener('click', async () => {                
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = `Delete`
+    productCard.appendChild(deleteButton)
+
+    deleteButton.addEventListener('click', async () => {
           
-    const deletedProduct = await deleteProduct(objID);
-    console.log(deletedProduct);
-    allproducts.innerHTML = "";
-    await displayProducts(deletedProduct, "delete");
+      const deletedProduct = await deleteProduct(objID);
+      console.log(deletedProduct);
+      allproducts.innerHTML = "";
+      await displayProducts(deletedProduct, "delete");
     })
+  
+    const editButton = document.createElement('button');
+    editButton.textContent = `Edit`
+    productCard.appendChild(editButton)
+
+    editButton.addEventListener('click', async () => {
+      await displayEditBox(objID);
+
+    })
+  
+  }
 };
 
+async function displayEditBox(searchID) {
+
+  const updateProduct = await searchProducts(searchID);
+  console.log(updateProduct);
+  const { UPC, productName, manufacturer, isUnion, unionName } = updateProduct[0];
+
+  console.log(`The product to update has a UPC of ${UPC}, a productName of ${productName}, is made by ${manufacturer}, has a union status of ${isUnion} and ${unionName}`);
+
+  allproducts.innerHTML = "";
+  header.textContent = "Edit Entry:"
+
+  const editBox = document.createElement(`div`);
+  editBox.classList.add("productCard");
+
+  const editForm = document.createElement('form');
+  editForm.setAttribute("id", "editform");
+
+  const labelUPC = document.createElement('label')
+  const editUPC = document.createElement('input');
+  editUPC.setAttribute("id", "editUPC");
+  editUPC.setAttribute("type", "text");
+  // editUPC.style.display = "inline";
+  labelUPC.textContent = `Current UPC: ${UPC}`;
+
+  const labelProduct = document.createElement('label')
+  const editProduct = document.createElement('input');
+  editProduct.setAttribute("id", "editProduct");
+  editProduct.setAttribute("type", "text");
+  labelProduct.textContent = `Current Product: ${productName}\n`;
+  
+  const labelManu = document.createElement('label')
+  const editManu = document.createElement('input');
+  editManu.setAttribute("id", "editManu");
+  editManu.setAttribute("type", "text");
+  labelManu.textContent = `Current Manufactuer: ${manufacturer}\n`;
+  
+  const labelUStatus = document.createElement('label')
+  const editUStatus = document.createElement('input');
+  editUStatus.setAttribute("id", "editUStatus");
+  editUStatus.setAttribute("type", "text");
+  // editUStatus.style.display = "inline";
+  labelUStatus.textContent = `Curent Union Status: ${isUnion}`;
+
+  const labelUName = document.createElement('label')
+  const editUName = document.createElement('input');
+  editUName.setAttribute("id", "editUName");
+  editUName.setAttribute("type", "text");
+  labelUName.textContent = `Current Union Name: ${unionName}`;
+
+  const submitEdit = document.createElement('button')
+  submitEdit.textContent = "Submit Edit"
+
+  editForm.appendChild(labelUPC);
+  labelUPC.appendChild(editUPC);
+  editUPC.insertAdjacentHTML('afterend', "Enter new UPC: ");
+
+  editForm.appendChild(labelProduct);
+  labelProduct.appendChild(editProduct);
+  editProduct.insertAdjacentHTML('afterend', "Enter new Product Name: ");
+
+  editForm.appendChild(labelManu);
+  labelManu.appendChild(editManu);
+  editManu.insertAdjacentHTML('afterend', "Enter new Manufacturer: ");
+
+  editForm.appendChild(labelUStatus);
+  labelUStatus.appendChild(editUStatus);
+  editUStatus.insertAdjacentHTML('afterend', "Enter new Union Status: ");
+
+  editForm.appendChild(labelUName);
+  labelUName.appendChild(editUName);
+  editUName.insertAdjacentHTML('afterend', "Endter new Union Name: ");
+
+  editForm.appendChild(submitEdit);
+
+  editBox.appendChild(editForm);
+  allproducts.appendChild(editBox);
+
+  editForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+  
+    let editedUPC = parseInt(editUPC.value);
+    let editedProduct = editProduct.value;
+    let editedManu = editManu.value;
+    let editedUStatus = editUStatus.value;
+    let editedUName = editUName.value;
+
+    if (editedUStatus === `Y`) { editedUStatus = true }
+    if (editedUStatus === 'N') { editedUStatus = false }
+
+    if (isNaN(editedUPC) === true) { editedUPC = UPC }
+    if (editedProduct === "") { editedProduct = productName }
+    if (editedManu === "") { editedManu = manufacturer }
+    if (editedUStatus === "") { editedUStatus = isUnion }
+    if (editedUName === "") { editedUName = unionName}
+
+    const editDetails = {
+      "UPC": editedUPC,
+      "productName": editedProduct,
+      "manufacturer": editedManu,
+      "isUnion": editedUStatus,
+      "unionName": editedUName
+    };
+
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editDetails)
+    }
+  
+    const results = await fetch(`${baseUrl}${searchID}`, requestOptions);
+    const updatedEntry = await results.json();
+
+    await displayProducts(updatedEntry, "edit");
+  })
+}
 
 //Seems like I'm just writing the controllers again?
 
@@ -298,18 +429,18 @@ async function createProduct(newDetails) {
   return json;
 }
 
-async function updateProduct(searchUCP, updateDetails) {
+// async function updateProduct(searchId, updateDetails) {
 
-  const requestOptions = {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updateDetails)
-  }
+//   const requestOptions = {
+//     method: 'PATCH',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(updateDetails)
+//   }
 
-  const results = await fetch(`${baseUrl}${searchUCP}`, requestOptions);
-  const json = await results.json();
-  return json;
-}
+//   const results = await fetch(`${baseUrl}${searchId}`, requestOptions);
+//   const json = await results.json();
+//   return json;
+// }
 
 async function deleteProduct(deleteTerm) {
   const results = await fetch(`${baseUrl}${deleteTerm}`, { method: 'DELETE' });
