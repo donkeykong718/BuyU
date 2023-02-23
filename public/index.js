@@ -3,6 +3,7 @@ const baseUrl = 'http://localhost:8080/';
 const body = document.querySelector('body');
 const allproducts = document.getElementById('allproducts');
 const header = document.getElementById('header');
+const returnButton = document.getElementById('returnButton')
 
 //SEARCH FORM (READ)
 
@@ -27,12 +28,11 @@ searchform.addEventListener(`submit`, async (e) => {
   if (searchUStatus === `Y`) { searchUStatus = true }
   if (searchUStatus === 'N') { searchUStatus = false }
 
-  console.log(`The searchUPC is ${searchUPC} which is a ${typeof searchUPC}`);
-  console.log(`The searchProduct is ${searchProduct} which is a ${typeof searchProduct}`);
-  console.log(`The searchManu is ${searchManu} which is a ${typeof searchManu}`);
-  console.log(`The searchUStatus is ${searchUStatus} which is a ${typeof searchUStatus}`);
-  console.log(`The searchUName is ${searchUName} which is a ${typeof searchUName}`);
-
+  // console.log(`The searchUPC is ${searchUPC} which is a ${typeof searchUPC}`);
+  // console.log(`The searchProduct is ${searchProduct} which is a ${typeof searchProduct}`);
+  // console.log(`The searchManu is ${searchManu} which is a ${typeof searchManu}`);
+  // console.log(`The searchUStatus is ${searchUStatus} which is a ${typeof searchUStatus}`);
+  // console.log(`The searchUName is ${searchUName} which is a ${typeof searchUName}`);
 
   switch(false) {
     case (isNaN(searchUPC)):
@@ -52,10 +52,10 @@ searchform.addEventListener(`submit`, async (e) => {
         break;
   };
 
-  console.log(`The search term is ${searchTerm}, which is a ${typeof searchTerm}`);
+  // console.log(`The search term is ${searchTerm}, which is a ${typeof searchTerm}`);
 
   const resultProduct = await searchProducts(searchTerm);
-  console.log(resultProduct);
+  // console.log(resultProduct);
 
   await displayProducts(resultProduct, "search");
 })
@@ -95,63 +95,10 @@ createform.addEventListener(`submit`, async (e) => {
 
 })
 
-////EDIT FORM (UPDATE)
-
-// const editform = document.getElementById('editform');
-
-// const editUPCinput = document.getElementById('editUPC');
-// const editProductinput = document.getElementById('editProduct');
-// const editManuinput = document.getElementById('editManu');
-// const editUStatusinput = document.getElementById('editUStatus');
-// const editUNameinput = document.getElementById('editUName');
-
-// editform.addEventListener(`submit`, async (e) => {
-//   e.preventDefault();
-
-//   const searchUPC = parseInt(editUPCinput.value);
-
-//   const editProduct = editProductinput.value;
-//   const editManu = editManuinput.value;
-//   let editUStatus = editUStatusinput.value;
-//   const editUName = editUNameinput.value;
-
-//   if ( editUStatus === `Y`) { editUStatus = true }
-//   if ( editUStatus === 'N') { editUStatus = false }
-
-//   const editDetails = {
-//     "productName": editProduct,
-//     "manufacturer": editManu,
-//     "isUnion": editUStatus,
-//     "unionName": editUName
-//   };
-
-//   const updatedEntry = await updateProduct(searchUPC, editDetails);
-
-//   await displayProducts(updatedEntry, "edit");
-// })
-
-// DELETE FORM (DELETE)
-
-// const deleteform = document.getElementById('deleteform');
-// const deleteinput = document.getElementById('delete');
-
-// deleteform.addEventListener(`submit`, async (e) => {
-//   e.preventDefault();
-//   const deleteTerm = deleteinput.value;
-
-//   console.log(`The UPC to delete is ${deleteTerm}`);
-
-//   const deletedProduct = await deleteProducts(deleteTerm);
-//   console.log(deletedProduct);
-
-//   await displayProduct(deletedProduct, "deleted");
-// })
-
-
 //Basic product list display
 
 const productList = await getProducts(baseUrl);
-console.log(productList);
+// console.log(productList);
 await displayProducts(productList);
 
 async function displayProducts(productList, method) {
@@ -165,6 +112,7 @@ async function displayProducts(productList, method) {
       break;
     case (method === "create"):
       header.textContent = "New Entry Created:"
+      hasButtons = false;
       break;
     case (method === "delete"):
       header.textContent = "Deleted Entry:"
@@ -183,45 +131,6 @@ async function displayProducts(productList, method) {
   else {
     for (let i = 0; i < productList.length; i++) {
       await displayProduct(productList[i], hasButtons)
-      
-      // const { UPC, productName, manufacturer, isUnion, unionName } = productList[i]
-      // const productCard = document.createElement('div');
-      // productCard.classList.add('productCard');
-      // allproducts.appendChild(productCard);
-
-      // const objID = productList[i]._id;
-      // console.log(objID);
-
-      // // const pObjID = document.createElement('p');
-      // const pUPC = document.createElement('p');
-      // const pName = document.createElement('p');
-      // const pManu = document.createElement('p');
-      // const pBoolean = document.createElement('p');
-      // const pUnion = document.createElement('p');
-
-      // // pObjID.textContent = productList[i]._id;
-      // pUPC.textContent = `UPC: ${ UPC }`;
-      // pName.textContent = `Product: ${ productName }`;
-      // pManu.textContent = `Manufacturer: ${ manufacturer }`;
-      // pBoolean.textContent = `Union made?: ${ isUnion }`;
-      // pUnion.textContent = `Union: ${ unionName }`;
-
-      // productCard.appendChild(pUPC);
-      // productCard.appendChild(pName);
-      // productCard.appendChild(pManu);
-      // productCard.appendChild(pBoolean);
-      // productCard.appendChild(pUnion);
-
-      // const deleteButton = document.createElement('button');
-      // deleteButton.textContent = `Delete`
-      // productCard.appendChild(deleteButton)
-
-      // deleteButton.addEventListener('click', async () => {                
-          
-      //   const deletedProduct = await deleteProduct(objID);
-      //     console.log(deletedProduct);
-      //     await displayProduct(deletedProduct, "deleted");
-      //   })
     }
   }
 };
@@ -234,7 +143,6 @@ async function displayProduct(productList, hasButtons) {
   allproducts.appendChild(productCard);
 
   const objID = productList._id;
-  // console.log(objID);
 
   // productCard.textContent = `The ${method} product is:`
 
@@ -280,17 +188,21 @@ async function displayProduct(productList, hasButtons) {
       await displayEditBox(objID);
 
     })
-  
   }
 };
 
 async function displayEditBox(searchID) {
 
+  // console.log(`The objectID of the item to be edited is ${searchID}`);
+  // console.log(typeof searchID);
+
+  // console.log(isValidObjectId(searchID));
+
   const updateProduct = await searchProducts(searchID);
-  console.log(updateProduct);
+  // console.log(updateProduct);
   const { UPC, productName, manufacturer, isUnion, unionName } = updateProduct[0];
 
-  console.log(`The product to update has a UPC of ${UPC}, a productName of ${productName}, is made by ${manufacturer}, has a union status of ${isUnion} and ${unionName}`);
+  // console.log(`The product to update has a UPC of ${UPC}, a productName of ${productName}, is made by ${manufacturer}, has a union status of ${isUnion} and ${unionName}`);
 
   allproducts.innerHTML = "";
   header.textContent = "Edit Entry:"
@@ -304,57 +216,64 @@ async function displayEditBox(searchID) {
   const labelUPC = document.createElement('label')
   const editUPC = document.createElement('input');
   editUPC.setAttribute("id", "editUPC");
-  editUPC.setAttribute("type", "text");
+  editUPC.setAttribute("minlength", "12");
+  editUPC.setAttribute("maxlength", "12"); 
+  editUPC.setAttribute("value", UPC)
   // editUPC.style.display = "inline";
-  labelUPC.textContent = `Current UPC: ${UPC}`;
+  // labelUPC.textContent = `Current UPC: ${UPC}`;
 
   const labelProduct = document.createElement('label')
   const editProduct = document.createElement('input');
   editProduct.setAttribute("id", "editProduct");
   editProduct.setAttribute("type", "text");
-  labelProduct.textContent = `Current Product: ${productName}\n`;
+  editProduct.setAttribute("value", productName)
+  // labelProduct.textContent = `Current Product: ${productName}\n`;
   
   const labelManu = document.createElement('label')
   const editManu = document.createElement('input');
   editManu.setAttribute("id", "editManu");
   editManu.setAttribute("type", "text");
-  labelManu.textContent = `Current Manufactuer: ${manufacturer}\n`;
+  editManu.setAttribute("value", manufacturer);
+  // labelManu.textContent = `Current Manufactuer: ${manufacturer}\n`;
   
   const labelUStatus = document.createElement('label')
   const editUStatus = document.createElement('input');
   editUStatus.setAttribute("id", "editUStatus");
   editUStatus.setAttribute("type", "text");
+  editUStatus.setAttribute("pattern", "[Yy]|[Nn]")
+  editUStatus.setAttribute("value", isUnion);
   // editUStatus.style.display = "inline";
-  labelUStatus.textContent = `Curent Union Status: ${isUnion}`;
+  // labelUStatus.textContent = `Curent Union Status: ${isUnion}`;
 
   const labelUName = document.createElement('label')
   const editUName = document.createElement('input');
   editUName.setAttribute("id", "editUName");
   editUName.setAttribute("type", "text");
-  labelUName.textContent = `Current Union Name: ${unionName}`;
+  editUName.setAttribute("value", unionName);
+  // labelUName.textContent = `Current Union Name: ${unionName}`;
 
   const submitEdit = document.createElement('button')
   submitEdit.textContent = "Submit Edit"
 
   editForm.appendChild(labelUPC);
-  labelUPC.appendChild(editUPC);
-  editUPC.insertAdjacentHTML('afterend', "Enter new UPC: ");
+  editForm.appendChild(editUPC);
+  labelUPC.textContent = "UPC: ";
 
   editForm.appendChild(labelProduct);
-  labelProduct.appendChild(editProduct);
-  editProduct.insertAdjacentHTML('afterend', "Enter new Product Name: ");
+  editForm.appendChild(editProduct);
+  labelProduct.textContent ="Product Name: ";
 
   editForm.appendChild(labelManu);
-  labelManu.appendChild(editManu);
-  editManu.insertAdjacentHTML('afterend', "Enter new Manufacturer: ");
+  editForm.appendChild(editManu);
+  labelManu.textContent = "Manufacturer: ";
 
   editForm.appendChild(labelUStatus);
-  labelUStatus.appendChild(editUStatus);
-  editUStatus.insertAdjacentHTML('afterend', "Enter new Union Status: ");
+  editForm.appendChild(editUStatus);
+  labelUStatus.textContent = "Union Status (Y/N): ";
 
   editForm.appendChild(labelUName);
-  labelUName.appendChild(editUName);
-  editUName.insertAdjacentHTML('afterend', "Endter new Union Name: ");
+  editForm.appendChild(editUName);
+  labelUName.textContent = "Union Name: ";
 
   editForm.appendChild(submitEdit);
 
@@ -393,8 +312,11 @@ async function displayEditBox(searchID) {
       body: JSON.stringify(editDetails)
     }
   
-    const results = await fetch(`${baseUrl}${searchID}`, requestOptions);
-    const updatedEntry = await results.json();
+    // const results =
+      await fetch(`${baseUrl}${searchID}`, requestOptions);
+    // const updatedEntry = await results.json();
+
+    const updatedEntry = await searchProducts(searchID);
 
     await displayProducts(updatedEntry, "edit");
   })
@@ -428,19 +350,6 @@ async function createProduct(newDetails) {
   const json = await results.json();
   return json;
 }
-
-// async function updateProduct(searchId, updateDetails) {
-
-//   const requestOptions = {
-//     method: 'PATCH',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(updateDetails)
-//   }
-
-//   const results = await fetch(`${baseUrl}${searchId}`, requestOptions);
-//   const json = await results.json();
-//   return json;
-// }
 
 async function deleteProduct(deleteTerm) {
   const results = await fetch(`${baseUrl}${deleteTerm}`, { method: 'DELETE' });

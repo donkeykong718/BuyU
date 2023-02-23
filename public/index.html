@@ -15,13 +15,17 @@
   </div>
   <div id="searches">
     <h2>CRUD Box</h2>
+    <!-- <button id="returnButton">Refresh DB Results</button> -->
+    <a href="http://localhost:8080/public">Go Back To Database</a>
     <div class="CRUDbox">
       <h3>Search</h3>
+      <h4>(one field only)</h4>
       <form id="searchform">
-        UPC: <input id="searchUPC" type="text"> 
+        UPC: <input id="searchUPC" 
+                  minlength="12" maxlength="12" type="text"> 
         Product Name: <input id="searchProduct" type="text"> 
         Manufacturer: <input id="searchManu" type="text"> 
-        Union (Y/N)?: <input id="searchUStatus" type="text">
+        Union (Y/N)?: <input id="searchUStatus" pattern="[Yy]|[Nn]" type="text">
         Union: <input id="searchUName" type="text"> 
         <button>Click me to search</button>
       </form>
@@ -29,10 +33,10 @@
     <div class="CRUDbox">
       <h3>Create</h3>
       <form id="createform">
-        UPC: <input id="createUPC" type="text"> 
+        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text"> 
         Product Name: <input id="createProduct" type="text"> 
         Manufacturer: <input id="createManu" type="text"> 
-        Union (Y/N)?: <input id="createUStatus" type="text">
+        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]" type="text">
         Union (if applicable): <input id="createUName" type="text"> 
         <button>Click me to create</button>
       </form>
