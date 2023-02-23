@@ -1,8 +1,28 @@
+//MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
+// import { MultiFormatReader, BarcodeFormat } from '@zxing/library';
+
+
 const baseUrl = 'http://localhost:8080/';
 
 const body = document.querySelector('body');
-const allproducts = document.getElementById('allproducts');
-const header = document.getElementById('header');
+
+const dbContainer = document.getElementById('dbcontainer');
+const dbHeader = document.getElementById('dbheader');
+const allProducts = document.getElementById('allproducts');
+
+const selectContainer = document.getElementById('selectcontainer');
+const selectHeader = document.getElementById('selectheader');
+const selectProducts = document.getElementById('selectproducts');
+
+const crudContainer = document.getElementById('crudcontainer');
+
+const crButton = document.getElementById('crButton');
+
+crButton.addEventListener('click', () => {
+  dbContainer.classList.add("hidden");
+  crudContainer.classList.remove("hidden");
+});
+
 // const returnButton = document.getElementById('returnButton')
 
 //SEARCH FORM (READ)
@@ -58,6 +78,7 @@ searchform.addEventListener(`submit`, async (e) => {
   // console.log(resultProduct);
 
   await displayProducts(resultProduct, "search");
+  crudContainer.classList.add("hidden");
 })
 
 //CREATE FORM (CREATE)
@@ -92,6 +113,7 @@ createform.addEventListener(`submit`, async (e) => {
   const newEntry = await createProduct(newDetails);
   
   await displayProducts(newEntry, "create");
+  crudContainer.classList.add("hidden");
 
 })
 
@@ -99,53 +121,66 @@ createform.addEventListener(`submit`, async (e) => {
 
 const productList = await getProducts(baseUrl);
 // console.log(productList);
-await displayProducts(productList);
+await displayProducts(productList, "listDB");
 
 async function displayProducts(productList, method) {
-  
-  allproducts.innerHTML = "";
-  let hasButtons = true;
 
-  switch (true) {
-    case (method === "search"):
-      header.textContent = "Search Results:" 
-      break;
-    case (method === "create"):
-      header.textContent = "New Entry Created:"
-      hasButtons = false;
-      break;
-    case (method === "delete"):
-      header.textContent = "Deleted Entry:"
-      hasButtons = false;
-      break;
-    case (method === "edit"):
-      header.textContent = "Updated Entry:"
-      hasButtons = false;
-      break;
-    default:
-      header.textContent = "Database Display"
-      break;
-  }
+  if (method === "listDB") {
+    const display = allProducts;
+    display.innerHTML = "";
+    selectContainer.classList.add("hidden")
+    dbContainer.classList.remove("hidden");
+    let hasButtons = true;
 
-  if (productList.length === undefined) { displayProduct(productList, hasButtons)}
-  else {
     for (let i = 0; i < productList.length; i++) {
-      await displayProduct(productList[i], hasButtons)
+      await displayProduct(productList[i], hasButtons, display)
     }
   }
+  else {
+    const display = selectProducts;
+    selectProducts.innerHTML = "";
+    selectContainer.classList.remove("hidden");
+    dbContainer.classList.add("hidden");
 
-  const anchor = document.createElement('a');
-  anchor.href = "http://localhost:8080/public";
-  anchor.textContent = "Return to Database"
-  allproducts.appendChild(anchor);
+    
+    let hasButtons = false;
+
+    switch (true) {
+      case (method === "search"):
+        selectHeader.textContent = "Search Results:"
+        hasButtons = true;
+        break;
+      case (method === "create"):
+        selectHeader.textContent = "New Entry Created:"
+        break;
+      case (method === "delete"):
+        selectHeader.textContent = "Deleted Entry:"
+        break;
+      case (method === "edit"):
+        selectHeader.textContent = "Updated Entry:"
+        break;
+    }
+
+    if (productList.length === undefined) { displayProduct(productList, hasButtons, display) }
+    else {
+      for (let i = 0; i < productList.length; i++) {
+        await displayProduct(productList[i], hasButtons, display)
+      }
+    }
+
+    const anchor = document.createElement('a');
+    anchor.href = "http://localhost:8080/public";
+    anchor.textContent = "Return to Database"
+    selectProducts.appendChild(anchor);
+  }
 };
 
-async function displayProduct(productList, hasButtons) {
+async function displayProduct(productList, hasButtons, display) {
   const { UPC, productName, manufacturer, isUnion, unionName } = productList
 
   const productCard = document.createElement('div');
   productCard.classList.add('productCard');
-  allproducts.appendChild(productCard);
+  display.appendChild(productCard);
 
   const objID = productList._id;
 
@@ -181,7 +216,7 @@ async function displayProduct(productList, hasButtons) {
           
       const deletedProduct = await deleteProduct(objID);
       // console.log(deletedProduct);
-      allproducts.innerHTML = "";
+      display.innerHTML = "";
       await displayProducts(deletedProduct, "delete");
     })
   
@@ -191,7 +226,6 @@ async function displayProduct(productList, hasButtons) {
 
     editButton.addEventListener('click', async () => {
       await displayEditBox(objID);
-
     })
   }
 };
@@ -209,8 +243,11 @@ async function displayEditBox(searchID) {
 
   // console.log(`The product to update has a UPC of ${UPC}, a productName of ${productName}, is made by ${manufacturer}, has a union status of ${isUnion} and ${unionName}`);
 
-  allproducts.innerHTML = "";
-  header.textContent = "Edit Entry:"
+  selectContainer.classList.remove("hidden");
+  dbContainer.classList.add("hidden");
+
+  selectProducts.innerHTML = "";
+  selectHeader.textContent = "Edit Entry:"
 
   const editBox = document.createElement(`div`);
   editBox.classList.add("productCard");
@@ -283,7 +320,7 @@ async function displayEditBox(searchID) {
   editForm.appendChild(submitEdit);
 
   editBox.appendChild(editForm);
-  allproducts.appendChild(editBox);
+  selectProducts.appendChild(editBox);
 
   editForm.addEventListener("submit", async (e) => {
     e.preventDefault();

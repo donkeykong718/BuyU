@@ -9,15 +9,15 @@
   <script src="index.js" defer type="module"></script>
 </head>
 <body>
-  <div>
-    <h2 id="header">Database Display</h2>
-    <div id="allproducts"></div>
+  <div id="selectcontainer" class="hidden">
+    <h2 id="selectheader"></h2>
+    <div id="selectproducts"></div>
   </div>
-  <div id="searches">
+  <div id="crudcontainer" class="hidden">
     <h2>CRUD Box</h2>
     <!-- <button id="returnButton">Refresh DB Results</button> -->
     <a href="http://localhost:8080/public">Refresh Database</a>
-    <div class="CRUDbox">
+    <div class="crudbox">
       <h3>Search</h3>
       <h4>(one field only)</h4>
       <form id="searchform">
@@ -30,7 +30,7 @@
         <button>Click me to search</button>
       </form>
     </div>
-    <div class="CRUDbox">
+    <div class="crudbox">
       <h3>Create</h3>
       <form id="createform">
         UPC: <input id="createUPC" minlength="12" maxlength="12" type="text"> 
@@ -41,6 +41,12 @@
         <button>Click me to create</button>
       </form>
     </div>
+    </div>
+  <div id="dbcontainer">
+    <h2 id="dbheader">Database Display</h2>
+    <button id="crButton">Search Database or Add Entry</button>
+    <div id="allproducts"></div>
+  </div>
     <!-- <div class="CRUDbox">
       <h3>Edit</h3>
       <form id="editform">
@@ -58,6 +64,5 @@
         <button>Click me to delete</button>
       </form>
     </div> -->
-  </div>
 </body>
 </html>

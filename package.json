@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/donkeykong718/BuyU#readme",
   "dependencies": {
+    "@zxing/library": "^0.19.2",
     "express": "^4.18.2",
     "mongoose": "^6.9.2"
   }
