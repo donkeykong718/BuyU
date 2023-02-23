@@ -9,4 +9,6 @@ router.post('/', controllers.createProduct);
 router.patch('/:id', controllers.updateProduct);
 router.delete('/:id', controllers.deleteProduct);
 
+// router.get('/scanner/', controllers.scanBarcode);
+
 export default router;

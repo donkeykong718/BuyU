@@ -1,5 +1,7 @@
 import Products from "./model.js"
 import { isValidObjectId } from "mongoose";
+import { MultiFormatReader, BarcodeFormat } from '@zxing/library';
+
 
 export const getProducts = async (request, response) => {
   try {
@@ -10,7 +12,6 @@ export const getProducts = async (request, response) => {
     alert(error);
   }
 };
-
 
 export const searchProducts = async (request, response) => {
   try {
@@ -109,3 +110,21 @@ export const deleteProduct = async (request, response) => {
   }
 }
 
+export const scanBarcode = async (request, response) => {
+  try {
+    const hints = new Map();
+    const formats = [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX/*, ...*/];
+    
+    hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
+    
+    const reader = new MultiFormatReader();
+    
+    const luminanceSource = new RGBLuminanceSource(imgByteArray, imgWidth, imgHeight);
+    const binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
+    
+    reader.decode(binaryBitmap, hints);
+  }
+  catch (error) {
+    alert(error);
+  }
+}

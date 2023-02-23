@@ -18,6 +18,34 @@
     <!-- <button id="returnButton">Refresh DB Results</button> -->
     <a href="http://localhost:8080/public">Refresh Database</a>
     <div class="crudbox">
+      <h3>Create</h3>
+          <button id="scanbutton">Or click to scan barcode</button>
+            <section class="container hidden" id="scanner">  
+              <div id="sourceSelectPanel" style="display:none">
+                <label for="sourceSelect">Change video source:</label>
+                <select id="sourceSelect" style="max-width:400px">
+                </select>
+              </div>
+                <button id="startButton">Start</button>
+                <!-- <button id="resetButton">Reset</button> -->
+              <div>
+                <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+              </div>
+        
+              <label>Result:</label>
+              <pre><code id="result"></code></pre>
+            </section>
+
+      <form id="createform">
+        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text"> 
+        Product Name: <input id="createProduct" type="text"> 
+        Manufacturer: <input id="createManu" type="text"> 
+        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]" type="text">
+        Union (if applicable): <input id="createUName" type="text"> 
+        <button>Click me to create</button>
+      </form>
+    </div>
+    <div class="crudbox">
       <h3>Search</h3>
       <h4>(one field only)</h4>
       <form id="searchform">
@@ -30,18 +58,7 @@
         <button>Click me to search</button>
       </form>
     </div>
-    <div class="crudbox">
-      <h3>Create</h3>
-      <form id="createform">
-        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text"> 
-        Product Name: <input id="createProduct" type="text"> 
-        Manufacturer: <input id="createManu" type="text"> 
-        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]" type="text">
-        Union (if applicable): <input id="createUName" type="text"> 
-        <button>Click me to create</button>
-      </form>
-    </div>
-    </div>
+  </div>
   <div id="dbcontainer">
     <h2 id="dbheader">Database Display</h2>
     <button id="crButton">Search Database or Add Entry</button>
@@ -64,5 +81,60 @@
         <button>Click me to delete</button>
       </form>
     </div> -->
+
+<script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+    <!-- <script type="text/javascript">
+      const scanButton = document.getElementById('scanbutton');
+      
+      scanButton.addEventListener('click', () => {
+        let selectedDeviceId;
+        const codeReader = new ZXing.BrowserMultiFormatReader()
+        console.log('ZXing code reader initialized')
+        codeReader.listVideoInputDevices()
+          .then((videoInputDevices) => {
+            const sourceSelect = document.getElementById('sourceSelect')
+            selectedDeviceId = videoInputDevices[0].deviceId
+            if (videoInputDevices.length >= 1) {
+              videoInputDevices.forEach((element) => {
+                const sourceOption = document.createElement('option')
+                sourceOption.text = element.label
+                sourceOption.value = element.deviceId
+                sourceSelect.appendChild(sourceOption)
+              })
+  
+              sourceSelect.onchange = () => {
+                selectedDeviceId = sourceSelect.value;
+              };
+  
+              const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+              sourceSelectPanel.style.display = 'block'
+            }
+  
+            document.getElementById('startButton').addEventListener('click', () => {
+              codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+                if (result) {
+                  console.log(result)
+                  document.getElementById('result').textContent = result.text
+                }
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                  console.error(err)
+                  document.getElementById('result').textContent = err
+                }
+              })
+              console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+            })
+  
+            // document.getElementById('resetButton').addEventListener('click', () => {
+            //   codeReader.reset()
+            //   document.getElementById('result').textContent = '';
+            //   console.log('Reset.')
+            // })
+  
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      })
+    </script> -->
 </body>
 </html>
