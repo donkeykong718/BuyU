@@ -1,6 +1,10 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 // import { MultiFormatReader, BarcodeFormat } from '@zxing/library';
 
+const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
+
+const barcodeKey = "key=qcukoqhlmkagewubr21i7isnr46nt6";
+const barcodeURL = `${PROXY}/api.barcodelookup.com/v3/products?`
 
 const baseUrl = 'http://localhost:8080/';
 
@@ -43,7 +47,7 @@ searchform.addEventListener(`submit`, async (e) => {
   const searchProduct = searchProductinput.value;
   const searchManu = searchManuinput.value;
   let searchUStatus = searchUStatusinput.value;
-  const searchUName = searchUNameinput.value;
+  let searchUName = searchUNameinput.value;
 
   if (searchUStatus.toString().toUpperCase() == 'Y') { searchUStatus = true }
   if (searchUStatus.toString().toUpperCase() == 'N') { searchUStatus = false }
@@ -91,8 +95,20 @@ const newManuinput = document.getElementById('createManu');
 const newUStatusinput = document.getElementById('createUStatus');
 const newUNameinput = document.getElementById('createUName');
 
+// if (newUStatusinput.value === false || newUStatusinput.value.toString.toUpperCase === "N") {
+//   newUNameinput.setAttribute("maxlength", "0")
+// }
+
+// if (newUStatusinput.value == true || newUStatusinput.value.toString.toUpperCase == "Y")
+// {
+//   newUNameinput.removeAttribute("maxlength");
+//   newUNameinput.setAttribute("required")
+//   }
+
 const scanButton = document.getElementById('scanbutton');
 const scanner = document.getElementById('scanner');
+
+    // EMBEDDED SCANNER
 
 scanButton.addEventListener('click', () => {
   scanButton.classList.add("hidden");
@@ -121,10 +137,23 @@ scanButton.addEventListener('click', () => {
             }
   
             document.getElementById('startButton').addEventListener('click', () => {
-              codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+              codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', async (result, err) => {
                 if (result) {
-                  console.log(result)
-                  document.getElementById('result').textContent = result.text
+                  newUPCinput.setAttribute("value", result);
+                  const video = document.getElementById("video");
+                  video.style.border = "5px solid lightgreen"
+                  const successMessage = document.createElement('div');
+                  const messageDiv = document.getElementById('message');
+                  successMessage.textContent = "Scan successful"
+                  successMessage.style.color = "green"
+                  successMessage.style.fontWeight = "bold"
+                  messageDiv.appendChild(successMessage)
+              
+                  // const scannedDetails = await barcodeSearch(result.text);
+                  // newProductinput.setAttribute("value", scannedDetails.productName)
+                  // newManuinput.setAttribute("value",scannedDetails.manufacturer)
+                  // console.log(result)
+                  // document.getElementById('result').textContent = result.text
                 }
                 if (err && !(err instanceof ZXing.NotFoundException)) {
                   console.error(err)
@@ -152,10 +181,26 @@ createform.addEventListener(`submit`, async (e) => {
   const newProduct = newProductinput.value;
   const newManu = newManuinput.value;
   let newUStatus = newUStatusinput.value;
-  const newUName = newUNameinput.value;
+  let newUName = newUNameinput.value;
 
-  if (newUStatus.toString().toUpperCase() === 'Y') { newUStatus = true }
-  if (newUStatus.toString().toUpperCase() === 'N') { newUStatus = false }
+  if (newUStatus.toString().toUpperCase() === 'Y') {
+    newUStatus = true;
+  }
+  if (newUStatus.toString().toUpperCase() === 'N') {
+    newUStatus = false
+  }
+
+  if (newUStatus === true && (newUName === undefined || newUName === ""))
+  {
+    newUName = prompt("Please enter a Union Name");
+    newUNameinput.required = true;
+  }
+
+  if (newUStatus === false && newUName !== undefined)
+  {
+    alert("You cannot have a Union Name for a non-union product");
+    newUName = "";
+  }
 
   const newDetails = {
     "UPC": newUPC,
@@ -198,18 +243,18 @@ async function displayProducts(productList, method) {
     dbContainer.classList.add("hidden");
 
     
-    let hasButtons = false;
+    let hasButtons = true;
 
     switch (true) {
       case (method === "search"):
         selectHeader.textContent = "Search Results:"
-        hasButtons = true;
         break;
       case (method === "create"):
         selectHeader.textContent = "New Entry Created:"
         break;
       case (method === "delete"):
         selectHeader.textContent = "Deleted Entry:"
+        hasButtons = false;
         break;
       case (method === "edit"):
         selectHeader.textContent = "Updated Entry:"
@@ -252,7 +297,7 @@ async function displayProduct(productList, hasButtons, display) {
   pUPC.textContent = `UPC: ${ UPC }`;
   pName.textContent = `Product: ${ productName }`;
   pManu.textContent = `Manufacturer: ${ manufacturer }`;
-  pBoolean.textContent = `Union made?: ${ isUnion }`;
+  pBoolean.textContent = `Union made: ${ isUnion }`;
   pUnion.textContent = `Union: ${ unionName }`;
 
   productCard.appendChild(pUPC);
@@ -337,7 +382,7 @@ async function displayEditBox(searchID) {
   const editUStatus = document.createElement('input');
   editUStatus.setAttribute("id", "editUStatus");
   editUStatus.setAttribute("type", "text");
-  editUStatus.setAttribute("pattern", "[Yy]|[Nn]")
+  editUStatus.setAttribute("pattern", "[Yy]|[Nn]|[Ff]alse|[Tt]rue")
   editUStatus.setAttribute("value", isUnion);
   // editUStatus.style.display = "inline";
   // labelUStatus.textContent = `Curent Union Status: ${isUnion}`;
@@ -389,11 +434,20 @@ async function displayEditBox(searchID) {
     if (editedUStatus.toString().toUpperCase() === 'Y') { editedUStatus = true }
     if (editedUStatus.toString().toUpperCase() === 'N') { editedUStatus = false }
 
-    if (isNaN(editedUPC) === true) { editedUPC = UPC }
-    if (editedProduct === "") { editedProduct = productName }
-    if (editedManu === "") { editedManu = manufacturer }
-    if (editedUStatus === "") { editedUStatus = isUnion }
-    if (editedUName === "") { editedUName = unionName}
+    if ((editedUStatus === true || isUnion === true) && (editedUName == undefined || editedUName == "" || editedUName == null))
+    {editedUName = prompt("Please enter a Union Name");}
+  
+    if ((editUStatus === false || isUnion === false) && (editedUName !== undefined || editedUName !== "" || editedUName !== null))
+    {
+      alert("You cannot have a Union Name for a non-union product");
+      editedUName = "";
+    }
+
+    // if (isNaN(editedUPC) === true) { editedUPC = UPC }
+    // if (editedProduct === "") { editedProduct = productName }
+    // if (editedManu === "") { editedManu = manufacturer }
+    // if (editedUStatus === "") { editedUStatus = isUnion }
+    // if (editedUName === "") { editedUName = unionName}
 
     const editDetails = {
       "UPC": editedUPC,
@@ -454,3 +508,44 @@ async function deleteProduct(deleteTerm) {
   return json;
 }
 
+
+/// NEW API CALL
+
+async function barcodeSearch(barcode) {
+  try {
+    // console.log('The barcode search has begun');
+    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&${barcodeKey}`)
+    
+    const json = await results.json();
+    // const json = testData;
+    console.log("This is the json")
+    console.log(json);
+
+
+    const productData = json.products[0];
+    console.log("This is just the product data")
+    console.log(productData);
+
+    const scannedUPC = productData.barcode_number;
+    const scannedProduct = productData.title;
+    const scannedManu = productData.manufacturer;
+
+    const scannedDetails = {
+      "UPC": scannedUPC,
+      "productName": scannedProduct,
+      "manufacturer": scannedManu,
+    };
+
+    return scannedDetails;
+
+    // const { barcode_number, title, manufacturer } = productData;
+    // console.log("These are the destructured variables")
+    // console.log(barcode_number, title, manufacturer);    
+
+    // console.log("These are the scan variables")
+    // console.log(scannedUPC, scannedProduct, scannedManu);
+
+  }
+  catch {
+  }
+}

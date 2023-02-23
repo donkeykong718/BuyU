@@ -67,6 +67,8 @@ export const createProduct = async (request, response) => {
     // console.log(`It's made by ${manufacturer}`)
     // console.log(`It is union? ${isUnion}`);
     // console.log(`The union is ${unionName}`);
+
+    // if (isUnion === false) { unionName = undefined };
   
     const newProduct = await Products.create({
       UPC: UPC,
@@ -86,7 +88,10 @@ export const updateProduct = async (request, response) => {
   try {
     const searchID = request.params.id;
 
-    const { productName, manufacturer, isUnion, unionName } = request.body;
+    let { productName, manufacturer, isUnion, unionName } = request.body;
+
+    // if (isUnion == false) { unionName = "" };
+
     const updateDetails = { productName, manufacturer, isUnion, unionName }
 
     const updatedProduct = await Products.findByIdAndUpdate({ "_id": searchID }, updateDetails);

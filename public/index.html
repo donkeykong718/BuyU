@@ -16,7 +16,7 @@
   <div id="crudcontainer" class="hidden">
     <h2>CRUD Box</h2>
     <!-- <button id="returnButton">Refresh DB Results</button> -->
-    <a href="http://localhost:8080/public">Refresh Database</a>
+    <a href="http://localhost:8080/public">Return to Database</a>
     <div class="crudbox">
       <h3>Create</h3>
           <button id="scanbutton">Or click to scan barcode</button>
@@ -31,16 +31,18 @@
               <div>
                 <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
               </div>
-        
-              <label>Result:</label>
-              <pre><code id="result"></code></pre>
+              <div id="message">
+                Code reader courtesy of ZXING (https://github.com/zxing-js/library)
+              </div>
+                            <!-- <label>Result:</label>
+              <pre><code id="result"></code></pre> -->
             </section>
 
       <form id="createform">
-        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text"> 
+        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text" required> 
         Product Name: <input id="createProduct" type="text"> 
         Manufacturer: <input id="createManu" type="text"> 
-        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]" type="text">
+        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
         Union (if applicable): <input id="createUName" type="text"> 
         <button>Click me to create</button>
       </form>
@@ -53,7 +55,7 @@
                   minlength="12" maxlength="12" type="text"> 
         Product Name: <input id="searchProduct" type="text"> 
         Manufacturer: <input id="searchManu" type="text"> 
-        Union (Y/N)?: <input id="searchUStatus" pattern="[Yy]|[Nn]" type="text">
+        Union (Y/N)?: <input id="searchUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
         Union: <input id="searchUName" type="text"> 
         <button>Click me to search</button>
       </form>
