@@ -3,7 +3,7 @@ const baseUrl = 'http://localhost:8080/';
 const body = document.querySelector('body');
 const allproducts = document.getElementById('allproducts');
 const header = document.getElementById('header');
-const returnButton = document.getElementById('returnButton')
+// const returnButton = document.getElementById('returnButton')
 
 //SEARCH FORM (READ)
 
@@ -25,8 +25,8 @@ searchform.addEventListener(`submit`, async (e) => {
   let searchUStatus = searchUStatusinput.value;
   const searchUName = searchUNameinput.value;
 
-  if (searchUStatus === `Y`) { searchUStatus = true }
-  if (searchUStatus === 'N') { searchUStatus = false }
+  if (searchUStatus.toString().toUpperCase() == 'Y') { searchUStatus = true }
+  if (searchUStatus.toString().toUpperCase() == 'N') { searchUStatus = false }
 
   // console.log(`The searchUPC is ${searchUPC} which is a ${typeof searchUPC}`);
   // console.log(`The searchProduct is ${searchProduct} which is a ${typeof searchProduct}`);
@@ -78,8 +78,8 @@ createform.addEventListener(`submit`, async (e) => {
   let newUStatus = newUStatusinput.value;
   const newUName = newUNameinput.value;
 
-  if (newUStatus === `Y`) { newUStatus = true }
-  if (newUStatus === 'N') { newUStatus = false }
+  if (newUStatus.toString().toUpperCase() === 'Y') { newUStatus = true }
+  if (newUStatus.toString().toUpperCase() === 'N') { newUStatus = false }
 
   const newDetails = {
     "UPC": newUPC,
@@ -133,6 +133,11 @@ async function displayProducts(productList, method) {
       await displayProduct(productList[i], hasButtons)
     }
   }
+
+  const anchor = document.createElement('a');
+  anchor.href = "http://localhost:8080/public";
+  anchor.textContent = "Return to Database"
+  allproducts.appendChild(anchor);
 };
 
 async function displayProduct(productList, hasButtons) {
@@ -175,7 +180,7 @@ async function displayProduct(productList, hasButtons) {
     deleteButton.addEventListener('click', async () => {
           
       const deletedProduct = await deleteProduct(objID);
-      console.log(deletedProduct);
+      // console.log(deletedProduct);
       allproducts.innerHTML = "";
       await displayProducts(deletedProduct, "delete");
     })
@@ -289,8 +294,8 @@ async function displayEditBox(searchID) {
     let editedUStatus = editUStatus.value;
     let editedUName = editUName.value;
 
-    if (editedUStatus === `Y`) { editedUStatus = true }
-    if (editedUStatus === 'N') { editedUStatus = false }
+    if (editedUStatus.toString().toUpperCase() === 'Y') { editedUStatus = true }
+    if (editedUStatus.toString().toUpperCase() === 'N') { editedUStatus = false }
 
     if (isNaN(editedUPC) === true) { editedUPC = UPC }
     if (editedProduct === "") { editedProduct = productName }
@@ -332,7 +337,7 @@ async function getProducts() {
 
 async function searchProducts(searchTerm) {
   
-  console.log(`Searching for ${baseUrl}${searchTerm}`);
+  // console.log(`Searching for ${baseUrl}${searchTerm}`);
 
   const results = await fetch(`${baseUrl}${searchTerm}`);
   const json = await results.json();

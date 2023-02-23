@@ -2,8 +2,13 @@ import Products from "./model.js"
 import { isValidObjectId } from "mongoose";
 
 export const getProducts = async (request, response) => {
+  try {
     const product = await Products.find();
     response.json(product);
+  }
+  catch (error) {
+    alert(error);
+  }
 };
 
 
@@ -11,8 +16,8 @@ export const searchProducts = async (request, response) => {
   try {
     const searchTerm = request.params.search;
 
-    if (isValidObjectId(searchTerm) === true) {
-      const product = await Products.find({ _id: searchTerm });
+    if (isNaN(searchTerm) === false) {
+      const product = await Products.find({ UPC: searchTerm });
       response.json(product);
     }
     else {
@@ -21,23 +26,24 @@ export const searchProducts = async (request, response) => {
     };
     
     async function searchFor(searchTerm) {
-      if (isNaN(searchTerm) === false) {
-        const product = await Products.find({ UPC: searchTerm });
+      
+      if (isValidObjectId(searchTerm) === true) {
+        const product = await Products.find({ _id: searchTerm });
         return product;
-      }
+      }  
       else if (searchTerm === "true" || searchTerm === "false") {
         const product = await Products.find({ isUnion: searchTerm });
         return product;
       }
       else {
-        const product = await Products.find({ $or: [{ productName: searchTerm }, { manufacturer: searchTerm }, { unionName: searchTerm }] });
-        console.log(`${searchTerm} belongs to product: ${product}`);
+        const product = await Products.find({ $or: [{ productName: { $regex: searchTerm, $options: 'i' } }, { manufacturer: { $regex: searchTerm, $options:'i'} }, { unionName: searchTerm }] });
+        // console.log(`${searchTerm} belongs to product: ${product}`);
         return product;
       }
     };
   }
   catch (error) {
-    return null;
+    alert(error);
   }
 }
 
@@ -45,8 +51,8 @@ export const createProduct = async (request, response) => {
   try {
     const { UPC, productName, manufacturer, isUnion, unionName } = request.body;
 
-    console.log(`The request body looks like:`)
-    console.log(request.body);
+    // console.log(`The request body looks like:`)
+    // console.log(request.body);
 
     // const newEntry = request.body;
     // console.log(newEntry);
@@ -71,7 +77,7 @@ export const createProduct = async (request, response) => {
     response.json(newProduct);
   }
   catch (error) {
-    return null
+    alert(error);
   }
 }
 
@@ -87,19 +93,19 @@ export const updateProduct = async (request, response) => {
     response.json(updatedProduct);
   }
   catch (error) {
-    return null
+    alert(error);
   }
 }
 
 export const deleteProduct = async (request, response) => {
   try {
     const objID = request.params.id;
-    console.log(`The object to delete is ${objID}`);
+    // console.log(`The object to delete is ${objID}`);
     const deletedProduct = await Products.findByIdAndDelete({ "_id": objID })
     response.json(deletedProduct);
   }
-  catch {
-    return null
+  catch (error) {
+    alert(error);
   }
 }
 

@@ -31,8 +31,14 @@ form {
   flex: auto;
 }
 
-input {
+input:valid {
   display: block;
+}
+
+input:invalid {
+  display: block;
+  border: red solid thick;
+  box-sizing: border-box;
 }
 
 label {
