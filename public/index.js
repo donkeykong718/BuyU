@@ -1,12 +1,12 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
-// import { MultiFormatReader, BarcodeFormat } from '@zxing/library';
 
 const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
 
-const barcodeKey = "key=qcukoqhlmkagewubr21i7isnr46nt6";
+// process.env.BARCODE_KEY;
+
 const barcodeURL = `${PROXY}/api.barcodelookup.com/v3/products?`
 
-const baseUrl = 'http://localhost:8080/';
+const baseUrl = 'http://localhost:3000/api/';
 
 const body = document.querySelector('body');
 
@@ -261,7 +261,7 @@ async function displayProducts(productList, method) {
     }
 
     const anchor = document.createElement('a');
-    anchor.href = "http://localhost:8080/public";
+    anchor.href = "http://localhost:3000/";
     anchor.textContent = "Return to Database"
     selectProducts.appendChild(anchor);
   }
@@ -506,7 +506,7 @@ async function deleteProduct(deleteTerm) {
 async function barcodeSearch(barcode) {
   try {
     // console.log('The barcode search has begun');
-    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&${barcodeKey}`)
+    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&key=${barcodeKey}`)
     
     const json = await results.json();
     // const json = testData;

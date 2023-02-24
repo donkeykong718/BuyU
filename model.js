@@ -1,4 +1,5 @@
-import mongoose from "./connection.js"
+// import mongoose from "./connection.js"
+import mongoose from "mongoose"
 
 const productSchema = new mongoose.Schema(
   {

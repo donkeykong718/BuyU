@@ -2,7 +2,7 @@
     "age_group": "adult",
     "asin": "B000Q8V01O",
     "barcode_formats": "UPC-A 637792501004, EAN-13 0637792501004",
-    "barcode_number":"637792501004",
+    "UPC":"637792501004",
     "brand": "Tea Tree Therapy",
     "category": "Health & Beauty > Personal Care > Oral Care",
     "color": "",
@@ -26,7 +26,7 @@
     "release_date": "",
     "reviews": [],
     "size": "100 ct",
-    "title": "Tea Tree Therapy Toothpicks Mint 100 Toothpicks",
+    "productName": "Tea Tree Therapy Toothpicks Mint 100 Toothpicks",
     "weight": "0.055",
     "width": "1.6"
   }
