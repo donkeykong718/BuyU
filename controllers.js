@@ -10,6 +10,7 @@ export const getProducts = async (request, response) => {
   }
   catch (error) {
     console.error(error);
+    response.status(500).json("Error message");
   }
 };
 
@@ -45,6 +46,7 @@ export const searchProducts = async (request, response) => {
   }
   catch (error) {
     console.error(error);
+    response.status(500).json("Error message");
   }
 }
 
@@ -81,6 +83,7 @@ export const createProduct = async (request, response) => {
   }
   catch (error) {
     console.error(error);
+    response.status(500).json("Error message");
   }
 }
 
@@ -100,6 +103,7 @@ export const updateProduct = async (request, response) => {
   }
   catch (error) {
     console.error(error);
+    response.status(500).json("Error message");
   }
 }
 
@@ -112,6 +116,7 @@ export const deleteProduct = async (request, response) => {
   }
   catch (error) {
     console.error(error);
+    response.status(500).json("Error message");
   }
 }
 
