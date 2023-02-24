@@ -9,7 +9,7 @@ export const getProducts = async (request, response) => {
     response.json(product);
   }
   catch (error) {
-    alert(error);
+    console.error(error);
   }
 };
 
@@ -44,7 +44,7 @@ export const searchProducts = async (request, response) => {
     };
   }
   catch (error) {
-    alert(error);
+    console.error(error);
   }
 }
 
@@ -80,7 +80,7 @@ export const createProduct = async (request, response) => {
     response.json(newProduct);
   }
   catch (error) {
-    alert(error);
+    console.error(error);
   }
 }
 
@@ -99,7 +99,7 @@ export const updateProduct = async (request, response) => {
     response.json(updatedProduct);
   }
   catch (error) {
-    alert(error);
+    console.error(error);
   }
 }
 
@@ -111,7 +111,7 @@ export const deleteProduct = async (request, response) => {
     response.json(deletedProduct);
   }
   catch (error) {
-    alert(error);
+    console.error(error);
   }
 }
 
@@ -130,6 +130,6 @@ export const scanBarcode = async (request, response) => {
     reader.decode(binaryBitmap, hints);
   }
   catch (error) {
-    alert(error);
-  }
+    console.error(error);
+ }
 }
