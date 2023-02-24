@@ -188,7 +188,7 @@ createform.addEventListener(`submit`, async (e) => {
     newUNameinput.required = true;
   }
 
-  if (newUStatus === false && newUName !== undefined)
+  if (newUStatus === false && (newUName != undefined && newUName !=""))
   {
     alert("You cannot have a Union Name for a non-union product");
     newUName = "";
@@ -429,7 +429,7 @@ async function displayEditBox(searchID) {
     if ((editedUStatus === true || isUnion === true) && (editedUName == undefined || editedUName == "" || editedUName == null))
     {editedUName = prompt("Please enter a Union Name");}
   
-    if ((editUStatus === false || isUnion === false) && (editedUName !== undefined || editedUName !== "" || editedUName !== null))
+    if ((editUStatus === false || isUnion === false) && (editedUName != undefined || editedUName != "" || editedUName != null))
     {
       alert("You cannot have a Union Name for a non-union product");
       editedUName = "";
