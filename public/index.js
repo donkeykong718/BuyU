@@ -6,7 +6,7 @@ const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
 
 const barcodeURL = `${PROXY}/api.barcodelookup.com/v3/products?`
 
-const baseUrl = 'http://localhost:3000/api/';
+const baseUrl = '/api/';
 
 const body = document.querySelector('body');
 
@@ -261,7 +261,7 @@ async function displayProducts(productList, method) {
     }
 
     const anchor = document.createElement('a');
-    anchor.href = "http://localhost:3000/";
+    anchor.href = "/";
     anchor.textContent = "Return to Database"
     selectProducts.appendChild(anchor);
   }
