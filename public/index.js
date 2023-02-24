@@ -1,5 +1,4 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
-
 // process.env.BARCODE_KEY;
 
 const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
@@ -181,6 +180,12 @@ createform.addEventListener(`submit`, async (e) => {
     "isUnion": newUStatus,
     "unionName": newUName
   };
+
+  newUPCinput.removeAttribute("value")   
+  newProductinput.removeAttribute("value")
+  newManuinput.removeAttribute("value")
+  newUStatusinput.removeAttribute("value")
+  newUNameinput.removeAttribute("value")
 
   const newEntry = await createProduct(newDetails);
   

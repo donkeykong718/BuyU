@@ -53,24 +53,6 @@ export const searchProducts = async (request, response) => {
 export const createProduct = async (request, response) => {
   try {
     const { UPC, productName, manufacturer, isUnion, unionName } = request.body;
-
-    // console.log(`The request body looks like:`)
-    // console.log(request.body);
-
-    // const newEntry = request.body;
-    // console.log(newEntry);
-    // Products.create(newEntry)
-    //   .then(entry => {
-    //     response.json(entry)
-    //   });
-
-    // console.log(`The UPC is ${UPC}`)
-    // console.log(`The product is ${productName}`)
-    // console.log(`It's made by ${manufacturer}`)
-    // console.log(`It is union? ${isUnion}`);
-    // console.log(`The union is ${unionName}`);
-
-    // if (isUnion === false) { unionName = undefined };
   
     const newProduct = await Products.create({
       UPC: UPC,
@@ -120,21 +102,3 @@ export const deleteProduct = async (request, response) => {
   }
 }
 
-// export const scanBarcode = async (request, response) => {
-//   try {
-//     const hints = new Map();
-//     const formats = [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX/*, ...*/];
-    
-//     hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
-    
-//     const reader = new MultiFormatReader();
-    
-//     const luminanceSource = new RGBLuminanceSource(imgByteArray, imgWidth, imgHeight);
-//     const binaryBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
-    
-//     reader.decode(binaryBitmap, hints);
-//   }
-//   catch (error) {
-//     console.error(error);
-//  }
-// }
