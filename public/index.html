@@ -9,14 +9,12 @@
   <script src="index.js" defer type="module"></script>
 </head>
 <body>
-  <div id="selectcontainer" class="hidden">
-    <h2 id="selectheader"></h2>
-    <div id="selectproducts"></div>
-  </div>
-  <div id="crudcontainer" class="hidden">
+  
+<div class="wrapper" id="crudcontainer">
+  <div id="crudcontainer" class="mobilehidden">
     <h2>CRUD Box</h2>
     <!-- <button id="returnButton">Refresh DB Results</button> -->
-    <a href="/">Return to Database</a>
+    <a class="desktophidden" href="/">Return to Database</a>
     <div class="crudbox">
       <h3>Create</h3>
           <button id="scanbutton">Or click to scan barcode</button>
@@ -40,6 +38,7 @@
 
       <form id="createform">
         UPC: <input id="createUPC" minlength="12" maxlength="12" type="text" required> 
+        <p style="color: red; font-size: small; font-style: italic;">required</p>
         Product Name: <input id="createProduct" type="text"> 
         Manufacturer: <input id="createManu" type="text"> 
         Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
@@ -61,11 +60,20 @@
       </form>
     </div>
   </div>
+</div>
+  
+  <div id="selectcontainer" class="hidden">
+    <h2 id="selectheader"></h2>
+    <div id="selectproducts"></div>
+  </div>
+
   <div id="dbcontainer">
     <h2 id="dbheader">Database Display</h2>
-    <button id="crButton">Search Database or Add Entry</button>
+    <button id="crButton" class="desktophidden">Search Database or Add Entry</button>
     <div id="allproducts"></div>
   </div>
+
+
     <!-- <div class="CRUDbox">
       <h3>Edit</h3>
       <form id="editform">

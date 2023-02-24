@@ -9,6 +9,11 @@ body {
   margin: 20px;
 }
 
+button{
+  min-width: 40px;
+  padding: 2px 5px 2px 5px;
+}
+
 .crudbox {
   display: flex;
   flex-direction: column;
@@ -17,6 +22,14 @@ body {
   border: solid black 2px;
   padding: 5px;
   margin: 5px;
+}
+
+#selectcontainer {
+  width: fit-content;
+}
+
+#dbcontainer {
+  width: fit-content;
 }
 
 .productCard {
@@ -29,6 +42,10 @@ body {
   display: none;
 }
 
+.mobilehidden {
+   display: none;
+}
+
 form {
   flex: auto;
 }
@@ -39,7 +56,7 @@ input:valid {
 
 input:invalid {
   display: block;
-  border: red solid thick;
+  border: red solid 3px;
   box-sizing: border-box;
 }
 
@@ -47,60 +64,26 @@ label {
   display: block;
 }
 
+.desktophidden{
+  display: contents;
+ }
+
 /* LAPTOP DISPLAY OPTIONS */
 
-/* @media (max-width: 480px) {
-  .mobileinactive{
-    display: none;
-  }
-
+@media (min-width: 600px) {
   body {
-  display: grid;
-  grid-template-columns: 50% 50%;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  justify-content: space-evenly;
+  
+}
+
+  .mobilehidden {
+  display: contents; 
  }
-  
-  header{
-    font-size: 35px;
-  }
 
-  .headerbox{
-    flex: 0 0 100%;
-    margin-top: 15px;
-    font-size: 17px;
-  }
-
-  .subheader{
-    text-align: center;
-    margin-bottom: 10px;
-  }
-
-  .container {
-    display: grid;
-    grid-template-columns: 100%;
-    padding: 10px;
-    justify-content: space-around;
-  }
-
-  .amazoncard {
-    margin: 0 17px 10px 0;
-  }
-
-  .googlecard {
-    margin: 0 17px 10px 0;
-  }
-
-  .image{
-    max-width: 100px;
-    max-height: 100px;
-  }   
-  
-  .content{
-    font-size: 14px;
-  }
-
-  .mobilesearch {
-    display: flex;
-    margin-top: 40px;
-    justify-content: center;
-  }
-} */
+ .desktophidden{
+  display: none;
+ }
+} 
