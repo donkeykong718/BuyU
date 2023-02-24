@@ -95,16 +95,6 @@ const newManuinput = document.getElementById('createManu');
 const newUStatusinput = document.getElementById('createUStatus');
 const newUNameinput = document.getElementById('createUName');
 
-// if (newUStatusinput.value === false || newUStatusinput.value.toString.toUpperCase === "N") {
-//   newUNameinput.setAttribute("maxlength", "0")
-// }
-
-// if (newUStatusinput.value == true || newUStatusinput.value.toString.toUpperCase == "Y")
-// {
-//   newUNameinput.removeAttribute("maxlength");
-//   newUNameinput.setAttribute("required")
-//   }
-
 const scanButton = document.getElementById('scanbutton');
 const scanner = document.getElementById('scanner');
 
@@ -149,6 +139,8 @@ scanButton.addEventListener('click', () => {
                   successMessage.style.fontWeight = "bold"
                   messageDiv.appendChild(successMessage)
               
+    //BARCODE SEARCH -- USE SPARINGLY 
+                  
                   // const scannedDetails = await barcodeSearch(result.text);
                   // newProductinput.setAttribute("value", scannedDetails.productName)
                   // newManuinput.setAttribute("value",scannedDetails.manufacturer)
@@ -163,11 +155,11 @@ scanButton.addEventListener('click', () => {
               console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
             })
   
-            // document.getElementById('resetButton').addEventListener('click', () => {
-            //   codeReader.reset()
-            //   document.getElementById('result').textContent = '';
-            //   console.log('Reset.')
-            // })
+            document.getElementById('resetButton').addEventListener('click', () => {
+              codeReader.reset()
+              document.getElementById('result').textContent = '';
+              console.log('Reset.')
+            })
   
           })
           .catch((err) => {
