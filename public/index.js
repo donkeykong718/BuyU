@@ -268,7 +268,7 @@ async function displayProducts(productList, method) {
 };
 
 async function displayProduct(productList, hasButtons, display) {
-  const { UPC, productName, manufacturer, isUnion, unionName } = productList
+  const { UPC, productName, manufacturer, isUnion, unionName, createdAt, updatedAt } = productList
 
   const productCard = document.createElement('div');
   productCard.classList.add('productCard');
@@ -284,19 +284,81 @@ async function displayProduct(productList, hasButtons, display) {
   const pManu = document.createElement('p');
   const pBoolean = document.createElement('p');
   const pUnion = document.createElement('p');
+  const pCreated = document.createElement('p');
+  const pUpdated = document.createElement('p');
+ 
+  let creDate = "";
+  let upDate = "";
+  let creTime = "";
+  let upTime = "";
+  let creHour = 0;
+  let estHour = 0;
+  let upHour = 0;
+  let amPM = " AM";
+
+  if (!(createdAt === undefined))
+  { 
+    const tIndex = createdAt.indexOf('T');
+    creDate = createdAt.slice(0, (tIndex))
+    const zIndex = createdAt.indexOf('.');
+    creTime = createdAt.slice(tIndex + 1, zIndex); 
+    const hIndex = createdAt.indexOf(':');
+    creHour = parseInt(createdAt.slice(tIndex + 1, hIndex));
+    estHour = creHour - 5;
+
+    if (estHour > 12) {
+      estHour = estHour - 12;
+      amPM = " PM";
+    }
+    else if (estHour = 12) {
+      amPM = " PM"
+    };
+    creTime = creTime.replace(creHour.toString(), estHour.toString());
+    creTime = creTime + amPM;
+   };
+
+  if (!(updatedAt == undefined)) {
+    amPM = " AM";
+    const tIndex = updatedAt.indexOf('T');
+    upDate = updatedAt.slice(0, (tIndex))
+    const zIndex = updatedAt.indexOf('.');
+    upTime = updatedAt.slice(tIndex + 1, zIndex);
+    const hIndex = updatedAt.indexOf(':');
+    upHour = parseInt(updatedAt.slice(tIndex + 1, hIndex));
+    estHour = upHour - 5;
+
+    if (estHour > 12) {
+      estHour = estHour - 12;
+      amPM = " PM";
+    }
+    else if (estHour = 12) {
+      amPM = " PM"
+    };
+    upTime = upTime.replace(upHour.toString(), estHour.toString());
+    upTime = upTime + amPM;
+   };
+  ;
+     
 
       // pObjID.textContent = productList[i]._id;
   pUPC.textContent = `UPC: ${ UPC }`;
   pName.textContent = `Product: ${ productName }`;
   pManu.textContent = `Manufacturer: ${ manufacturer }`;
   pBoolean.textContent = `Union made: ${ isUnion }`;
-  pUnion.textContent = `Union: ${ unionName }`;
+  pUnion.textContent = `Union: ${unionName}`;
+  pCreated.textContent = `Entry created on: ${creDate} at ${creTime} EST`
+  pUpdated.textContent = `Last update on: ${upDate} at ${upTime} EST`
+
+  // console.log(UPC, productName, manufacturer, isUnion, unionName, createdAt, updatedAt)
 
   productCard.appendChild(pUPC);
   productCard.appendChild(pName);
   productCard.appendChild(pManu);
   productCard.appendChild(pBoolean);
   productCard.appendChild(pUnion);
+
+  if (!(createdAt === undefined || createdAt == "")) { productCard.appendChild(pCreated) };
+  if (!(updatedAt == undefined || updatedAt == "")) { productCard.appendChild(pUpdated); }
 
   if (hasButtons === true) {
 

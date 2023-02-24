@@ -76,7 +76,7 @@ export const createProduct = async (request, response) => {
       UPC: UPC,
       productName: productName,
       manufacturer: manufacturer,
-      isUnion: isUnion === 'true',
+      isUnion: isUnion,
       unionName: unionName,
     })
     response.json(newProduct);

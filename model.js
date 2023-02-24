@@ -8,7 +8,8 @@ const productSchema = new mongoose.Schema(
     manufacturer: String,
     isUnion: Boolean,
     unionName: String
-  }
+  },
+  {timestamps: true}
 )
 
 export default mongoose.model('Products', productSchema);
