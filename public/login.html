@@ -28,7 +28,7 @@
     </form>
     <button id="signupbutton">Create Account</button>
   </div>
-  
+
   <div id="signupcontainer" class="hidden">
     <header>Sign-up</header>
       <form id="signupform">
@@ -40,8 +40,9 @@
         <label>Last Name:<input id="lastName" type="text" required></label> 
           <p style="color: red; font-size: small; font-style: italic;">required</p>
         <label>E-mail:<input id="eMail" type="email"></label> 
-        <label>Union:<input id="unionName" type="text" required></label> 
-          <p style="color: red; font-size: small; font-style: italic;">required</p>
+        <label for="unionName">Union:</label>
+        <p style="color: red; font-size: small; font-style: italic;">required</p>
+        <select id="unionName" name="unionName" required></select>
         <label>Local:<input id="localName" type="text"></label> 
         <label>Title/Role:<input id="title" type="text"></label> 
   

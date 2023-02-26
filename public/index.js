@@ -2,9 +2,6 @@
 // process.env.BARCODE_KEY;
 
 window.onload = localStorage.getItem("currentUser");
-// const currentUserID = localStorage.getItem("currentUser");
-// sessionStorage.setItem("currentUser", currentUserID);
-// localStorage.removeItem("currentUser");
 
 let currentUser = await getUser(localStorage.currentUser)
 console.log(currentUser);
@@ -50,6 +47,15 @@ crButton.addEventListener('click', () => {
   crudContainer.classList.remove("mobilehidden");
 });
 
+const unionList = await getUnions();
+const unionArray = []
+for (const union of unionList) {
+  unionArray.push(union.unionName.nickName);
+}
+unionArray.sort();
+console.log(unionArray);
+
+
 //SEARCH FORM (READ)
 
 const searchform = document.getElementById('searchform');
@@ -58,7 +64,16 @@ const searchUPCinput = document.getElementById('searchUPC');
 const searchProductinput = document.getElementById('searchProduct');
 const searchManuinput = document.getElementById('searchManu');
 const searchUStatusinput = document.getElementById('searchUStatus');
-const searchUNameinput = document.getElementById('searchUName');
+const searchUNameselect = document.getElementById('searchUName');
+searchUNameselect.innerHTML = "";
+
+for (const union of unionArray) {
+  const selection = union;
+  const option = document.createElement('option');
+  option.value = selection
+  option.text = selection
+  searchUNameselect.appendChild(option);  
+}
 
 searchform.addEventListener(`submit`, async (e) => {
   e.preventDefault();
@@ -68,7 +83,7 @@ searchform.addEventListener(`submit`, async (e) => {
   const searchProduct = searchProductinput.value;
   const searchManu = searchManuinput.value;
   let searchUStatus = searchUStatusinput.value;
-  let searchUName = searchUNameinput.value;
+  let searchUName = searchUNameselect.options[searchUNameselect.selectedIndex].value;
 
   if (searchUStatus.toString().toUpperCase() == 'Y') { searchUStatus = true }
   if (searchUStatus.toString().toUpperCase() == 'N') { searchUStatus = false }
@@ -106,9 +121,22 @@ const newUPCinput = document.getElementById('createUPC');
 const newProductinput = document.getElementById('createProduct');
 const newManuinput = document.getElementById('createManu');
 const newUStatusinput = document.getElementById('createUStatus');
-const newUNameinput = document.getElementById('createUName');
+const newUNameselect = document.getElementById('createUName');
+
 newUStatusinput.setAttribute("value", true);
-newUNameinput.setAttribute("value", unionName);
+
+newUNameselect.innerHTML = "";
+
+for (const union of unionArray) {
+  const selection = union;
+  const option = document.createElement('option');
+  option.value = selection
+  option.text = selection
+  if (selection === unionName) {
+    option.setAttribute("selected", "selected")
+  }
+  newUNameselect.appendChild(option);  
+}
 
 
     // EMBEDDED SCANNER
@@ -189,7 +217,7 @@ createform.addEventListener(`submit`, async (e) => {
   const newProduct = newProductinput.value;
   const newManu = newManuinput.value;
   let newUStatus = newUStatusinput.value;
-  let newUName = newUNameinput.value;
+  let newUName = newUNameselect.options[newUNameselect.selectedIndex].value;
 
   if (newUStatus.toString().toUpperCase() === 'Y') { newUStatus = true };
   if (newUStatus.toString().toUpperCase() === 'N') { newUStatus = false };
@@ -215,7 +243,7 @@ createform.addEventListener(`submit`, async (e) => {
   newProductinput.removeAttribute("value")
   newManuinput.removeAttribute("value")
   newUStatusinput.removeAttribute("value")
-  newUNameinput.removeAttribute("value")
+  // newUNameinput.removeAttribute("value")
 
   const newEntry = await createProduct(newDetails);
   
@@ -386,10 +414,9 @@ async function displayEditBox(searchID) {
   editUStatus.setAttribute("value", isUnion);
 
   const labelUName = document.createElement('label')
-  const editUName = document.createElement('input');
+  const editUName = document.createElement('select');
   editUName.setAttribute("id", "editUName");
-  editUName.setAttribute("type", "text");
-  editUName.setAttribute("value", unionName);
+  editUName.setAttribute("name", "unionName");
 
   const submitEdit = document.createElement('button')
   submitEdit.textContent = "Submit Edit"
@@ -410,9 +437,24 @@ async function displayEditBox(searchID) {
   editForm.appendChild(editUStatus);
   labelUStatus.textContent = "Union Status (Y/N): ";
 
+  const oldUName = document.createElement('p');
+  oldUName.textContent = `Union: ${unionName}`;
+  editForm.appendChild(oldUName);
+
   editForm.appendChild(labelUName);
   editForm.appendChild(editUName);
   labelUName.textContent = "Union Name: ";
+    for (const union of unionArray) {
+     const selection = union;
+      const option = document.createElement('option');
+      option.value = selection
+      option.text = selection
+      if (selection === unionName) {
+        option.setAttribute("selected", "selected");
+      }
+      editUName.appendChild(option);  
+    }
+
 
   editForm.appendChild(submitEdit);
 
@@ -426,7 +468,7 @@ async function displayEditBox(searchID) {
     let editedProduct = editProduct.value;
     let editedManu = editManu.value;
     let editedUStatus = editUStatus.value;
-    let editedUName = editUName.value;
+    let editedUName = editUName.options[editUName.selectedIndex].value;
 
     if (editedUStatus.toString().toUpperCase() === 'Y') { editedUStatus = true }
     if (editedUStatus.toString().toUpperCase() === 'N') { editedUStatus = false }
@@ -558,6 +600,11 @@ function parseTime(rawDate) {
 async function getUser(userId) {
   const results = await fetch(`/api/users/${userId}`);
   const json = await results.json();
-  console.log(json);
+  return json;
+}
+
+async function getUnions() {
+  const results = await fetch(`/api/unions/`);
+  const json = await results.json();
   return json;
 }

@@ -1,0 +1,74 @@
+[
+  {
+    "unionName": {
+      "properName": "AFL-CIO",
+      "nickName": "AFL-CIO"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Bakery, Confectionery, Tobacco Workers and Grain Millers International Union",
+      "nickName": "BCTGM"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Communications Workers of America",
+      "nickName": "CWA"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Farm Labor Organizing Committee",
+      "nickName": "FLOC"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "International Association of Machinists and Aerospace Workers",
+      "nickName": "IAM"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "International Association of Heat and Frost Insulators and Allied Workers",
+      "nickName": "HFIU"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Industrial Association of Sheet Metal, Air, Rail and Transportation Workers",
+      "nickName": "SMART"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Industrial Union of Bricklayers and Allied Craftworkers",
+      "nickName": "BAC"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "Laborers International Union of North America",
+      "nickName": "LIUNA"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "United Automobile, Aerospace & Agricultural Implement Workers of America ",
+      "nickName": "UAW"
+    }
+  },  
+  {
+    "unionName": {
+      "properName": "United Food and Commercial Workers",
+      "nickName": "UFCW"
+    }
+  },
+  {
+    "unionName": {
+      "properName": "United Steel, Paper and Forestry, Rubber, Manufacturing, Energy, Allied Industrial & Service Workers International Union",
+      "nickName": "USW"
+    }
+  }
+]

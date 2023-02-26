@@ -47,6 +47,14 @@ loginForm.addEventListener("submit", async (e) => {
   }
 })
 
+const unionList = await getUnions();
+const unionArray = []
+for (const union of unionList) {
+  unionArray.push(union.unionName.nickName);
+}
+unionArray.sort();
+console.log(unionArray);
+
 const signupContainer = document.getElementById("signupcontainer");
 const signupForm = document.getElementById("signupform");
 
@@ -55,10 +63,19 @@ const passwordInput = document.getElementById("password");
 const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.getElementById("lastName");
 const eMailInput = document.getElementById("eMail");
-const unionInput = document.getElementById("unionName");
+const unionSelect = document.getElementById("unionName");
 const localInput = document.getElementById('localName');
 const titleInput = document.getElementById('title'); 
-    
+
+unionSelect.innerHTML = "";
+
+for (const union of unionArray) {
+  const selection = union;
+  const option = document.createElement('option');
+  option.value = selection
+  option.text = selection
+  unionSelect.appendChild(option);  
+}
 
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -68,7 +85,7 @@ signupForm.addEventListener("submit", async (e) => {
   const firstName = firstNameInput.value;
   const lastName = lastNameInput.value;
   const eMail = eMailInput.value;
-  const unionName = unionInput.value;
+  const unionName = unionSelect.options[unionSelect.selectedIndex].value;
   const localName = localInput.value;
   const title = titleInput.value;
 
@@ -216,5 +233,11 @@ async function searchUsers(searchTerm) {
   const results = await fetch(`${baseUrl}${searchTerm}`);
   const json = await results.json();
   console.log(json);
+  return json;
+}
+
+async function getUnions() {
+  const results = await fetch(`/api/unions/`);
+  const json = await results.json();
   return json;
 }
