@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import Products from "../model.js"
+import Products from "../models/Products.js"
 import dummyData from "../dummy.json" assert {type: "json"};
 import testData from "../test.json" assert {type: 'json'};
 

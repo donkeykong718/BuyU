@@ -1,10 +1,36 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 // process.env.BARCODE_KEY;
 
+window.onload = localStorage.getItem("currentUser");
+// const currentUserID = localStorage.getItem("currentUser");
+// sessionStorage.setItem("currentUser", currentUserID);
+// localStorage.removeItem("currentUser");
+
+let currentUser = await getUser(localStorage.currentUser)
+console.log(currentUser);
+if (currentUser.length === 0) {
+  window.location.href = `http://localhost:3000/login.html`
+}
+else { currentUser = currentUser[0] };
+
+const { userName, firstName, lastName, unionName, localName, title } = currentUser;
+console.log(userName, firstName, lastName, unionName, localName, title);
+
+const loggedIn = document.getElementById('loggedin');
+loggedIn.textContent = `You are logged in as ${userName}`;
+
+const logout = document.getElementById("logout");
+
+logout.addEventListener("click", () => {
+  localStorage.removeItem("currentUser");
+  location.reload();
+})
+
+
 const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
 const barcodeURL = `${PROXY}/api.barcodelookup.com/v3/products?`
 
-const baseUrl = '/api/';
+const baseUrl = '/api/products/';
 
 const body = document.querySelector('body');
 
@@ -81,6 +107,9 @@ const newProductinput = document.getElementById('createProduct');
 const newManuinput = document.getElementById('createManu');
 const newUStatusinput = document.getElementById('createUStatus');
 const newUNameinput = document.getElementById('createUName');
+newUStatusinput.setAttribute("value", true);
+newUNameinput.setAttribute("value", unionName);
+
 
     // EMBEDDED SCANNER
 
@@ -178,7 +207,8 @@ createform.addEventListener(`submit`, async (e) => {
     "productName": newProduct,
     "manufacturer": newManu,
     "isUnion": newUStatus,
-    "unionName": newUName
+    "unionName": newUName,
+    "createdBy": userName
   };
 
   newUPCinput.removeAttribute("value")   
@@ -252,7 +282,7 @@ let hasButtons = true;
 };
 
 async function displayProduct(productList, hasButtons, display) {
-  const { UPC, productName, manufacturer, isUnion, unionName, createdAt, updatedAt } = productList
+  const { UPC, productName, manufacturer, isUnion, unionName, createdBy, updatedBy, createdAt, updatedAt } = productList
 
   const productCard = document.createElement('div');
   productCard.classList.add('productCard');
@@ -282,13 +312,13 @@ async function displayProduct(productList, hasButtons, display) {
 
   if (!(createdAt == undefined)) {
     const parsedCreate = parseTime(createdAt);
-    pCreated.textContent = `Entry created on: ${parsedCreate} EST`
+    pCreated.textContent = `Entry created by user ${createdBy} on: ${parsedCreate} EST`
     productCard.appendChild(pCreated)
   }
 
   if (!(updatedAt == undefined)) {
     const parsedUpdate = parseTime(updatedAt);
-    pUpdated.textContent = `Last update on: ${parsedUpdate} EST`
+    pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`
     productCard.appendChild(pUpdated); }
 
   if (hasButtons === true) {
@@ -415,7 +445,8 @@ async function displayEditBox(searchID) {
       "productName": editedProduct,
       "manufacturer": editedManu,
       "isUnion": editedUStatus,
-      "unionName": editedUName
+      "unionName": editedUName,
+      "updatedBy": userName
     };
 
     const requestOptions = {
@@ -523,3 +554,10 @@ function parseTime(rawDate) {
   const parsedDate = `${date} at ${time} ${amPM}`
   return parsedDate;
 };
+
+async function getUser(userId) {
+  const results = await fetch(`/api/users/${userId}`);
+  const json = await results.json();
+  console.log(json);
+  return json;
+}

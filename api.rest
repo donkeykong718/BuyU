@@ -1,4 +1,46 @@
-@url = http://localhost:8080
+@url = http://localhost:3000
+
+
+# @name CreateUnion
+POST {{url}}/unions/api
+Content-Type: application/json
+
+{
+  "unionName": {
+      "properName": "United Farm Workers",
+      "nickName": "UFW",
+    },
+   "locals":,
+    "industry": "Agriculture",
+    "website": "https://ufw.org",
+    "contactInfo":
+    {
+      "phone": {
+        "isTrue": true,
+        "details": 6618236105
+        },
+     " eMail": {
+        "isTrue": false,
+        "details":
+        },
+      "faxLOL": {
+        "isTrue": false,
+        "details": ,
+        },
+      "address": {
+        "isTrue": true,
+        "details": 
+          {"streetNumber": 220,
+          "street": "18th St",
+          "city": "Bakersfield",
+          "State": "CA",
+          "zip": 93301
+        }
+      }
+    },
+    "description":
+  }
+###
 
 # @name GetProducts
 

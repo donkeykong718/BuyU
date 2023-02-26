@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 // import lifecycle from './middleware/lifecycle.js'
-import router from '../routes.js'
+import router from '../routes/router.js'
 
 const app = express();
 app.use(express.json());
@@ -9,8 +9,8 @@ app.use(express.json());
 
 // app.use(lifecycle({
 //   async setup() {
-    mongoose.set('strictQuery', false)
-    mongoose.connect(process.env.DATABASE_URL)
+mongoose.set('strictQuery', false)
+mongoose.connect(process.env.DATABASE_URL)
 //   },
 //   async cleanup() {
 //     await mongoose.disconnect()

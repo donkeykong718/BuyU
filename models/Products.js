@@ -7,7 +7,9 @@ const productSchema = new mongoose.Schema(
     productName: String,
     manufacturer: String,
     isUnion: Boolean,
-    unionName: String
+    unionName: String,
+    createdBy: String,
+    updatedBy: String
   },
   {timestamps: true}
 )

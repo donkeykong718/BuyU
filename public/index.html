@@ -10,7 +10,16 @@
 </head>
 <body>
   
+  <nav>
+    <p id="loggedin"></p>
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./contact.html">Contact</a>
+    <a id="logout" href="./login.html">Log Out</a>
+  </nav>
+
 <div class="wrapper">
+  <div id="crudwrapper">
   <div id="crudcontainer" class="mobilehidden container">
     <header>CRUD Box</header>
     <a class="desktophidden" href="/">Return to Database</a>
@@ -55,10 +64,11 @@
         Manufacturer: <input id="searchManu" type="text"> 
         Union (Y/N)?: <input id="searchUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
         Union: <input id="searchUName" type="text"> 
-        <button>Click me to search</button>
+        <button>Click to search</button>
       </form>
     </div>
   </div>
+</div>
   
   <div id="selectcontainer" class="hidden container">
     <header id="selectheader"></header>
@@ -70,8 +80,7 @@
     <button id="crButton" class="desktophidden">Search Database or Add Entry</button>
     <div id="allproducts"></div>
   </div>
-
-</div>
+  </div>
 
     <!-- <div class="CRUDbox">
       <h3>Edit</h3>
