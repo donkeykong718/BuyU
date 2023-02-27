@@ -4,7 +4,7 @@ import unionData from "./unions.json" assert {type: "json"};
 
 // Leave these 4 lines
 //@ts-ignore
-mongoose.connect(DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL)
 mongoose.set('strictQuery', false);
 Unions.remove();
 Unions.insertMany(unionData);
