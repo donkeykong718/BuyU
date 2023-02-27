@@ -2,6 +2,22 @@
 
 window.onload = localStorage.getItem("currentUser");
 
+let currentPage = window.location.href;
+
+const homeIndex = document.getElementById('homeindex')
+const aboutIndex = document.getElementById('aboutindex')
+const contactIndex = document.getElementById('contactindex')
+
+if (homeIndex.href === currentPage) {
+  homeIndex.classList.add("active-page");
+}
+if (aboutIndex == currentPage) {
+  aboutIndex.classList.add("active-page");
+}
+if (contactIndex == currentPage) {
+  contactIndex.classList.add("active-page");
+}
+
 
 let currentUser = await getUser(localStorage.currentUser)
 console.log(currentUser);
@@ -23,10 +39,6 @@ logout.addEventListener("click", () => {
   location.reload();
 })
 
-
-const PROXY = 'https://cors-proxy-k7a5pa4az44r.runkit.sh'
-const barcodeURL = `${PROXY}/api.barcodelookup.com/v3/products?`
-
 const baseUrl = '/api/products/';
 
 const body = document.querySelector('body');
@@ -39,12 +51,14 @@ const selectContainer = document.getElementById('selectcontainer');
 const selectHeader = document.getElementById('selectheader');
 const selectProducts = document.getElementById('selectproducts');
 
-const crudContainer = document.getElementById('crudcontainer');
+const createContainer = document.getElementById('createcontainer');
 const crButton = document.getElementById('crButton');
+
+const editContainer = document.getElementById('editcontainer');
 
 crButton.addEventListener('click', () => {
   dbContainer.classList.add("hidden");
-  crudContainer.classList.remove("mobilehidden");
+  createContainer.classList.remove("mobilehidden");
 });
 
 const unionList = await getUnions();
@@ -65,7 +79,6 @@ const searchUPCinput = document.getElementById('searchupc');
 const searchStringinput = document.getElementById('searchstring');
 const searchUStatusselect = document.getElementById('searchstatus');
 const searchUNameselect = document.getElementById('searchunion');
-// searchUNameselect.innerHTML = "";
 
 let nullOption = document.createElement('option');
 nullOption.value = null;
@@ -115,7 +128,7 @@ searchform.addEventListener(`submit`, async (e) => {
   const resultProduct = await searchProducts(searchTerm);
 
   await displayProducts(resultProduct, "search");
-  crudContainer.classList.add("mobilehidden");
+  createContainer.classList.add("mobilehidden");
 
 })
 
@@ -198,11 +211,10 @@ scanButton.addEventListener('click', () => {
               
     //BARCODE SEARCH -- USE SPARINGLY 
                   
-            const scannedDetails = await barcodeSearch(result.text);
-            newProductinput.setAttribute("value", scannedDetails.productName)
-            newManuinput.setAttribute("value",scannedDetails.manufacturer)
-            console.log(result)
-            document.getElementById('result').textContent = result.text
+            // const scannedDetails = await barcodeSearch(result.text);
+            // newProductinput.setAttribute("value", scannedDetails.productName)
+            // newManuinput.setAttribute("value",scannedDetails.manufacturer)
+            // console.log(result)
         }
         if (err && !(err instanceof ZXing.NotFoundException)) {
               console.error(err)
@@ -258,12 +270,11 @@ createform.addEventListener(`submit`, async (e) => {
   newProductinput.removeAttribute("value")
   newManuinput.removeAttribute("value")
   newUStatusinput.removeAttribute("value")
-  // newUNameinput.removeAttribute("value")
 
   const newEntry = await createProduct(newDetails);
   
   await displayProducts(newEntry, "create");
-  crudContainer.classList.add("mobilehidden");
+  createContainer.classList.add("mobilehidden");
 
 })
 
@@ -387,78 +398,38 @@ async function displayProduct(productList, hasButtons, display) {
 
 async function displayEditBox(searchID) {
 
+  const editClose = document.getElementById('editclose');
+  editClose.addEventListener("click", () => { 
+    editContainer.classList.add("hidden")
+  })
+
   const updateProduct = await searchProducts(searchID);
   const { UPC, productName, manufacturer, isUnion, unionName } = updateProduct[0];
+  
+  window.scrollTo(0, 0);
 
-  selectContainer.classList.remove("hidden");
-  dbContainer.classList.add("hidden");
-
-  selectProducts.innerHTML = "";
-  selectHeader.textContent = "Edit Entry:"
-
-  const editBox = document.createElement(`div`);
-  editBox.classList.add("productCard");
-
-  const editForm = document.createElement('form');
-  editForm.setAttribute("id", "editform");
-
-  const labelUPC = document.createElement('label')
-  const editUPC = document.createElement('input');
-  editUPC.setAttribute("id", "editUPC");
-  editUPC.setAttribute("minlength", "12");
-  editUPC.setAttribute("maxlength", "12"); 
+  editContainer.classList.remove("hidden");
+  
+  const editBox = document.getElementById(`editbox`);
+  const editForm = document.getElementById('editform');
+  const editUPC = document.getElementById('editupc');
   editUPC.setAttribute("value", UPC)
 
-  const labelProduct = document.createElement('label')
-  const editProduct = document.createElement('input');
-  editProduct.setAttribute("id", "editProduct");
-  editProduct.setAttribute("type", "text");
+  const editProduct = document.getElementById('editproduct');
   editProduct.setAttribute("value", productName)
-  
-  const labelManu = document.createElement('label')
-  const editManu = document.createElement('input');
-  editManu.setAttribute("id", "editManu");
-  editManu.setAttribute("type", "text");
+  const editManu = document.getElementById('editmanu');
   editManu.setAttribute("value", manufacturer);
   
-  const labelUStatus = document.createElement('label')
-  const editUStatus = document.createElement('input');
-  editUStatus.setAttribute("id", "editUStatus");
-  editUStatus.setAttribute("type", "text");
-  editUStatus.setAttribute("pattern", "[Yy]|[Nn]|[Ff]alse|[Tt]rue")
+  const editUStatus = document.getElementById('editstatus');
   editUStatus.setAttribute("value", isUnion);
 
-  const labelUName = document.createElement('label')
-  const editUName = document.createElement('select');
-  editUName.setAttribute("id", "editUName");
-  editUName.setAttribute("name", "unionName");
+  const editUName = document.getElementById('editunion');
 
-  const submitEdit = document.createElement('button')
-  submitEdit.textContent = "Submit Edit"
+  // const oldUName = document.createElement('p');
+  
+  // oldUName.textContent = `Union: ${unionName}`;
+  // editForm.appendChild(oldUName);
 
-  editForm.appendChild(labelUPC);
-  editForm.appendChild(editUPC);
-  labelUPC.textContent = "UPC: ";
-
-  editForm.appendChild(labelProduct);
-  editForm.appendChild(editProduct);
-  labelProduct.textContent ="Product Name: ";
-
-  editForm.appendChild(labelManu);
-  editForm.appendChild(editManu);
-  labelManu.textContent = "Manufacturer: ";
-
-  editForm.appendChild(labelUStatus);
-  editForm.appendChild(editUStatus);
-  labelUStatus.textContent = "Union Status (Y/N): ";
-
-  const oldUName = document.createElement('p');
-  oldUName.textContent = `Union: ${unionName}`;
-  editForm.appendChild(oldUName);
-
-  editForm.appendChild(labelUName);
-  editForm.appendChild(editUName);
-  labelUName.textContent = "Union Name: ";
     for (const union of unionArray) {
      const selection = union;
       const option = document.createElement('option');
@@ -469,12 +440,6 @@ async function displayEditBox(searchID) {
       }
       editUName.appendChild(option);  
     }
-
-
-  editForm.appendChild(submitEdit);
-
-  editBox.appendChild(editForm);
-  selectProducts.appendChild(editBox);
 
   editForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -513,10 +478,7 @@ async function displayEditBox(searchID) {
     }
   
     await fetch(`${baseUrl}${searchID}`, requestOptions);
-
-    const updatedEntry = await searchProducts(searchID);
-
-    await displayProducts(updatedEntry, "edit");
+    editContainer.classList.add("hidden");
   })
 }
 
@@ -557,10 +519,10 @@ async function deleteProduct(deleteTerm) {
 
 async function barcodeSearch(barcode) {
   try {
-    // console.log('The barcode search has begun');
-    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&key=${process.env.BARCODE_KEY}`)
-    
+
+    const results = await fetch(`/api/scanner/${barcode}`)    
     const json = await results.json();
+
     const productData = json.products[0];
     const scannedUPC = productData.barcode_number;
     const scannedProduct = productData.title;
@@ -573,14 +535,6 @@ async function barcodeSearch(barcode) {
     };
 
     return scannedDetails;
-
-    // const { barcode_number, title, manufacturer } = productData;
-    // console.log("These are the destructured variables")
-    // console.log(barcode_number, title, manufacturer);    
-
-    // console.log("These are the scan variables")
-    // console.log(scannedUPC, scannedProduct, scannedManu);
-
   }
   catch (error) {
     console.error(error);

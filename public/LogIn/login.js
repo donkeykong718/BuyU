@@ -32,7 +32,7 @@ loginForm.addEventListener("submit", async (e) => {
   if (oldErrMsg) { oldErrMsg.parentNode.removeChild(oldErrMsg); }
 
   if (currentUser.length === 0) {
-        errMsg.textContent = "No user by that name was found. Please create an account."
+    errMsg.textContent = "No user by that name was found. Please create an account."
     loginContainer.appendChild(errMsg);
   }
   else {
@@ -70,7 +70,7 @@ const lastNameInput = document.getElementById("lastName");
 const eMailInput = document.getElementById("eMail");
 const unionSelect = document.getElementById("unionName");
 const localInput = document.getElementById('localName');
-const titleInput = document.getElementById('title'); 
+const titleInput = document.getElementById('title');
 
 unionSelect.innerHTML = "";
 
@@ -84,7 +84,7 @@ for (const union of unionArray) {
   const option = document.createElement('option');
   option.value = selection
   option.text = selection
-  unionSelect.appendChild(option);  
+  unionSelect.appendChild(option);
 }
 
 
@@ -112,19 +112,19 @@ signupForm.addEventListener("submit", async (e) => {
     localName: localName,
     title: title
   };
-  
+
   const duplicateUser = await searchUsers(userName);
   const duplicateEmail = await searchUsers(eMail);
   console.log(duplicateUser.length);
-  
+
   const oldErrMsg = document.querySelector('.errormsg');
-    if (oldErrMsg) { oldErrMsg.parentNode.removeChild(oldErrMsg); }
-    
+  if (oldErrMsg) { oldErrMsg.parentNode.removeChild(oldErrMsg); }
+
   if (duplicateUser.length > 0) {
-    
+
     const errMsg = document.createElement("p");
     errMsg.classList.add("errormsg");
-  
+
     errMsg.style.color = "red";
     errMsg.style.fontWeight = "bold";
     errMsg.textContent = "That username is already taken. Please try another.";
@@ -141,17 +141,17 @@ signupForm.addEventListener("submit", async (e) => {
 })
 
 async function createUser(userDetails) {
-  
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(userDetails)
-    }
-  
-    const results = await fetch('/api/users/', requestOptions);
-    const newUser = await results.json();
-    console.log(newUser);
-    return newUser;
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userDetails)
+  }
+
+  const results = await fetch('/api/users/', requestOptions);
+  const newUser = await results.json();
+  console.log(newUser);
+  return newUser;
 };
 
 async function displayUser(userDetails, confirmed) {
@@ -174,7 +174,7 @@ async function displayUser(userDetails, confirmed) {
     const userHeader = document.createElement('div');
     userHeader.textContent = "A new user has been created:"
     userCard.appendChild(userHeader);
-    
+
     const loginLink = document.createElement("a");
     loginLink.href = `/login.html`
     loginLink.textContent = "Click to Log-In"
@@ -228,17 +228,17 @@ async function displayUser(userDetails, confirmed) {
 
     confirmButton.addEventListener('click', async () => {
       const newUser = await createUser(userDetails);
-      await displayUser(newUser, true);      
+      await displayUser(newUser, true);
     });
 
     const editButton = document.createElement('button');
     editButton.textContent = `Edit`
     userCard.appendChild(editButton)
-  
-    editButton.addEventListener('click', async () => { 
+
+    editButton.addEventListener('click', async () => {
       displayContainer.classList.add("hidden");
-      signupContainer.classList.remove("hidden");    
-     })
+      signupContainer.classList.remove("hidden");
+    })
   }
 }
 
@@ -248,7 +248,7 @@ function parseTime(rawDate) {
   const hIndex = rawDate.indexOf(':');
 
   const date = rawDate.slice(0, (tIndex))
-  let time = rawDate.slice(tIndex + 1, zIndex); 
+  let time = rawDate.slice(tIndex + 1, zIndex);
   const hour = parseInt(rawDate.slice(tIndex + 1, hIndex));
   let estHour = hour - 5;
   let amPM = "AM";
@@ -260,10 +260,10 @@ function parseTime(rawDate) {
   else if (estHour = 12) {
     amPM = "PM"
   };
-time = time.replace(hour.toString(), estHour.toString());
+  time = time.replace(hour.toString(), estHour.toString());
 
-const parsedDate = `${date} at ${time} ${amPM}`
-return parsedDate;
+  const parsedDate = `${date} at ${time} ${amPM}`
+  return parsedDate;
 };
 
 async function searchUsers(searchTerm) {

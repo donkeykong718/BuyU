@@ -12,15 +12,21 @@
   <title>BuyU Log-In</title>
 </head>
 <body>
+  <div id="mainheader">
+    <p id="loggedin"></p>
+    <div id="navcontainer">
   <nav>
-    <a href="./index.html">Home</a>
-    <a href="./login.html">Log In</a>
-    <a href="./about.html">About</a>
-    <a href="./contact.html">Contact</a>
+    <!-- <img src="ulbl_logo.png" alt="Union Label logo" height="91px"> -->
+    <a id="homeindex" href="./index.html">Home</a>
+    <a id="aboutindex" href="./about.html">About</a>
+    <a id="contactindex" href="./contact.html">Contact</a>
+    <a id="logout" href="./login.html">Log Out</a>
   </nav>
+  </div>
+</div>
 
-  <div id="logincontainer">
-    <header>Log-In</header>
+  <div id="logincontainer" class="container">
+    <h3>Log-In</h3>
     <form id="loginform">
       <label>Username or E-mail: <input id="loginUser" type="text" required></label>
       <label>Password: <input id="loginPassword" type="text"></label>
@@ -29,8 +35,8 @@
     <button id="signupbutton">Create Account</button>
   </div>
 
-  <div id="signupcontainer" class="hidden">
-    <header>Sign-up</header>
+  <div id="signupcontainer" class="hidden container">
+    <h3>Sign-up</h3>
       <form id="signupform">
         <label>User Name: <input id="userName" type="text" required></label>
           <p style="color: red; font-size: small; font-style: italic;">required</p>

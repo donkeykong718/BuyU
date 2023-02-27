@@ -9,18 +9,26 @@
   <script src="index.js" defer type="module"></script>
 </head>
 <body>
-  
-  <nav>
+  <div id="mainheader">
     <p id="loggedin"></p>
-    <a href="./index.html">Home</a>
-    <a href="./about.html">About</a>
-    <a href="./contact.html">Contact</a>
+    <div id="navcontainer">
+  <nav>
+    <!-- <img src="ulbl_logo.png" alt="Union Label logo" height="91px"> -->
+    <a id="homeindex" href="./index.html">Home</a>
+    <a id="aboutindex" href="./about.html">About</a>
+    <a id="contactindex" href="./contact.html">Contact</a>
     <a id="logout" href="./login.html">Log Out</a>
   </nav>
+  </div>
+</div>
 
-  <div class="crudbox">
+<div class="wrapper">
+
+<div class="container">
+    <h3>Search</h3>
     <form id="searchform">
       <label for="searchType">Search by:</label>
+      <p style="color: red; font-size: small; font-style: italic;">required</p>
       <select name="searchType" id="searchtype">
         <option value="1">UPC</option>
         <option value="2">String</option>
@@ -39,21 +47,22 @@
       </select>
       <!-- <label for="unionNames">Union:</label> 
       <select name="unionName" id="searchunion"></select> -->
-      <button>Click to search</button>
+      <div><button>Click to search</button></div>
     </form>
+    <button id="crButton" class="desktophidden">Or create New Entry</button>
+    <a class="desktophidden" href="/">Return to Database</a>
+</div>
+
+  <div id="selectcontainer" class="hidden container">
+    <h3 id="selectheader"></h3>
+    <div id="selectproducts"></div>
   </div>
 
-<div class="wrapper">
-
-
-  <div id="crudwrapper">
-  <div id="crudcontainer" class="mobilehidden container">
-    <header>CRUD Box</header>
-    <a class="desktophidden" href="/">Return to Database</a>
-    <div class="crudbox">
+<div id="createcontainer" class="mobilehidden container">
+    <div class="container">
       <h3>Create</h3>
           <button id="scanbutton">Or click to scan barcode</button>
-            <section class="container hidden" id="scanner">  
+            <section class="hidden" id="scanner">  
               <div id="sourceSelectPanel" style="display:none">
                 <label for="sourceSelect">Change video source:</label>
                 <select id="sourceSelect" style="max-width:400px">
@@ -67,8 +76,6 @@
               <div id="message">
                 Code reader courtesy of ZXING (https://github.com/zxing-js/library)
               </div>
-                            <!-- <label>Result:</label>
-              <pre><code id="result"></code></pre> -->
             </section>
 
       <form id="createform">
@@ -79,20 +86,40 @@
         Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
         <label for="unionNames">Select a Union:</label> 
         <select name="unionName" id="createUName"></select>
+        <div>
         <button>Click to create</button>
+        </div>
       </form>
     </div>
-  </div>
 </div>
   
-  <div id="selectcontainer" class="hidden container">
-    <header id="selectheader"></header>
-    <div id="selectproducts"></div>
-  </div>
+<div id="editcontainer" class="hidden container">
+  <h3>Edit</h3>
+  <div id="editbox">
+    <form id="editform">
+      <label>UPC: 
+   <input id="editupc" minlength="12" maxlength="12" type="text"> 
+    </label>
+    <label>Product Name: 
+    <input id="editproduct" type="text"> 
+    </label>
+    <label>Manufacturer: 
+      <input id="editmanu" type="text"> 
+    </label>
+    <label>Union (Y/N)?: <input id="editstatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
+      </label>
+  <label for="unionNames">Select a Union:</label> 
+  <select name="unionName" id="editunion"></select>
+  <div><button>Submit Edit</button></div>
+</form>
+  <button class="closebutton" id='editclose'>Close</button>
+</div>
+</div>
+
+</div>
 
   <div id="dbcontainer" class="container">
-    <header id="dbheader">Database Display</header>
-    <button id="crButton" class="desktophidden">Search Database or Add Entry</button>
+    <h3 id="dbheader">Database Display</h3>
     <div id="allproducts"></div>
   </div>
   </div>
