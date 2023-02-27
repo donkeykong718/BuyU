@@ -198,11 +198,11 @@ scanButton.addEventListener('click', () => {
               
     //BARCODE SEARCH -- USE SPARINGLY 
                   
-            // const scannedDetails = await barcodeSearch(result.text);
-            // newProductinput.setAttribute("value", scannedDetails.productName)
-            // newManuinput.setAttribute("value",scannedDetails.manufacturer)
-            // console.log(result)
-            // document.getElementById('result').textContent = result.text
+            const scannedDetails = await barcodeSearch(result.text);
+            newProductinput.setAttribute("value", scannedDetails.productName)
+            newManuinput.setAttribute("value",scannedDetails.manufacturer)
+            console.log(result)
+            document.getElementById('result').textContent = result.text
         }
         if (err && !(err instanceof ZXing.NotFoundException)) {
               console.error(err)
@@ -558,7 +558,7 @@ async function deleteProduct(deleteTerm) {
 async function barcodeSearch(barcode) {
   try {
     // console.log('The barcode search has begun');
-    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&key=${barcodeKey}`)
+    const results = await fetch(`${barcodeURL}barcode=${barcode}&formatted=y&key=${process.env.BARCODE_KEY}`)
     
     const json = await results.json();
     const productData = json.products[0];

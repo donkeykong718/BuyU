@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import mongoose from 'mongoose'
 import Unions from "./models/Unions.js"
 import unionData from "./unions.json" assert {type: "json"};
@@ -6,10 +7,10 @@ import unionData from "./unions.json" assert {type: "json"};
 //@ts-ignore
 mongoose.connect(process.env.DATABASE_URL)
 mongoose.set('strictQuery', false);
-Unions.remove();
-Unions.insertMany(unionData);
+await seed();
+await mongoose.disconnect();
 
-// async function seed() {
-//   Unions.remove({});
-//   Unions.insertMany(unionData);
-// }
+async function seed() {
+  await Unions.remove({});
+  await Unions.insertMany(unionData);
+}
