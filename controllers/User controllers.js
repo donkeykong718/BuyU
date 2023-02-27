@@ -25,7 +25,7 @@ export const searchUsers = async (request, response) => {
         return user;
       }
       else {
-        const user = await Users.find({ $or: [{ userName: { $regex: searchTerm, $options: 'i' } }, {firstName: { $regex: searchTerm, $options: 'i' }}, { lastName: { $regex: searchTerm, $options: 'i' } }, { eMail: { $regex: searchTerm, $options: 'i' } }, { unionName: { $regex: searchTerm, $options: 'i' } }, { localName: { $regex: searchTerm, $options: 'i' } }, { title: { $regex: searchTerm, $options: 'i' } }] });
+        const user = await Users.find({ $or: [{ userName: searchTerm}, { eMail: searchTerm }] });
    
         return user;
       }

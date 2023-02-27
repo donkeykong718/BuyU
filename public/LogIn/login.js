@@ -9,6 +9,9 @@ const signupButton = document.getElementById('signupbutton')
 const loginUserInput = document.getElementById("loginUser");
 const loginPasswordInput = document.getElementById("loginPassword");
 
+const displayContainer = document.getElementById("displaycontainer");
+const signupContainer = document.getElementById("signupcontainer");
+
 signupButton.addEventListener("click", () => {
   loginContainer.classList.add("hidden");
   signupContainer.classList.remove("hidden");
@@ -22,11 +25,14 @@ loginForm.addEventListener("submit", async (e) => {
 
   const currentUser = await searchUsers(loginUser);
   const errMsg = document.createElement("p");
+  errMsg.classList.add("errormsg");
   errMsg.style.color = "red";
   errMsg.style.fontWeight = "bold";
+  const oldErrMsg = document.querySelector('.errormsg');
+  if (oldErrMsg) { oldErrMsg.parentNode.removeChild(oldErrMsg); }
 
   if (currentUser.length === 0) {
-    errMsg.textContent = "No user by that name was found. Please create an account."
+        errMsg.textContent = "No user by that name was found. Please create an account."
     loginContainer.appendChild(errMsg);
   }
   else {
@@ -55,7 +61,6 @@ for (const union of unionList) {
 unionArray.sort();
 console.log(unionArray);
 
-const signupContainer = document.getElementById("signupcontainer");
 const signupForm = document.getElementById("signupform");
 
 const userNameInput = document.getElementById("userName");
@@ -69,6 +74,11 @@ const titleInput = document.getElementById('title');
 
 unionSelect.innerHTML = "";
 
+const nullOption = document.createElement('option');
+nullOption.value = null;
+nullOption.text = "(None)";
+unionSelect.appendChild(nullOption);
+
 for (const union of unionArray) {
   const selection = union;
   const option = document.createElement('option');
@@ -76,6 +86,7 @@ for (const union of unionArray) {
   option.text = selection
   unionSelect.appendChild(option);  
 }
+
 
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -89,6 +100,8 @@ signupForm.addEventListener("submit", async (e) => {
   const localName = localInput.value;
   const title = titleInput.value;
 
+  console.log(`The unionName is ${unionName}`);
+
   const newDetails = {
     userName: userName,
     password: password,
@@ -101,12 +114,27 @@ signupForm.addEventListener("submit", async (e) => {
   };
   
   const duplicateUser = await searchUsers(userName);
+  const duplicateEmail = await searchUsers(eMail);
   console.log(duplicateUser.length);
+  
+  const oldErrMsg = document.querySelector('.errormsg');
+    if (oldErrMsg) { oldErrMsg.parentNode.removeChild(oldErrMsg); }
+    
   if (duplicateUser.length > 0) {
+    
     const errMsg = document.createElement("p");
+    errMsg.classList.add("errormsg");
+  
     errMsg.style.color = "red";
     errMsg.style.fontWeight = "bold";
     errMsg.textContent = "That username is already taken. Please try another.";
+    signupContainer.appendChild(errMsg);
+  }
+  else if (duplicateEmail.length > 0) {
+    const errMsg = document.createElement("p");
+    errMsg.style.color = "red";
+    errMsg.style.fontWeight = "bold";
+    errMsg.textContent = "An account with that e-mail already exists. Please try another.";
     signupContainer.appendChild(errMsg);
   }
   else await displayUser(newDetails, false);
@@ -128,11 +156,14 @@ async function createUser(userDetails) {
 
 async function displayUser(userDetails, confirmed) {
 
-  signupContainer.innerHTML = "";
+  signupContainer.classList.add("hidden");
+  displayContainer.innerHTML = "";
+  displayContainer.classList.remove("hidden");
+
 
   const userCard = document.createElement('div');
   userCard.classList.add('userCard');
-  signupContainer.appendChild(userCard);
+  displayContainer.appendChild(userCard);
 
   if (confirmed === true) {
     console.log(`Display User has started the second time`);
@@ -143,6 +174,11 @@ async function displayUser(userDetails, confirmed) {
     const userHeader = document.createElement('div');
     userHeader.textContent = "A new user has been created:"
     userCard.appendChild(userHeader);
+    
+    const loginLink = document.createElement("a");
+    loginLink.href = `http://localhost:3000/login.html`
+    loginLink.textContent = "Click to Log-In"
+    userCard.appendChild(loginLink);
   }
 
   const { userName, password, firstName, lastName, eMail, unionName, localName, title, createdAt, updatedAt } = userDetails
@@ -199,7 +235,10 @@ async function displayUser(userDetails, confirmed) {
     editButton.textContent = `Edit`
     userCard.appendChild(editButton)
   
-    editButton.addEventListener('click', async () => { await displayEditBox(objID) })
+    editButton.addEventListener('click', async () => { 
+      displayContainer.classList.add("hidden");
+      signupContainer.classList.remove("hidden");    
+     })
   }
 }
 
@@ -241,3 +280,4 @@ async function getUnions() {
   const json = await results.json();
   return json;
 }
+

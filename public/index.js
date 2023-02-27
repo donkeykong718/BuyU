@@ -1,5 +1,4 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
-// process.env.BARCODE_KEY;
 
 window.onload = localStorage.getItem("currentUser");
 
@@ -60,12 +59,17 @@ console.log(unionArray);
 
 const searchform = document.getElementById('searchform');
 
-const searchUPCinput = document.getElementById('searchUPC');
-const searchProductinput = document.getElementById('searchProduct');
-const searchManuinput = document.getElementById('searchManu');
-const searchUStatusinput = document.getElementById('searchUStatus');
-const searchUNameselect = document.getElementById('searchUName');
-searchUNameselect.innerHTML = "";
+const searchTypeselect = document.getElementById('searchtype');
+const searchUPCinput = document.getElementById('searchupc');
+const searchStringinput = document.getElementById('searchstring');
+const searchUStatusselect = document.getElementById('searchstatus');
+const searchUNameselect = document.getElementById('searchunion');
+// searchUNameselect.innerHTML = "";
+
+let nullOption = document.createElement('option');
+nullOption.value = null;
+nullOption.text = "(None)";
+searchUNameselect.appendChild(nullOption);
 
 for (const union of unionArray) {
   const selection = union;
@@ -79,37 +83,39 @@ searchform.addEventListener(`submit`, async (e) => {
   e.preventDefault();
   let searchTerm = undefined
 
+  const searchType = searchTypeselect.options[searchTypeselect.selectedIndex].value;
+
   const searchUPC = parseInt(searchUPCinput.value);
-  const searchProduct = searchProductinput.value;
-  const searchManu = searchManuinput.value;
-  let searchUStatus = searchUStatusinput.value;
-  let searchUName = searchUNameselect.options[searchUNameselect.selectedIndex].value;
+  const searchString = searchStringinput.value;
+  const searchUStatus = searchUStatusselect.options[searchUStatusselect.selectedIndex].value;
+  const searchUName = searchUNameselect.options[searchUNameselect.selectedIndex].value;
 
-  if (searchUStatus.toString().toUpperCase() == 'Y') { searchUStatus = true }
-  if (searchUStatus.toString().toUpperCase() == 'N') { searchUStatus = false }
+  console.log(searchUPC, searchString, searchUStatus, searchUName);
 
-  switch(false) {
-    case (isNaN(searchUPC)):
+  console.log(`The selected search type is ${ searchType }`)
+
+  switch(searchType) {
+    case ("1"):
       searchTerm = searchUPC;
       break;
-    case (searchProduct === ""):
-      searchTerm = searchProduct;
+    case ("2"):
+      searchTerm = searchString;
       break;
-    case (searchManu === ""):
-      searchTerm = searchManu;
-      break;
-    case (searchUStatus === ""):
-        searchTerm = searchUStatus;
-      break;
-    case (searchUName === ""):
+    case ("3"):
         searchTerm = searchUName;
+      break;
+    case ("4"):
+        searchTerm = searchUStatus;
         break;
   };
+
+  console.log(`The search term is ${searchTerm}`);
 
   const resultProduct = await searchProducts(searchTerm);
 
   await displayProducts(resultProduct, "search");
   crudContainer.classList.add("mobilehidden");
+
 })
 
 
@@ -126,6 +132,11 @@ const newUNameselect = document.getElementById('createUName');
 newUStatusinput.setAttribute("value", true);
 
 newUNameselect.innerHTML = "";
+
+nullOption = document.createElement('option');
+nullOption.value = null;
+nullOption.text = "(None)";
+newUNameselect.appendChild(nullOption);
 
 for (const union of unionArray) {
   const selection = union;
@@ -173,6 +184,7 @@ scanButton.addEventListener('click', () => {
   document.getElementById('startButton').addEventListener('click', () => {
       codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', async (result, err) => {
         if (result) {
+            createform.reset();
             newUPCinput.setAttribute("value", result);
             const video = document.getElementById("video");
             video.style.border = "5px solid lightgreen"
@@ -201,8 +213,10 @@ scanButton.addEventListener('click', () => {
   
       document.getElementById('resetButton').addEventListener('click', () => {
         codeReader.reset()
-        document.getElementById('result').textContent = '';
-        console.log('Reset.')
+        createform.reset();
+        video.style.border = "1px solid gray"
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerHTML = "";
       })
         
     })
@@ -259,46 +273,47 @@ await displayProducts(productList, "listDB");
 
 async function displayProducts(productList, method) {
 
-let hasButtons = true;
-
-  if (method === "listDB") {
-    const display = allProducts;
-    display.innerHTML = "";
-    selectContainer.classList.add("hidden")
-    dbContainer.classList.remove("hidden");
+  let hasButtons = true;
   
-    for (let i = 0; i < productList.length; i++) {
-      await displayProduct(productList[i], hasButtons, display)
-    }
-  }
-  else {
-    const display = selectProducts;
-    selectProducts.innerHTML = "";
-    selectContainer.classList.remove("hidden");
-    dbContainer.classList.add("hidden");   
-    
-    hasButtons = false;
-
-    switch (true) {
-      case (method === "search"):
-        selectHeader.textContent = "Search Results:"
-        hasButtons = true;
-        break;
-      case (method === "create"):
-        selectHeader.textContent = "New Entry Created:"
-         break;
-      case (method === "delete"):
-        selectHeader.textContent = "Deleted Entry:"
-        break;
-      case (method === "edit"):
-        selectHeader.textContent = "Updated Entry:"
-        break;
-    }
-
-    if (productList.length === undefined) { displayProduct(productList, hasButtons, display) }
-    else {
+  if (method === "listDB") {
+      const display = allProducts;
+      display.innerHTML = "";
+      selectContainer.classList.add("hidden")
+      dbContainer.classList.remove("hidden");
+  
       for (let i = 0; i < productList.length; i++) {
         await displayProduct(productList[i], hasButtons, display)
+      }
+    }
+    else {
+      const display = selectProducts;
+      selectProducts.innerHTML = "";
+      selectContainer.classList.remove("hidden");
+      dbContainer.classList.add("hidden");
+    
+      hasButtons = false;
+
+      switch (true) {
+        case (method === "search"):
+          selectHeader.textContent = `${productList.length} Search Results:`
+          hasButtons = true;
+          break;
+        case (method === "create"):
+          selectHeader.textContent = "New Entry Created:"
+          break;
+        case (method === "delete"):
+          selectHeader.textContent = "Deleted Entry:"
+          break;
+        case (method === "edit"):
+          selectHeader.textContent = "Updated Entry:"
+          break;
+      }
+
+      if (productList.length === undefined) { displayProduct(productList, hasButtons, display) }
+      else {
+        for (let i = 0; i < productList.length; i++) {
+          await displayProduct(productList[i], hasButtons, display)
+        }
       }
     }
 
@@ -306,7 +321,6 @@ let hasButtons = true;
     anchor.href = "/";
     anchor.textContent = "Return to Database"
     selectProducts.appendChild(anchor);
-  }
 };
 
 async function displayProduct(productList, hasButtons, display) {
