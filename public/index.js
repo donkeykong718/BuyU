@@ -2,10 +2,11 @@
 
 window.onload = localStorage.getItem("currentUser");
 
+
 let currentUser = await getUser(localStorage.currentUser)
 console.log(currentUser);
 if (currentUser.length === 0) {
-  window.location.href = `http://localhost:3000/login.html`
+  window.location.href = `/login.html`
 }
 else { currentUser = currentUser[0] };
 
