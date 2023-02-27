@@ -48,7 +48,7 @@ loginForm.addEventListener("submit", async (e) => {
       console.log(correctUser._id);
       localStorage.setItem("currentUser", correctUser._id)
       console.log("The password was correct");
-      window.location.href = `http://localhost:3000/index.html`
+      window.location.href = `/index.html`
     }
   }
 })
@@ -176,7 +176,7 @@ async function displayUser(userDetails, confirmed) {
     userCard.appendChild(userHeader);
     
     const loginLink = document.createElement("a");
-    loginLink.href = `http://localhost:3000/login.html`
+    loginLink.href = `/login.html`
     loginLink.textContent = "Click to Log-In"
     userCard.appendChild(loginLink);
   }
