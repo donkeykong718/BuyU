@@ -64,35 +64,36 @@ button{
   width: fit-content;
   padding: 20px;
   margin: 10px;
+  border-top: 8px solid #992121;
 }
 
 #editcontainer {
   z-index: 1;
   background-color: white;
   position: absolute;
-  border: 3px solid black;
+  border-top: 8px solid #992121;
   padding: 10px;
   min-width: fit-content;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+input, select {
+  display: block;
+  margin-bottom: 10px
+}
 
 #selectcontainer {
   width: fit-content;
 }
 
 #dbcontainer {
-  width: fit-content;
+  overflow-wrap: normal;
 }
 
 .productCard {
   border: solid black 2px;
   padding: 10px;
   margin: 2px;
-}
-
-.hidden {
-  display: none;
 }
 
 .mobilehidden {
@@ -121,6 +122,11 @@ label {
   display: contents;
  }
 
+ .hidden {
+  display: none;
+}
+
+
 /* LAPTOP DISPLAY OPTIONS */
 
 @media (min-width: 600px) {
@@ -129,7 +135,6 @@ label {
   flex-direction: row;
   justify-items: center;
   justify-content: space-evenly;
-  
 }
 
 #mainheader {
@@ -141,6 +146,11 @@ label {
   padding: 20px;
 }
 
+#dbcontainer {
+  max-width: 50vw;
+  overflow-wrap: normal;
+}
+
   .mobilehidden {
   display: contents; 
  }
@@ -148,4 +158,10 @@ label {
  .desktophidden{
   display: none;
  }
+
+ .hidden {
+  display: none;
+}
+
 } 
+

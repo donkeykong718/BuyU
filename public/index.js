@@ -211,10 +211,10 @@ scanButton.addEventListener('click', () => {
               
     //BARCODE SEARCH -- USE SPARINGLY 
                   
-            // const scannedDetails = await barcodeSearch(result.text);
-            // newProductinput.setAttribute("value", scannedDetails.productName)
-            // newManuinput.setAttribute("value",scannedDetails.manufacturer)
-            // console.log(result)
+            const scannedDetails = await barcodeSearch(result.text);
+            newProductinput.setAttribute("value", scannedDetails.productName)
+            newManuinput.setAttribute("value",scannedDetails.manufacturer)
+            console.log(result)
         }
         if (err && !(err instanceof ZXing.NotFoundException)) {
               console.error(err)
