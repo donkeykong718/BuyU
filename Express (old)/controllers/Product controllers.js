@@ -1,4 +1,4 @@
-import Products from "../models/Products.js"
+import Products from "../Express (old)/models/Products.js"
 import { isValidObjectId } from "mongoose";
 import { MultiFormatReader, BarcodeFormat } from '@zxing/library';
 
@@ -78,7 +78,7 @@ export const updateProduct = async (request, response) => {
 
     // if (isUnion == false) { unionName = "" };
 
-    const updateDetails = { productName, manufacturer, isUnion, unionName , updatedBy}
+    const updateDetails = { productName, manufacturer, isUnion, unionName, updatedBy }
 
     const updatedProduct = await Products.findByIdAndUpdate({ "_id": searchID }, updateDetails);
 

@@ -1,4 +1,4 @@
-import Unions from "../models/Unions.js"
+import Unions from "../Express (old)/models/Unions.js"
 import { isValidObjectId } from "mongoose";
 
 // {
@@ -27,7 +27,7 @@ export const searchUnions = async (request, response) => {
     const searchTerm = request.params.search;
 
     if (isNaN(searchTerm) === false) {
-      const union = await Unions.find({ $or:[{ phone: { details: searchTerm } },{ faxLOL: { details: searchTerm } } ]});
+      const union = await Unions.find({ $or: [{ phone: { details: searchTerm } }, { faxLOL: { details: searchTerm } }] });
       response.json(union);
     }
     else {
@@ -39,18 +39,18 @@ export const searchUnions = async (request, response) => {
 
       if (isValidObjectId(searchTerm) === true) {
         const union = await Unions
-      .find({ _id: searchTerm });
+          .find({ _id: searchTerm });
         return union;
       }
       else if (searchTerm === "true" || searchTerm === "false") {
         const union = await Unions
-          .find({ $or: [{ phone: { isTrue: searchTerm } },{ eMail: { isTrue: searchTerm } },{ faxLOL: { isTrue: searchTerm } },{ address: { isTrue: searchTerm } }] });
+          .find({ $or: [{ phone: { isTrue: searchTerm } }, { eMail: { isTrue: searchTerm } }, { faxLOL: { isTrue: searchTerm } }, { address: { isTrue: searchTerm } }] });
         return union;
       }
       else {
         const union = await Unions
           .find({
-            $or: [{ unionName: { properName: { $regex: searchTerm, $options: 'i' }}}, { unionName: { nickName: { $regex: searchTerm, $options: 'i' }}},{ industry: { $regex: searchTerm, $options: 'i' } }, { website: { $regex: searchTerm, $options: 'i' } }, { contactInfo: { eMail: { details: { $regex: searchTerm, $options: 'i' } } } }, { contactInfo: { address: { details: { $regex: searchTerm, $options: 'i' } } } }, { description: { $regex: searchTerm, $options: 'i' } }]
+            $or: [{ unionName: { properName: { $regex: searchTerm, $options: 'i' } } }, { unionName: { nickName: { $regex: searchTerm, $options: 'i' } } }, { industry: { $regex: searchTerm, $options: 'i' } }, { website: { $regex: searchTerm, $options: 'i' } }, { contactInfo: { eMail: { details: { $regex: searchTerm, $options: 'i' } } } }, { contactInfo: { address: { details: { $regex: searchTerm, $options: 'i' } } } }, { description: { $regex: searchTerm, $options: 'i' } }]
           });
         return union;
       }
@@ -69,14 +69,14 @@ export const createUnion = async (request, response) => {
     } = request.body;
 
     const newUnion = await Unions
-  .create({
-      unionName: unionName,
-      locals: locals,
-      industry: industry,
-      website: website,
-      contactInfo: contactInfo,
-      description:description
-    })
+      .create({
+        unionName: unionName,
+        locals: locals,
+        industry: industry,
+        website: website,
+        contactInfo: contactInfo,
+        description: description
+      })
     response.json(newUnion);
   }
   catch (error) {
@@ -93,10 +93,10 @@ export const updateUnion = async (request, response) => {
 
     // if (isUnion == false) { unionName = "" };
 
-    const updateDetails = { unionName, locals, industry, website, contactInfo, description  }
+    const updateDetails = { unionName, locals, industry, website, contactInfo, description }
 
     const updatedUnion = await Unions
-  .findByIdAndUpdate({ "_id": searchID }, updateDetails);
+      .findByIdAndUpdate({ "_id": searchID }, updateDetails);
 
     response.json(updatedUnion);
   }
@@ -111,7 +111,7 @@ export const deleteUnion = async (request, response) => {
     const objID = request.params.id;
     // console.log(`The object to delete is ${objID}`);
     const deletedUnion = await Unions
-  .findByIdAndDelete({ "_id": objID })
+      .findByIdAndDelete({ "_id": objID })
     response.json(deletedUnion);
   }
   catch (error) {

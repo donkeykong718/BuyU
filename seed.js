@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import mongoose from 'mongoose'
-import Unions from "./models/Unions.js"
+import Unions from "./Express (old)/models/Unions.js"
 import unionData from "./unions.json" assert {type: "json"};
 
 // Leave these 4 lines

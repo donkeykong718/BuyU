@@ -1,4 +1,4 @@
-import Users from "../models/Users.js"
+import Users from "../Express (old)/models/Users.js"
 import { isValidObjectId } from "mongoose";
 
 export const getUsers = async (request, response) => {
@@ -25,8 +25,8 @@ export const searchUsers = async (request, response) => {
         return user;
       }
       else {
-        const user = await Users.find({ $or: [{ userName: searchTerm}, { eMail: searchTerm }] });
-   
+        const user = await Users.find({ $or: [{ userName: searchTerm }, { eMail: searchTerm }] });
+
         return user;
       }
     };
@@ -80,7 +80,7 @@ export const updateUser = async (request, response) => {
 export const deleteUser = async (request, response) => {
   try {
     const objID = request.params.id;
-     const deletedUser = await Users.findByIdAndDelete({ "_id": objID })
+    const deletedUser = await Users.findByIdAndDelete({ "_id": objID })
     response.json(deletedUser);
   }
   catch (error) {

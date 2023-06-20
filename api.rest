@@ -1,5 +1,5 @@
-@url = http://localhost:3000
-
+@url = http://localhost:5000
+@py = http://127.0.0.1:5000
 
 # @name CreateUnion
 POST {{url}}/unions/api
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 # @name GetProducts
 
-GET {{url}}/
+GET {{py}}
 
 ###
 
@@ -54,16 +54,17 @@ GET {{url}}/{{productCode}}
 ###
 
 # @name CreateProduct
-POST {{url}}/
+POST {{py}}/products/
 Content-Type: application/json
 
-  {
+{
   "UPC": 887227816615,
   "productName": "New fake product",
   "manufacturer": "Union Shop",
   "isUnion": true,
   "unionName": "WGA"
 }
+
 ###
 
 # @name UpdateProject
