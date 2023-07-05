@@ -127,6 +127,11 @@ label {
   display: none;
 }
 
+/* .active {
+  font-weight: bold;
+  border: 2px solid green;
+} */
+
 /* LAPTOP DISPLAY OPTIONS */
 
 @media (min-width: 600px) {

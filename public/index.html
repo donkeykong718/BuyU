@@ -30,13 +30,14 @@
       <label for="searchType">Search by:</label>
       <p style="color: red; font-size: small; font-style: italic;">required</p>
       <select name="searchType" id="searchtype">
-        <option value="1">UPC</option>
-        <option value="2">String</option>
+        <option value="1">String</option>
+        <option value="2">UPC</option>
         <option value="3">Union Name</option>
         <option value="4">Union Status (Y/N)</option>
       </select>
-      <label>UPC (12-digit number): <input id="searchupc" minlength="12" maxlength="12"></label>
-      Search term: <input id="searchstring">
+    </label>
+    Search term: <input id="searchstring" class="active">
+      <label>UPC (12-digit number): <input id="searchupc" minlength="12" maxlength="12">
       <label for="unionNames">Union:</label> 
       <select name="unionName" id="searchunion"></select>
       <label for="unionStatus">Union status (Y/N):</label> 
