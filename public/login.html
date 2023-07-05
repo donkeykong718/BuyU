@@ -1,65 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BuyU Log-in</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./LogIn/login.css">
-  <!-- <script src="./index.js" defer type="module"></script> -->
-  <script src="./LogIn/login.js" defer type="module"></script>
-  <title>BuyU Log-In</title>
-</head>
-<body>
-  <div id="mainheader">
-    <p id="loggedin"></p>
-    <div id="navcontainer">
-      <img src="./ulbl_logo.png" alt="Union Label logo" height="91px">
-  <nav>
-    <!-- <img src="ulbl_logo.png" alt="Union Label logo" height="91px"> -->
-    <a id="homeindex" href="./index.html">Home</a>
-    <a id="aboutindex" href="./about.html">About</a>
-    <a id="contactindex" href="./contact.html">Contact</a>
-    <a id="logout" href="./login.html">Log Out</a>
-  </nav>
-  </div>
-</div>
-
-<main>
-  <div id="logincontainer" class="container">
-    <h3>Log-In</h3>
-    <form id="loginform">
-      <label>Username or E-mail: <input id="loginUser" type="text" required></label>
-      <label>Password: <input id="loginPassword" type="text"></label>
-      <button id="loginbutton">Click to login</button>
-    </form>
-    <button id="signupbutton">Create Account</button>
-  </div>
-
-  <div id="signupcontainer" class="hidden container">
-    <h3>Sign-up</h3>
-      <form id="signupform">
-        <label>User Name: <input id="userName" type="text" required></label>
-          <p style="color: red; font-size: small; font-style: italic;">required</p>
-        <label>Password: <input id="password" type="text" ></label>
-        <label>First Name:<input id="firstName" type="text" required></label> 
-          <p style="color: red; font-size: small; font-style: italic;">required</p>
-        <label>Last Name:<input id="lastName" type="text" required></label> 
-          <p style="color: red; font-size: small; font-style: italic;">required</p>
-        <label>E-mail:<input id="eMail" type="email"></label> 
-        <label for="unionName">Union:</label>
-        <p style="color: red; font-size: small; font-style: italic;">required</p>
-        <select id="unionName" name="unionName" required></select>
-        <label>Local:<input id="localName" type="text"></label> 
-        <label>Title/Role:<input id="title" type="text"></label> 
-  
-        <button>Click to signup</button>
-      </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BuyU Log-in</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./LogIn/login.css" />
+    <!-- <script src="./index.js" defer type="module"></script> -->
+    <script src="./LogIn/login.js" defer type="module"></script>
+    <title>BuyU Log-In</title>
+  </head>
+  <body>
+    <div id="mainheader">
+      <p id="loggedin"></p>
+      <div id="navcontainer">
+        <nav>
+          <!-- <img src="ulbl_logo.png" alt="Union Label logo" height="91px"> -->
+          <a id="homeindex" href="./index.html">Home</a>
+          <a id="aboutindex" href="./about.html">About</a>
+          <a id="contactindex" href="./contact.html">Contact</a>
+          <a id="logout" href="./login.html">Log Out</a>
+        </nav>
+      </div>
     </div>
 
-  </main>
+    <main>
+      <div id="logincontainer" class="container">
+        <h3>Log-In</h3>
+        <form id="loginform">
+          <label
+            >Username or E-mail: <input id="loginUser" type="text" required
+          /></label>
+          <label>Password: <input id="loginPassword" type="text" /></label>
+          <button id="loginbutton">Click to login</button>
+        </form>
+        <button id="signupbutton">Create Account</button>
+      </div>
 
-  <div id="displaycontainer" class="hidden"></div>
-</body>
+      <div id="signupcontainer" class="hidden container">
+        <h3>Sign-up</h3>
+        <form id="signupform">
+          <label>User Name: <input id="userName" type="text" required /></label>
+          <p style="color: red; font-size: small; font-style: italic">
+            required
+          </p>
+          <label>Password: <input id="password" type="text" /></label>
+          <label
+            >First Name:<input id="firstName" type="text" required
+          /></label>
+          <p style="color: red; font-size: small; font-style: italic">
+            required
+          </p>
+          <label>Last Name:<input id="lastName" type="text" required /></label>
+          <p style="color: red; font-size: small; font-style: italic">
+            required
+          </p>
+          <label>E-mail:<input id="eMail" type="email" /></label>
+          <label for="unionName">Union:</label>
+          <p style="color: red; font-size: small; font-style: italic">
+            required
+          </p>
+          <select id="unionName" name="unionName" required></select>
+          <label>Local:<input id="localName" type="text" /></label>
+          <label>Title/Role:<input id="title" type="text" /></label>
+
+          <button>Click to signup</button>
+        </form>
+      </div>
+    </main>
+
+    <div id="displaycontainer" class="hidden"></div>
+  </body>
 </html>

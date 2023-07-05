@@ -13,11 +13,10 @@ main {
 }
 
 #logincontainer {
-    margin: auto;
-    max-width: 33vw;
-    min-width: fit-content;
-    height: fit-content;
-    display: flex;
+  margin: auto;
+  max-width: 33vw;
+  min-width: fit-content;
+  height: fit-content;
 }
 
 #signupcontainer {
@@ -25,5 +24,6 @@ main {
   max-width: 33vw;
   min-width: fit-content;
   height: fit-content;
-  display: flex;
+  /* display: flex; */
+  display: hidden;
 }

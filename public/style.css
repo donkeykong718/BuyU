@@ -12,10 +12,10 @@ body {
 }
 
 #mainheader {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #992121;
   padding: 10px;
-    /* width: 100vw; */
+  /* width: 100vw; */
 }
 
 #navcontainer {
@@ -23,37 +23,37 @@ body {
 }
 
 a {
-  color: #FFFFFF99;
+  color: #ffffff99;
   text-decoration: none;
 }
 
 a:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: underline;
 }
 
-.active-page{
-  color: #FFFFFF;
+.active-page {
+  color: #ffffff;
   text-decoration: underline;
 }
 
 nav {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #992121;
   display: flex;
   justify-content: space-evenly;
 }
 
-button{
+button {
   min-width: 40px;
   padding: 2px 5px 2px 5px;
 }
 
-.wrapper{
+.wrapper {
   padding: 5px;
 }
 
-.container{
+.container {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px;
   border-radius: 5px;
   background-color: white;
@@ -77,9 +77,10 @@ button{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-input, select {
+input,
+select {
   display: block;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 #selectcontainer {
@@ -97,7 +98,7 @@ input, select {
 }
 
 .mobilehidden {
-   display: none;
+  display: none;
 }
 
 form {
@@ -120,48 +121,45 @@ label {
 
 .desktophidden {
   display: contents;
- }
-
- .hidden {
-  display: none;
 }
 
+.hidden {
+  display: none;
+}
 
 /* LAPTOP DISPLAY OPTIONS */
 
 @media (min-width: 600px) {
   .wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-items: center;
-  justify-content: space-evenly;
-}
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-evenly;
+  }
 
-#mainheader {
- font-size: 19px;
-}
+  #mainheader {
+    font-size: 19px;
+  }
 
-#navcontainer {
-  margin: 0px 44.25px;
-  padding: 20px;
-}
+  #navcontainer {
+    margin: 0px 44.25px;
+    padding: 20px;
+  }
 
-#dbcontainer {
-  max-width: 50vw;
-  overflow-wrap: normal;
-}
+  #dbcontainer {
+    max-width: 50vw;
+    overflow-wrap: normal;
+  }
 
   .mobilehidden {
-  display: contents; 
- }
+    display: contents;
+  }
 
- .desktophidden{
-  display: none;
- }
+  .desktophidden {
+    display: none;
+  }
 
- .hidden {
-  display: none;
+  .hidden {
+    display: none;
+  }
 }
-
-} 
-
