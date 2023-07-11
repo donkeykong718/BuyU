@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get("/", controllers.getUnions);
 router.get("/:search", controllers.searchUnions);
-router.post("/", verifyAuth, controllers.createUnion);
-router.patch("/:id", verifyAuth, controllers.updateUnion);
-router.delete("/:id", verifyAuth, controllers.deleteUnion);
+router.post("/", controllers.createUnion);
+router.patch("/:id", controllers.updateUnion);
+router.delete("/:id", controllers.deleteUnion);
 
 export default router;

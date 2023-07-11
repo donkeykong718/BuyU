@@ -86,5 +86,5 @@ export const userLogin = async (request, response) => {
   response.set("Content-Type", "application/json");
 
   // return the token
-  return response.json({ token });
+  return response.json({ user, token });
 };

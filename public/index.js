@@ -1,6 +1,9 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 
-window.onload = localStorage.getItem("currentUser");
+window.onload = localStorage.getItem("token");
+if (localStorage.getItem("token") === null) {
+  window.location.href = `/login.html`;
+}
 
 let currentPage = window.location.href;
 
@@ -18,25 +21,28 @@ if (contactIndex == currentPage) {
   contactIndex.classList.add("active-page");
 }
 
-let currentUser = await getUser(localStorage.currentUser);
-console.log(currentUser);
-if (currentUser.length === 0) {
-  window.location.href = `/login.html`;
-} else {
-  currentUser = currentUser[0];
-}
+let activeName = localStorage.getItem("user");
+
+let currentUser = await getUser(activeName);
+// console.log(currentUser);
+// if (currentUser.length === 0) {
+//   window.location.href = `/login.html`;
+// } else {
+//   currentUser = currentUser[0];
+// }
 
 const { userName, firstName, lastName, unionName, localName, title } =
   currentUser;
 console.log(userName, firstName, lastName, unionName, localName, title);
 
 const loggedIn = document.getElementById("loggedin");
-loggedIn.textContent = `You are logged in as ${userName}`;
+loggedIn.textContent = `You are logged in as ${activeName}`;
 
 const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
-  localStorage.removeItem("currentUser");
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
   location.reload();
 });
 

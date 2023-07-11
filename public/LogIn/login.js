@@ -25,8 +25,7 @@ loginForm.addEventListener("submit", async (e) => {
 
   console.log(`Username: ` + loginUser + " and password: " + loginPassword);
 
-  const currentUser = await userLogin(loginUser, loginPassword);
-  console.log("The currentUser is" + currentUser);
+  userLogin(loginUser, loginPassword);
 
   // const currentUser = await searchUsers(loginUser);
   // const errMsg = document.createElement("p");
@@ -119,7 +118,7 @@ signupForm.addEventListener("submit", async (e) => {
   };
 
   const duplicateUser = await searchUsers(userName);
-  const duplicateEmail = await searchUsers(eMail);
+  // const duplicateEmail = await searchUsers(eMail);
   console.log(duplicateUser.length);
 
   const oldErrMsg = document.querySelector(".errormsg");
@@ -135,14 +134,16 @@ signupForm.addEventListener("submit", async (e) => {
     errMsg.style.fontWeight = "bold";
     errMsg.textContent = "That username is already taken. Please try another.";
     signupContainer.appendChild(errMsg);
-  } else if (duplicateEmail.length > 0) {
-    const errMsg = document.createElement("p");
-    errMsg.style.color = "red";
-    errMsg.style.fontWeight = "bold";
-    errMsg.textContent =
-      "An account with that e-mail already exists. Please try another.";
-    signupContainer.appendChild(errMsg);
-  } else await displayUser(newDetails, false);
+  }
+  // else if (duplicateEmail.length > 0) {
+  //   const errMsg = document.createElement("p");
+  //   errMsg.style.color = "red";
+  //   errMsg.style.fontWeight = "bold";
+  //   errMsg.textContent =
+  //     "An account with that e-mail already exists. Please try another.";
+  //   signupContainer.appendChild(errMsg);
+  // }
+  else await displayUser(newDetails, false);
 });
 
 async function createUser(userDetails) {
@@ -304,10 +305,15 @@ async function userLogin(username, password) {
 
       // Extract the token from the response data
       const token = data.token;
+      const authUser = data.user;
+
       console.log("The token is: " + token);
+      console.log("The authorized User is: ");
+      console.log(authUser);
 
       localStorage.setItem("token", token);
-      return data;
+      localStorage.setItem("user", authUser.userName);
+      window.location.href = `/index.html`;
 
       // Further processing or actions with the token
       // ...

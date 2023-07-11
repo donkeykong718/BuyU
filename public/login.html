@@ -31,42 +31,92 @@
         <h3>Log-In</h3>
         <form id="loginform">
           <label
-            >Username or E-mail: <input id="loginUser" type="text" required
+            >Username or E-mail: <input id="loginUser" type="text" value="Demo" required
           /></label>
-          <label>Password: <input id="loginPassword" type="text" /></label>
-          <button id="loginbutton">Click to login</button>
+          <label>Password: <input id="loginPassword" type="password" value="demo"/></label>
+          <button id="loginbutton">Click to Log-In</button>
         </form>
         <button id="signupbutton">Create Account</button>
       </div>
 
       <div id="signupcontainer" class="hidden container">
-        <h3>Sign-up</h3>
+        <h3 style="margin-bottom: 10px">Sign-Up</h3>
         <form id="signupform">
-          <label>User Name: <input id="userName" type="text" required /></label>
-          <p style="color: red; font-size: small; font-style: italic">
-            required
-          </p>
-          <label>Password: <input id="password" type="text" /></label>
+          <div style="grid-column-start: 1">
+            <label
+              >User Name: <input id="userName" type="text" required
+            /></label>
+            <p
+              style="
+                color: red;
+                font-size: small;
+                font-style: italic;
+                margin-top: -10px;
+              "
+            >
+              required
+            </p>
+          </div>
+          <div style="grid-column-start: 2">
+            <label
+              >Password: <input id="password" type="text" required
+            /></label>
+            <p
+              style="
+                color: red;
+                font-size: small;
+                font-style: italic;
+                margin-top: -10px;
+              "
+            >
+              required
+            </p>
+          </div>
+          <div style="grid-column-start: 1">
+            <label>First Name:<input id="firstName" type="text" /></label>
+          </div>
+          <div style="grid-column-start: 2">
+            <label
+              >Last Name:<input id="lastName" type="text"             /></label>
+            </p>
+          </div>
           <label
-            >First Name:<input id="firstName" type="text" required
+            >E-mail:<input style="grid-column-start: 1" id="eMail" type="email"
           /></label>
-          <p style="color: red; font-size: small; font-style: italic">
-            required
-          </p>
-          <label>Last Name:<input id="lastName" type="text" required /></label>
-          <p style="color: red; font-size: small; font-style: italic">
-            required
-          </p>
-          <label>E-mail:<input id="eMail" type="email" /></label>
+          <div             style="grid-column-start: 2"
+          >
           <label for="unionName">Union:</label>
-          <p style="color: red; font-size: small; font-style: italic">
+          <select
+            id="unionName"
+            name="unionName"
             required
-          </p>
-          <select id="unionName" name="unionName" required></select>
-          <label>Local:<input id="localName" type="text" /></label>
-          <label>Title/Role:<input id="title" type="text" /></label>
-
+          ></select>
+          <p
+          style="
+            color: red;
+            font-size: small;
+            font-style: italic;
+            margin-top: -10px;
+          "
+        >
+          required
+        </p>
+</div>
+          <label
+            >Local:<input
+              style="grid-column-start: 1"
+              id="localName"
+              type="text"
+          /></label>
+          <label
+            >Title/Role:<input
+              style="grid-column-start: 2"
+              id="title"
+              type="text"
+          /></label>
+      <div style="grid-column-start: 1; grid-column-end: 2;">
           <button>Click to signup</button>
+        </div>
         </form>
       </div>
     </main>
