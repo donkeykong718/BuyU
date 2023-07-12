@@ -57,10 +57,7 @@ loggedIn.textContent = `You are logged in as ${activeName}`;
 const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
-  sessionStorage.removeItem("user");
-  localStorage.removeItem("user");
-  sessionStorage.removeItem("token");
-  localStorage.removeItem("token");
+  sessionStorage.clear();
   location.reload();
 });
 

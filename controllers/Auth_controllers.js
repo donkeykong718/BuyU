@@ -43,7 +43,7 @@ export const createUser = async (request, response) => {
 
     const data = {
       id: newUser._id,
-      username: newUser.userName,
+      user: newUser,
       exp: getExpiration(),
     };
 
@@ -80,7 +80,7 @@ export const userLogin = async (request, response) => {
 
   const data = {
     id: user._id,
-    userName: user.userName,
+    user: user,
     exp: getExpiration(),
   };
 

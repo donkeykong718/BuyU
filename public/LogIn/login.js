@@ -9,12 +9,19 @@ const signupButton = document.getElementById("signupbutton");
 const loginUserInput = document.getElementById("loginUser");
 const loginPasswordInput = document.getElementById("loginPassword");
 
+const back2Login = document.getElementById("back2Login");
+
 const displayContainer = document.getElementById("displaycontainer");
 const signupContainer = document.getElementById("signupcontainer");
 
 signupButton.addEventListener("click", () => {
   loginContainer.classList.add("hidden");
   signupContainer.classList.remove("hidden");
+});
+
+back2Login.addEventListener("click", () => {
+  loginContainer.classList.remove("hidden");
+  signupContainer.classList.add("hidden");
 });
 
 loginForm.addEventListener("submit", async (e) => {
@@ -145,16 +152,18 @@ async function createUser(userDetails) {
       }
 
       // Extract the token from the response data
-      const token = data.token;
-      const authUser = data.newUser;
+      else {
+        const token = data.token;
+        const authUser = data.newUser;
 
-      console.log("The token is: " + token);
-      console.log("The authorized User is: ");
-      console.log(authUser);
+        console.log("The token is: " + token);
+        console.log("The authorized User is: ");
+        console.log(authUser);
 
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", authUser.userName);
-      window.location.href = `/index.html`;
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("user", authUser.userName);
+        window.location.href = `/index.html`;
+      }
 
       // Further processing or actions with the token
       // ...
@@ -356,16 +365,18 @@ async function userLogin(username, password) {
       // }
 
       // Extract the token from the response data
-      const token = data.token;
-      const authUser = data.user;
+      else {
+        const token = data.token;
+        const authUser = data.user;
 
-      console.log("The token is: " + token);
-      console.log("The authorized User is: ");
-      console.log(authUser);
+        console.log("The token is: " + token);
+        console.log("The authorized User is: ");
+        console.log(authUser);
 
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", authUser.userName);
-      window.location.href = `/index.html`;
+        sessionStorage.setItem("token", token);
+        sessionStorage.setItem("user", authUser.userName);
+        window.location.href = `/index.html`;
+      }
 
       // Further processing or actions with the token
       // ...
