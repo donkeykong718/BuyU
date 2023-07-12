@@ -1,9 +1,15 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 
-window.onload = localStorage.getItem("token");
-if (localStorage.getItem("token") === null) {
+window.onload = sessionStorage.getItem("token");
+if (sessionStorage.getItem("token") === null) {
   window.location.href = `/login.html`;
 }
+
+// addEventListener("unload", (event) => {
+//   console.log("Unloading");
+//   sessionStorage.removeItem("user");
+//   sessionStorage.removeItem("token");
+// });
 
 let currentPage = window.location.href;
 
@@ -21,7 +27,7 @@ if (contactIndex == currentPage) {
   contactIndex.classList.add("active-page");
 }
 
-let activeName = localStorage.getItem("user");
+let activeName = sessionStorage.getItem("user");
 
 let currentUser = await getUser(activeName);
 // console.log(currentUser);
@@ -41,7 +47,9 @@ loggedIn.textContent = `You are logged in as ${activeName}`;
 const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
+  sessionStorage.removeItem("user");
   localStorage.removeItem("user");
+  sessionStorage.removeItem("token");
   localStorage.removeItem("token");
   location.reload();
 });

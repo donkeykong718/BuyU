@@ -90,10 +90,10 @@ signupForm.addEventListener("submit", async (e) => {
 
   searchUsers(newDetails.userName)
     .then((checkUser) => {
-      if (checkUser.message) {
+      if (checkUser.message || checkUser.length === 0) {
         console.log(checkUser.message);
         createUser(newDetails);
-      } else if (checkUser.length >= 0) {
+      } else if (checkUser.length > 0) {
         console.log(checkUser);
         const errMsg = document.createElement("p");
         errMsg.classList.add("errormsg");
@@ -152,8 +152,8 @@ async function createUser(userDetails) {
       console.log("The authorized User is: ");
       console.log(authUser);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", authUser.userName);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", authUser.userName);
       window.location.href = `/index.html`;
 
       // Further processing or actions with the token
@@ -363,8 +363,8 @@ async function userLogin(username, password) {
       console.log("The authorized User is: ");
       console.log(authUser);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", authUser.userName);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", authUser.userName);
       window.location.href = `/index.html`;
 
       // Further processing or actions with the token
