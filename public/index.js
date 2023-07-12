@@ -1,8 +1,18 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 
+let loaded = false;
+
 window.onload = sessionStorage.getItem("token");
 if (sessionStorage.getItem("token") === null) {
   window.location.href = `/login.html`;
+} else {
+  loaded = true;
+}
+
+const wrapper = document.getElementsByClassName("wrapper")[0];
+
+if (loaded) {
+  wrapper.classList.remove("hidden");
 }
 
 // addEventListener("unload", (event) => {
