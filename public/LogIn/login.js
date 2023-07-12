@@ -25,37 +25,8 @@ loginForm.addEventListener("submit", async (e) => {
 
   console.log(`Username: ` + loginUser + " and password: " + loginPassword);
 
-  userLogin(loginUser, loginPassword);
-
-  // const currentUser = await searchUsers(loginUser);
-  // const errMsg = document.createElement("p");
-  // errMsg.classList.add("errormsg");
-  // errMsg.style.color = "red";
-  // errMsg.style.fontWeight = "bold";
-  // const oldErrMsg = document.querySelector(".errormsg");
-  // if (oldErrMsg) {
-  //   oldErrMsg.parentNode.removeChild(oldErrMsg);
-  // }
-
-  // if (currentUser.length === 0) {
-  //   errMsg.textContent =
-  //     "No user by that name was found. Please create an account.";
-  //   loginContainer.appendChild(errMsg);
-  // } else {
-  //   const correctUser = currentUser[0];
-  // console.log(correctUser);
-  // let correctPassword = correctUser.password;
-  // console.log(correctPassword);
-  // if (loginPassword != correctPassword) {
-  //   errMsg.textContent = "Password is incorrect. Please try again.";
-  //   loginContainer.appendChild(errMsg);
-  // } else {
-  //   console.log(correctUser._id);
-  //   localStorage.setItem("currentUser", correctUser._id);
-  //   console.log("The password was correct");
-  //   window.location.href = `/index.html`;
-  // }
-  // }
+  const message = await userLogin(loginUser, loginPassword);
+  console.log("The returned message is: " + message);
 });
 
 const unionList = await getUnions();
@@ -118,34 +89,6 @@ signupForm.addEventListener("submit", async (e) => {
   };
 
   createUser(newDetails);
-
-  // const duplicateUser = await searchUsers(userName);
-  // const duplicateEmail = await searchUsers(eMail);
-  // console.log(duplicateUser.length);
-
-  // const oldErrMsg = document.querySelector(".errormsg");
-  // if (oldErrMsg) {
-  //   oldErrMsg.parentNode.removeChild(oldErrMsg);
-  // }
-
-  // if (duplicateUser.length > 0) {
-  //   const errMsg = document.createElement("p");
-  //   errMsg.classList.add("errormsg");
-
-  //   errMsg.style.color = "red";
-  //   errMsg.style.fontWeight = "bold";
-  //   errMsg.textContent = "That username is already taken. Please try another.";
-  //   signupContainer.appendChild(errMsg);
-  // }
-  // else if (duplicateEmail.length > 0) {
-  //   const errMsg = document.createElement("p");
-  //   errMsg.style.color = "red";
-  //   errMsg.style.fontWeight = "bold";
-  //   errMsg.textContent =
-  //     "An account with that e-mail already exists. Please try another.";
-  //   signupContainer.appendChild(errMsg);
-  // }
-  // else await displayUser(newDetails, false);
 });
 
 async function createUser(userDetails) {
@@ -330,6 +273,51 @@ async function userLogin(username, password) {
     .then((data) => {
       console.log("The response data is:");
       console.log(data);
+
+      if (data.message) {
+        console.log(data.message);
+
+        const errMsg = document.createElement("p");
+        errMsg.classList.add("errormsg");
+        errMsg.style.color = "red";
+        errMsg.style.fontWeight = "bold";
+        const oldErrMsg = document.querySelector(".errormsg");
+        if (oldErrMsg) {
+          oldErrMsg.parentNode.removeChild(oldErrMsg);
+        }
+        errMsg.textContent = data.message;
+        loginContainer.appendChild(errMsg);
+      }
+
+      // const currentUser = await searchUsers(loginUser);
+      // const errMsg = document.createElement("p");
+      // errMsg.classList.add("errormsg");
+      // errMsg.style.color = "red";
+      // errMsg.style.fontWeight = "bold";
+      // const oldErrMsg = document.querySelector(".errormsg");
+      // if (oldErrMsg) {
+      //   oldErrMsg.parentNode.removeChild(oldErrMsg);
+      // }
+
+      // if (currentUser.length === 0) {
+      //   errMsg.textContent =
+      //     "No user by that name was found. Please create an account.";
+      //   loginContainer.appendChild(errMsg);
+      // } else {
+      //   const correctUser = currentUser[0];
+      // console.log(correctUser);
+      // let correctPassword = correctUser.password;
+      // console.log(correctPassword);
+      // if (loginPassword != correctPassword) {
+      //   errMsg.textContent = "Password is incorrect. Please try again.";
+      //   loginContainer.appendChild(errMsg);
+      // } else {
+      //   console.log(correctUser._id);
+      //   localStorage.setItem("currentUser", correctUser._id);
+      //   console.log("The password was correct");
+      //   window.location.href = `/index.html`;
+      // }
+      // }
 
       // Extract the token from the response data
       const token = data.token;

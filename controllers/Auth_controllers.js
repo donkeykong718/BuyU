@@ -43,7 +43,7 @@ export const createUser = async (request, response) => {
 
     const data = {
       id: newUser._id,
-      userName: newUser.userName,
+      username: newUser.userName,
       exp: getExpiration(),
     };
 
@@ -62,6 +62,11 @@ export const userLogin = async (request, response) => {
   console.log(username + " + " + password);
   const user = await User.findOne({ userName: username });
   console.log(user);
+  if (!user) {
+    return response
+      .status(500)
+      .json({ message: "No user found. Create an account." });
+  }
   const hash = user.hash;
 
   const result = await bcrypt.compare(password, hash);
