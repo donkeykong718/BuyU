@@ -41,7 +41,7 @@ export const searchUsers = async (request, response) => {
     }
   } catch (error) {
     console.error(error);
-    response.status(500).json("Error message");
+    response.status(500).json({ message: "Error message." });
   }
 };
 

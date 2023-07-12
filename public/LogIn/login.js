@@ -88,7 +88,28 @@ signupForm.addEventListener("submit", async (e) => {
     title: title,
   };
 
-  createUser(newDetails);
+  searchUsers(newDetails.userName)
+    .then((checkUser) => {
+      if (checkUser.message) {
+        console.log(checkUser.message);
+        createUser(newDetails);
+      } else if (checkUser.length >= 0) {
+        console.log(checkUser);
+        const errMsg = document.createElement("p");
+        errMsg.classList.add("errormsg");
+        errMsg.style.color = "red";
+        errMsg.style.fontWeight = "bold";
+        const oldErrMsg = document.querySelector(".errormsg");
+        if (oldErrMsg) {
+          oldErrMsg.parentNode.removeChild(oldErrMsg);
+        }
+        errMsg.textContent = "An account with that username already exists.";
+        signupContainer.appendChild(errMsg);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 async function createUser(userDetails) {
@@ -107,6 +128,21 @@ async function createUser(userDetails) {
     .then((data) => {
       console.log("The response data is:");
       console.log(data);
+
+      if (data.message) {
+        console.log(data.message);
+
+        const errMsg = document.createElement("p");
+        errMsg.classList.add("errormsg");
+        errMsg.style.color = "red";
+        errMsg.style.fontWeight = "bold";
+        const oldErrMsg = document.querySelector(".errormsg");
+        if (oldErrMsg) {
+          oldErrMsg.parentNode.removeChild(oldErrMsg);
+        }
+        errMsg.textContent = data.message;
+        loginContainer.appendChild(errMsg);
+      }
 
       // Extract the token from the response data
       const token = data.token;

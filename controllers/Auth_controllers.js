@@ -52,7 +52,7 @@ export const createUser = async (request, response) => {
     return response.json({ newUser, token });
   } catch (error) {
     console.error(error);
-    response.status(500).json("Error message");
+    response.status(500).json({ message: "Error message." });
   }
 };
 
@@ -74,7 +74,7 @@ export const userLogin = async (request, response) => {
 
   if (!result) {
     return response.status(401).json({
-      message: "Incorrect password",
+      message: "Incorrect password. Try again.",
     });
   }
 
