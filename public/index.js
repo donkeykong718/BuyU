@@ -604,7 +604,8 @@ function parseTime(rawDate) {
 async function getUser(userId) {
   const results = await fetch(`/api/users/${userId}`);
   const json = await results.json();
-  return json;
+  console.log(json[0]);
+  return json[0];
 }
 
 async function getUnions() {

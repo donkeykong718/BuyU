@@ -117,24 +117,26 @@ signupForm.addEventListener("submit", async (e) => {
     title: title,
   };
 
-  const duplicateUser = await searchUsers(userName);
+  createUser(newDetails);
+
+  // const duplicateUser = await searchUsers(userName);
   // const duplicateEmail = await searchUsers(eMail);
-  console.log(duplicateUser.length);
+  // console.log(duplicateUser.length);
 
-  const oldErrMsg = document.querySelector(".errormsg");
-  if (oldErrMsg) {
-    oldErrMsg.parentNode.removeChild(oldErrMsg);
-  }
+  // const oldErrMsg = document.querySelector(".errormsg");
+  // if (oldErrMsg) {
+  //   oldErrMsg.parentNode.removeChild(oldErrMsg);
+  // }
 
-  if (duplicateUser.length > 0) {
-    const errMsg = document.createElement("p");
-    errMsg.classList.add("errormsg");
+  // if (duplicateUser.length > 0) {
+  //   const errMsg = document.createElement("p");
+  //   errMsg.classList.add("errormsg");
 
-    errMsg.style.color = "red";
-    errMsg.style.fontWeight = "bold";
-    errMsg.textContent = "That username is already taken. Please try another.";
-    signupContainer.appendChild(errMsg);
-  }
+  //   errMsg.style.color = "red";
+  //   errMsg.style.fontWeight = "bold";
+  //   errMsg.textContent = "That username is already taken. Please try another.";
+  //   signupContainer.appendChild(errMsg);
+  // }
   // else if (duplicateEmail.length > 0) {
   //   const errMsg = document.createElement("p");
   //   errMsg.style.color = "red";
@@ -143,7 +145,7 @@ signupForm.addEventListener("submit", async (e) => {
   //     "An account with that e-mail already exists. Please try another.";
   //   signupContainer.appendChild(errMsg);
   // }
-  else await displayUser(newDetails, false);
+  // else await displayUser(newDetails, false);
 });
 
 async function createUser(userDetails) {
@@ -153,10 +155,36 @@ async function createUser(userDetails) {
     body: JSON.stringify(userDetails),
   };
 
-  const results = await fetch("/api/auth/signup", requestOptions);
-  const newUser = await results.json();
-  console.log(newUser);
-  return newUser;
+  // const results = await fetch("/api/auth/signup", requestOptions);
+  // const newUser = await results.json();
+  // console.log(newUser);
+
+  fetch("/api/auth/signup", requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("The response data is:");
+      console.log(data);
+
+      // Extract the token from the response data
+      const token = data.token;
+      const authUser = data.newUser;
+
+      console.log("The token is: " + token);
+      console.log("The authorized User is: ");
+      console.log(authUser);
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", authUser.userName);
+      window.location.href = `/index.html`;
+
+      // Further processing or actions with the token
+      // ...
+    })
+    .catch((error) => {
+      console.log("An error occurred:");
+      console.log(error);
+    });
+  // return newUser;
 }
 
 async function displayUser(userDetails, confirmed) {

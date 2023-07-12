@@ -49,7 +49,7 @@ export const createUser = async (request, response) => {
 
     const token = jwt.sign(data, TOKEN_KEY);
 
-    response.json(token);
+    return response.json({ newUser, token });
   } catch (error) {
     console.error(error);
     response.status(500).json("Error message");
