@@ -519,6 +519,7 @@ async function displayEditBox(searchID) {
 
     await fetch(`${baseUrl}${searchID}`, requestOptions);
     editContainer.classList.add("hidden");
+    location.reload();
   });
 }
 
