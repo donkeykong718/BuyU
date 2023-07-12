@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const unionSchema = new mongoose.Schema(
   {
@@ -9,28 +9,27 @@ const unionSchema = new mongoose.Schema(
     locals: [Number],
     industry: String,
     website: String,
-    contactInfo:
-    {
+    contactInfo: {
       phone: {
         isTrue: Boolean,
-        details: Number
-        },
+        details: Number,
+      },
       eMail: {
         isTrue: Boolean,
-        details: String
-        },
+        details: String,
+      },
       faxLOL: {
         isTrue: Boolean,
         details: Number,
-        },
+      },
       address: {
         isTrue: Boolean,
-        details: String
-        }
+        details: String,
+      },
     },
-    description: String
+    description: String,
   },
-  {timestamps: true}
-)
+  { timestamps: true }
+);
 
-export default mongoose.model('Unions', unionSchema);
+export default mongoose.model("Union", unionSchema);

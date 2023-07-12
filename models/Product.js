@@ -1,5 +1,5 @@
 // import mongoose from "./connection.js"
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
@@ -9,9 +9,9 @@ const productSchema = new mongoose.Schema(
     isUnion: Boolean,
     unionName: String,
     createdBy: String,
-    updatedBy: String
+    updatedBy: String,
   },
-  {timestamps: true}
-)
+  { timestamps: true }
+);
 
-export default mongoose.model('Products', productSchema);
+export default mongoose.model("Product", productSchema);

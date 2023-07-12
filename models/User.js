@@ -1,17 +1,17 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
     userName: String,
-    password: String,
+    hash: String,
     firstName: String,
     lastName: String,
     eMail: String,
     unionName: String,
     localName: String,
-    title: String
+    title: String,
   },
-  {timestamps: true}
-)
+  { timestamps: true }
+);
 
-export default mongoose.model('Users', userSchema);
+export default mongoose.model("User", userSchema);

@@ -21,9 +21,18 @@ main {
 
 #signupcontainer {
   margin: auto;
-  max-width: 33vw;
+  max-width: 40vw;
   min-width: fit-content;
   height: fit-content;
   /* display: flex; */
   display: hidden;
+}
+
+#signupform {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 20px;
+  max-width: 40vw;
+  padding-left: 15px;
+  padding-right: 20px;
 }

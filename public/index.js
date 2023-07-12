@@ -1,6 +1,25 @@
 //MAKE SURE TO GIVE CREDIT TO ZXING (https://github.com/zxing-js/library)
 
-window.onload = localStorage.getItem("currentUser");
+let loaded = false;
+
+window.onload = sessionStorage.getItem("token");
+if (sessionStorage.getItem("token") === null) {
+  window.location.href = `/login.html`;
+} else {
+  loaded = true;
+}
+
+const wrapper = document.getElementsByClassName("wrapper")[0];
+
+if (loaded) {
+  wrapper.classList.remove("hidden");
+}
+
+// addEventListener("unload", (event) => {
+//   console.log("Unloading");
+//   sessionStorage.removeItem("user");
+//   sessionStorage.removeItem("token");
+// });
 
 let currentPage = window.location.href;
 
@@ -18,25 +37,27 @@ if (contactIndex == currentPage) {
   contactIndex.classList.add("active-page");
 }
 
-let currentUser = await getUser(localStorage.currentUser);
-console.log(currentUser);
-if (currentUser.length === 0) {
-  window.location.href = `/login.html`;
-} else {
-  currentUser = currentUser[0];
-}
+let activeName = sessionStorage.getItem("user");
+
+let currentUser = await getUser(activeName);
+// console.log(currentUser);
+// if (currentUser.length === 0) {
+//   window.location.href = `/login.html`;
+// } else {
+//   currentUser = currentUser[0];
+// }
 
 const { userName, firstName, lastName, unionName, localName, title } =
   currentUser;
 console.log(userName, firstName, lastName, unionName, localName, title);
 
 const loggedIn = document.getElementById("loggedin");
-loggedIn.textContent = `You are logged in as ${userName}`;
+loggedIn.textContent = `You are logged in as ${activeName}`;
 
 const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
-  localStorage.removeItem("currentUser");
+  sessionStorage.clear();
   location.reload();
 });
 
@@ -513,6 +534,7 @@ async function displayEditBox(searchID) {
 
     await fetch(`${baseUrl}${searchID}`, requestOptions);
     editContainer.classList.add("hidden");
+    location.reload();
   });
 }
 
@@ -598,7 +620,8 @@ function parseTime(rawDate) {
 async function getUser(userId) {
   const results = await fetch(`/api/users/${userId}`);
   const json = await results.json();
-  return json;
+  console.log(json[0]);
+  return json[0];
 }
 
 async function getUnions() {
