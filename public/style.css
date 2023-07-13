@@ -21,6 +21,14 @@ label {
   display: block;
 }
 
+#aboutindex:hover {
+  cursor: url("./construction.png");
+}
+
+#contactindex:hover {
+  cursor: url("./construction.png");
+}
+
 .successMsg {
   color: rgb(11, 171, 11);
   font-weight: bold;
