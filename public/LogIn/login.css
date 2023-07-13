@@ -41,4 +41,29 @@ main {
   max-width: 40vw;
   padding-left: 15px;
   padding-right: 20px;
+  min-width: fit-content;
+}
+
+#loginuser {
+  justify-self: center;
+  border: red solid 1px;
+}
+
+/* @media (max-width: 900px) {
+  #signupcontainer {
+    min-width: 450px;
+    border: red solid 1px;
+  }
+} */
+
+@media (max-width: 600px) {
+  #signupform {
+    display: flex;
+    flex-direction: column;
+    border: solid 2px blue;
+  }
+
+  #signupcontainer {
+    min-width: 150%;
+  }
 }

@@ -433,7 +433,10 @@ async function displayProduct(productList, hasButtons, display) {
     editButton.textContent = `Edit`;
     pcButtons.appendChild(editButton);
 
-    editButton.setAttribute("style", "margin-right: 20%; width: 20%;");
+    editButton.setAttribute(
+      "style",
+      "margin-right: 20%; width: 20%; min-width: fit;"
+    );
 
     editButton.addEventListener("click", async () => {
       await displayEditBox(objID);
@@ -443,7 +446,7 @@ async function displayProduct(productList, hasButtons, display) {
     deleteButton.textContent = `Delete`;
     pcButtons.appendChild(deleteButton);
 
-    deleteButton.setAttribute("style", "width: 20%;");
+    deleteButton.setAttribute("style", "width: 20%; min-width: fit;");
 
     deleteButton.addEventListener("click", async () => {
       const deletedProduct = await deleteProduct(objID);
