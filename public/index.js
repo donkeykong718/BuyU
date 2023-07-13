@@ -404,6 +404,13 @@ async function displayProduct(productList, hasButtons, display) {
   const pUnion = document.createElement("p");
   const pCreated = document.createElement("p");
   const pUpdated = document.createElement("p");
+  const timestamp = document.createElement("div");
+
+  pUPC.classList.add("pcP");
+  pName.classList.add("pcP");
+  pManu.classList.add("pcP");
+  pBoolean.classList.add("pcP");
+  pUnion.classList.add("pcP");
 
   pUPC.textContent = `UPC: ${UPC}`;
   pName.textContent = `Product: ${productName}`;
@@ -417,36 +424,49 @@ async function displayProduct(productList, hasButtons, display) {
   productCard.appendChild(pBoolean);
   productCard.appendChild(pUnion);
 
-  if (!(createdAt == undefined)) {
-    const parsedCreate = parseTime(createdAt);
-    pCreated.textContent = `Entry created by user ${createdBy} on: ${parsedCreate} EST`;
-    productCard.appendChild(pCreated);
-  }
-
-  if (!(updatedAt == undefined)) {
-    const parsedUpdate = parseTime(updatedAt);
-    pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`;
-    productCard.appendChild(pUpdated);
-  }
-
   if (hasButtons === true) {
+    const pcButtons = document.createElement("div");
+    pcButtons.classList.add("pcButtons");
+    productCard.appendChild(pcButtons);
+
+    const editButton = document.createElement("button");
+    editButton.textContent = `Edit`;
+    pcButtons.appendChild(editButton);
+
+    editButton.setAttribute("style", "margin-right: 20%; width: 20%;");
+
+    editButton.addEventListener("click", async () => {
+      await displayEditBox(objID);
+    });
+
     const deleteButton = document.createElement("button");
     deleteButton.textContent = `Delete`;
-    productCard.appendChild(deleteButton);
+    pcButtons.appendChild(deleteButton);
+
+    deleteButton.setAttribute("style", "width: 20%;");
 
     deleteButton.addEventListener("click", async () => {
       const deletedProduct = await deleteProduct(objID);
       display.innerHTML = "";
       await displayProducts(deletedProduct, "delete");
     });
+  }
 
-    const editButton = document.createElement("button");
-    editButton.textContent = `Edit`;
-    productCard.appendChild(editButton);
+  display.appendChild(timestamp);
+  timestamp.classList.add("timestamps");
 
-    editButton.addEventListener("click", async () => {
-      await displayEditBox(objID);
-    });
+  if (!(createdAt == undefined)) {
+    const parsedCreate = parseTime(createdAt);
+    pCreated.classList.add("timestamped");
+    pCreated.textContent = `Entry created by user ${createdBy} on: ${parsedCreate} EST`;
+    timestamp.appendChild(pCreated);
+  }
+
+  if (!(updatedAt == undefined)) {
+    const parsedUpdate = parseTime(updatedAt);
+    pUpdated.classList.add("timestamped");
+    pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`;
+    timestamp.appendChild(pUpdated);
   }
 }
 

@@ -110,8 +110,29 @@ select {
 
 .productCard {
   border: solid black 2px;
-  padding: 10px;
-  margin: 2px;
+  padding: 10px 5px 5px 10px;
+  margin: 1em 2px 0px 2px;
+}
+
+.pcButtons {
+  display: flex;
+  justify-content: center;
+  margin: 0.75em 0;
+}
+
+.timestamps {
+  padding-left: 5px;
+  margin-top: 5px;
+}
+
+.timestamped {
+  font-size: x-small;
+  font-style: italic;
+  color: gray;
+}
+
+.pcP {
+  margin-bottom: 0.3em;
 }
 
 .mobilehidden {
