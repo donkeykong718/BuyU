@@ -192,7 +192,13 @@ for (const union of unionArray) {
 // EMBEDDED SCANNER
 
 const scanButton = document.getElementById("scanbutton");
+const hideScan = document.getElementById("hidescanbutton");
 const scanner = document.getElementById("scanner");
+
+hideScan.addEventListener("click", () => {
+  scanner.classList.add("hidden");
+  scanButton.classList.remove("hidden");
+});
 
 scanButton.addEventListener("click", () => {
   scanButton.classList.add("hidden");
@@ -232,17 +238,20 @@ scanButton.addEventListener("click", () => {
               const video = document.getElementById("video");
               video.style.border = "5px solid lightgreen";
               const successMessage = document.createElement("div");
+              successMessage.classList.add("successMsg");
               const messageDiv = document.getElementById("message");
               successMessage.textContent = "Scan successful";
-              successMessage.style.color = "green";
-              successMessage.style.fontWeight = "bold";
-              messageDiv.appendChild(successMessage);
+              const successMessages =
+                document.getElementsByClassName("successMsg");
+              if (successMessages.length === 0) {
+                messageDiv.appendChild(successMessage);
+              }
 
               //BARCODE SEARCH -- USE SPARINGLY
 
-              const scannedDetails = await barcodeSearch(result.text);
-              newProductinput.setAttribute("value", scannedDetails.productName);
-              newManuinput.setAttribute("value", scannedDetails.manufacturer);
+              // const scannedDetails = await barcodeSearch(result.text);
+              // newProductinput.setAttribute("value", scannedDetails.productName);
+              // newManuinput.setAttribute("value", scannedDetails.manufacturer);
               console.log(result);
             }
             if (err && !(err instanceof ZXing.NotFoundException)) {
