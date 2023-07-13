@@ -27,28 +27,39 @@
 <div class="container">
     <h3>Search</h3>
     <form id="searchform">
-      <label for="searchType">Search by:</label>
-      <p style="color: red; font-size: small; font-style: italic;">required</p>
-      <select name="searchType" id="searchtype">
-        <option value="1">String</option>
-        <option value="2">UPC</option>
-        <option value="3">Union Name</option>
-        <option value="4">Union Status (Y/N)</option>
-      </select>
-    </label>
-    Search term: <input id="searchstring" class="active">
-      <label>UPC (12-digit number): <input id="searchupc" minlength="12" maxlength="12">
-      <label for="unionNames">Union:</label> 
-      <select name="unionName" id="searchunion"></select>
-      <label for="unionStatus">Union status (Y/N):</label> 
-      <select name="unionStatus" id="searchstatus">
-        <option value="">(none)</option>
-        <option value="true">true</option>
-        <option value="false">false</option>
-      </select>
+      <div>
+        <label for="searchType">Search by:</label>
+        <select name="searchType" id="searchtype">
+          <option value="1">String</option>
+          <option value="2">UPC</option>
+          <option value="3">Union Name</option>
+          <option value="4">Union Status (Y/N)</option>
+        </select>
+        <p style="color: red; font-size: small; font-style: italic; margin-top: -10px;">required</p>
+      </div>
+      <div>
+        <label for="searchTerm">Search term:</label>
+        <input name="searchTerm" id="searchstring" class="active">
+      </div>
+      <div>
+        <label for="UPCinpu">UPC (12-digit number):</label>
+        <input name="UPCinput" id="searchupc" minlength="12" maxlength="12">
+      </div>
+      <div>
+        <label for="unionNames">Union:</label> 
+        <select name="unionName" id="searchunion"></select>
+      </div>
+      <div>
+        <label for="unionStatus">Union status (Y/N):</label> 
+        <select name="unionStatus" id="searchstatus">
+          <option value="">(none)</option>
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+      </div>
       <!-- <label for="unionNames">Union:</label> 
       <select name="unionName" id="searchunion"></select> -->
-      <div><button>Click to search</button></div>
+      <div style="display: flex; justify-content: center; padding: 2px; margin-top: 1em"><button>Click to search</button></div>
     </form>
     <button id="crButton" class="desktophidden">Or create New Entry</button>
     <a class="desktophidden" href="/">Return to Database</a>
@@ -80,8 +91,10 @@
             </section>
 
       <form id="createform">
+        <div>
         UPC: <input id="createUPC" minlength="12" maxlength="12" type="text" required> 
         <p style="color: red; font-size: small; font-style: italic;">required</p>
+        </div>
         Product Name: <input id="createProduct" type="text"> 
         Manufacturer: <input id="createManu" type="text"> 
         Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
