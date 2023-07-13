@@ -104,8 +104,6 @@ signupForm.addEventListener("submit", async (e) => {
         console.log(checkUser);
         const errMsg = document.createElement("p");
         errMsg.classList.add("errormsg");
-        errMsg.style.color = "red";
-        errMsg.style.fontWeight = "bold";
         const oldErrMsg = document.querySelector(".errormsg");
         if (oldErrMsg) {
           oldErrMsg.parentNode.removeChild(oldErrMsg);
@@ -141,8 +139,6 @@ async function createUser(userDetails) {
 
         const errMsg = document.createElement("p");
         errMsg.classList.add("errormsg");
-        errMsg.style.color = "red";
-        errMsg.style.fontWeight = "bold";
         const oldErrMsg = document.querySelector(".errormsg");
         if (oldErrMsg) {
           oldErrMsg.parentNode.removeChild(oldErrMsg);
@@ -324,8 +320,6 @@ async function userLogin(username, password) {
 
         const errMsg = document.createElement("p");
         errMsg.classList.add("errormsg");
-        errMsg.style.color = "red";
-        errMsg.style.fontWeight = "bold";
         const oldErrMsg = document.querySelector(".errormsg");
         if (oldErrMsg) {
           oldErrMsg.parentNode.removeChild(oldErrMsg);
