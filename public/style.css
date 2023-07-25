@@ -96,10 +96,13 @@ button {
   z-index: 1;
   background-color: white;
   position: absolute;
+  margin-left: 30vw;
   border-top: 8px solid #992121;
   padding: 10px;
   min-width: fit-content;
+  width: 40vw;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  top: 30vh;
 }
 
 input,
@@ -196,6 +199,10 @@ input:invalid {
   #dbcontainer {
     max-width: 50vw;
     overflow-wrap: normal;
+  }
+
+  #editcontainer {
+    top: 25%;
   }
 
   .mobilehidden {

@@ -74,6 +74,7 @@ const selectHeader = document.getElementById("selectheader");
 const selectProducts = document.getElementById("selectproducts");
 
 const createContainer = document.getElementById("createcontainer");
+const searchContainer = document.getElementById("searchcontainer");
 const crButton = document.getElementById("crButton");
 
 const editContainer = document.getElementById("editcontainer");
@@ -81,6 +82,7 @@ const editContainer = document.getElementById("editcontainer");
 crButton.addEventListener("click", () => {
   dbContainer.classList.add("hidden");
   createContainer.classList.remove("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 const unionList = await getUnions();
@@ -157,6 +159,7 @@ searchform.addEventListener(`submit`, async (e) => {
 
   await displayProducts(resultProduct, "search");
   createContainer.classList.add("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 //CREATE FORM (CREATE)
@@ -320,6 +323,7 @@ createform.addEventListener(`submit`, async (e) => {
 
   await displayProducts(newEntry, "create");
   createContainer.classList.add("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 //Basic product list display
@@ -440,6 +444,7 @@ async function displayProduct(productList, hasButtons, display) {
 
     editButton.addEventListener("click", async () => {
       await displayEditBox(objID);
+      searchContainer.classList.toggle("mobilehidden");
     });
 
     const deleteButton = document.createElement("button");
