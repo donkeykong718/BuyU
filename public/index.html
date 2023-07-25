@@ -10,89 +10,130 @@
 </head>
 <body>
   <div id="mainheader">
-    <p id="loggedin"></p>
     <div id="navcontainer">
   <nav>
     <img src="./ulbl_logo.png" alt="Union Label logo" height="91px">
     <a id="homeindex" href="./index.html">Home</a>
-    <a id="aboutindex" href="./about.html">About</a>
-    <a id="contactindex" href="./contact.html">Contact</a>
+    <a id="aboutindex">About</a>
+    <a id="contactindex">Contact</a>
     <a id="logout" href="./login.html">Log Out</a>
   </nav>
-  </div>
+</div>
+<div style="display: flex; justify-content: right; margin-right: 2em;">
+<p id="loggedin"></p>
+</div>
 </div>
 
 <div class="wrapper hidden">
 
+  <div id="searchcontainer">
 <div class="container">
     <h3>Search</h3>
     <form id="searchform">
-      <label for="searchType">Search by:</label>
-      <p style="color: red; font-size: small; font-style: italic;">required</p>
-      <select name="searchType" id="searchtype">
-        <option value="1">String</option>
-        <option value="2">UPC</option>
-        <option value="3">Union Name</option>
-        <option value="4">Union Status (Y/N)</option>
-      </select>
-    </label>
-    Search term: <input id="searchstring" class="active">
-      <label>UPC (12-digit number): <input id="searchupc" minlength="12" maxlength="12">
-      <label for="unionNames">Union:</label> 
-      <select name="unionName" id="searchunion"></select>
-      <label for="unionStatus">Union status (Y/N):</label> 
-      <select name="unionStatus" id="searchstatus">
-        <option value="">(none)</option>
-        <option value="true">true</option>
-        <option value="false">false</option>
-      </select>
+      <div>
+        <label for="searchType">Search by:</label>
+        <select name="searchType" id="searchtype">
+          <option value="1">String</option>
+          <option value="2">UPC</option>
+          <option value="3">Union Name</option>
+          <option value="4">Union Status (Y/N)</option>
+        </select>
+        <p style="color: red; font-size: small; font-style: italic; margin-top: -10px;">required</p>
+      </div>
+      <div>
+        <label for="searchTerm">Search term:</label>
+        <input name="searchTerm" id="searchstring" class="active">
+      </div>
+      <div>
+        <label for="UPCinput">UPC (12-digit number):</label>
+        <input name="UPCinput" id="searchupc" minlength="12" maxlength="12">
+      </div>
+      <div>
+        <label for="unionNames">Union:</label> 
+        <select name="unionName" id="searchunion"></select>
+      </div>
+      <div>
+        <label for="unionStatus">Union status (Y/N):</label> 
+        <select name="unionStatus" id="searchstatus">
+          <option value="">(none)</option>
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+      </div>
       <!-- <label for="unionNames">Union:</label> 
       <select name="unionName" id="searchunion"></select> -->
-      <div><button>Click to search</button></div>
+      <div style="display: flex; justify-content: center; padding: 2px; margin-top: 1em"><button>Click to search</button></div>
     </form>
     <button id="crButton" class="desktophidden">Or create New Entry</button>
-    <a class="desktophidden" href="/">Return to Database</a>
+    <a class="desktophidden" style="color: black" href="/">Return to Database</a>
+</div>
 </div>
 
-  <div id="selectcontainer" class="hidden container">
-    <h3 id="selectheader"></h3>
-    <div id="selectproducts"></div>
-  </div>
-
-<div id="createcontainer" class="mobilehidden container">
+<div id="createcontainer" class="mobilehidden">
     <div class="container">
       <h3>Create</h3>
-          <button id="scanbutton">Or click to scan barcode</button>
-            <section class="hidden" id="scanner">  
-              <div id="sourceSelectPanel" style="display:none">
-                <label for="sourceSelect">Change video source:</label>
-                <select id="sourceSelect" style="max-width:400px">
-                </select>
-              </div>
-                <button id="startButton">Start</button>
-                <button id="resetButton">Stop</button>
-              <div>
-                <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
-              </div>
-              <div id="message">
-                Code reader courtesy of ZXING (https://github.com/zxing-js/library)
-              </div>
-            </section>
+      <div style="margin-top: .5em; margin-bottom: 1em">  
+        <button id="scanbutton">Click to scan barcode</button>
+      </div>
+      <section class="hidden" id="scanner" style="margin-top: -25px; margin-bottom: 20px;">  
+        <div id="sourceSelectPanel" style="display:none">
+          <label for="sourceSelect">Change video source:</label>
+          <select id="sourceSelect" style="max-width:400px"></select>
+        </div>
+        <div style="margin-bottom: .5em">
+          <button id="startButton">Start</button>
+          <button id="resetButton">Stop</button>
+        </div>
+        <div>
+          <video id="video" width="300" height="200" style="border: 2px solid gray"></video>
+        </div>
+        <div id="message" style="color: gray; font-size: small; font-style: italic;">
+          Code reader courtesy of ZXING (https://github.com/zxing-js/library)
+        </div>
+        <div style="margin-top: 1em; display: flex; justify-content: center;">  
+          <button id="hidescanbutton">Hide barcode scanner</button>
+        </div>
+  
+      </section>
 
       <form id="createform">
-        UPC: <input id="createUPC" minlength="12" maxlength="12" type="text" required> 
-        <p style="color: red; font-size: small; font-style: italic;">required</p>
-        Product Name: <input id="createProduct" type="text"> 
-        Manufacturer: <input id="createManu" type="text"> 
-        Union (Y/N)?: <input id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
+        <div>
+          <label for="createUPC">UPC:</label>
+          <input name="createUPC" id="createUPC" minlength="12" maxlength="12" type="text" required> 
+          <p style="color: red; font-size: small; font-style: italic; margin-top: -10px">required</p>
+        </div>
+        <div>
+          <label for="productName">
+            Product Name: 
+          </label>
+          <input name="productName" id="createProduct" type="text"> 
+        </div>
+        <div>
+          <label for="manuName">
+          Manufacturer: </label><input name="manuName" id="createManu" type="text"> 
+        </div>
+        <div>
+          <label for="unionYN">
+          Union (Y/N)?:</label>
+          <input name="unionYN" id="createUStatus" pattern="[Yy]|[Nn]|[Ff]alse|[Tt]rue" type="text">
+        </div>
+        <div>
         <label for="unionNames">Select a Union:</label> 
         <select name="unionName" id="createUName"></select>
-        <div>
-        <button>Click to create</button>
-        </div>
+      </div>
+      <div style="display: flex; justify-content: center; padding: 2px; margin-top: 1em"><button>Click to create</button></div>
       </form>
     </div>
 </div>
+
+<div id="selectcontainer" class="hidden container">
+  <h3 id="selectheader"></h3>
+  <div style="display: flex; justify-content: center; padding: 2px; margin-top: 1em">
+    <a href="/" style="color:black">Return to main database</a>
+  </div>
+  <div id="selectproducts"></div>
+</div>
+
   
 <div id="editcontainer" class="hidden container">
   <h3>Edit</h3>

@@ -74,6 +74,7 @@ const selectHeader = document.getElementById("selectheader");
 const selectProducts = document.getElementById("selectproducts");
 
 const createContainer = document.getElementById("createcontainer");
+const searchContainer = document.getElementById("searchcontainer");
 const crButton = document.getElementById("crButton");
 
 const editContainer = document.getElementById("editcontainer");
@@ -81,6 +82,7 @@ const editContainer = document.getElementById("editcontainer");
 crButton.addEventListener("click", () => {
   dbContainer.classList.add("hidden");
   createContainer.classList.remove("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 const unionList = await getUnions();
@@ -157,6 +159,7 @@ searchform.addEventListener(`submit`, async (e) => {
 
   await displayProducts(resultProduct, "search");
   createContainer.classList.add("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 //CREATE FORM (CREATE)
@@ -192,7 +195,13 @@ for (const union of unionArray) {
 // EMBEDDED SCANNER
 
 const scanButton = document.getElementById("scanbutton");
+const hideScan = document.getElementById("hidescanbutton");
 const scanner = document.getElementById("scanner");
+
+hideScan.addEventListener("click", () => {
+  scanner.classList.add("hidden");
+  scanButton.classList.remove("hidden");
+});
 
 scanButton.addEventListener("click", () => {
   scanButton.classList.add("hidden");
@@ -232,17 +241,20 @@ scanButton.addEventListener("click", () => {
               const video = document.getElementById("video");
               video.style.border = "5px solid lightgreen";
               const successMessage = document.createElement("div");
+              successMessage.classList.add("successMsg");
               const messageDiv = document.getElementById("message");
               successMessage.textContent = "Scan successful";
-              successMessage.style.color = "green";
-              successMessage.style.fontWeight = "bold";
-              messageDiv.appendChild(successMessage);
+              const successMessages =
+                document.getElementsByClassName("successMsg");
+              if (successMessages.length === 0) {
+                messageDiv.appendChild(successMessage);
+              }
 
               //BARCODE SEARCH -- USE SPARINGLY
 
-              const scannedDetails = await barcodeSearch(result.text);
-              newProductinput.setAttribute("value", scannedDetails.productName);
-              newManuinput.setAttribute("value", scannedDetails.manufacturer);
+              // const scannedDetails = await barcodeSearch(result.text);
+              // newProductinput.setAttribute("value", scannedDetails.productName);
+              // newManuinput.setAttribute("value", scannedDetails.manufacturer);
               console.log(result);
             }
             if (err && !(err instanceof ZXing.NotFoundException)) {
@@ -311,6 +323,7 @@ createform.addEventListener(`submit`, async (e) => {
 
   await displayProducts(newEntry, "create");
   createContainer.classList.add("mobilehidden");
+  searchContainer.classList.add("mobilehidden");
 });
 
 //Basic product list display
@@ -395,6 +408,13 @@ async function displayProduct(productList, hasButtons, display) {
   const pUnion = document.createElement("p");
   const pCreated = document.createElement("p");
   const pUpdated = document.createElement("p");
+  const timestamp = document.createElement("div");
+
+  pUPC.classList.add("pcP");
+  pName.classList.add("pcP");
+  pManu.classList.add("pcP");
+  pBoolean.classList.add("pcP");
+  pUnion.classList.add("pcP");
 
   pUPC.textContent = `UPC: ${UPC}`;
   pName.textContent = `Product: ${productName}`;
@@ -408,36 +428,53 @@ async function displayProduct(productList, hasButtons, display) {
   productCard.appendChild(pBoolean);
   productCard.appendChild(pUnion);
 
-  if (!(createdAt == undefined)) {
-    const parsedCreate = parseTime(createdAt);
-    pCreated.textContent = `Entry created by user ${createdBy} on: ${parsedCreate} EST`;
-    productCard.appendChild(pCreated);
-  }
-
-  if (!(updatedAt == undefined)) {
-    const parsedUpdate = parseTime(updatedAt);
-    pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`;
-    productCard.appendChild(pUpdated);
-  }
-
   if (hasButtons === true) {
+    const pcButtons = document.createElement("div");
+    pcButtons.classList.add("pcButtons");
+    productCard.appendChild(pcButtons);
+
+    const editButton = document.createElement("button");
+    editButton.textContent = `Edit`;
+    pcButtons.appendChild(editButton);
+
+    editButton.setAttribute(
+      "style",
+      "margin-right: 20%; width: 20%; min-width: fit;"
+    );
+
+    editButton.addEventListener("click", async () => {
+      await displayEditBox(objID);
+      searchContainer.classList.toggle("mobilehidden");
+    });
+
     const deleteButton = document.createElement("button");
     deleteButton.textContent = `Delete`;
-    productCard.appendChild(deleteButton);
+    pcButtons.appendChild(deleteButton);
+
+    deleteButton.setAttribute("style", "width: 20%; min-width: fit;");
 
     deleteButton.addEventListener("click", async () => {
       const deletedProduct = await deleteProduct(objID);
       display.innerHTML = "";
       await displayProducts(deletedProduct, "delete");
     });
+  }
 
-    const editButton = document.createElement("button");
-    editButton.textContent = `Edit`;
-    productCard.appendChild(editButton);
+  display.appendChild(timestamp);
+  timestamp.classList.add("timestamps");
 
-    editButton.addEventListener("click", async () => {
-      await displayEditBox(objID);
-    });
+  if (!(createdAt == undefined)) {
+    const parsedCreate = parseTime(createdAt);
+    pCreated.classList.add("timestamped");
+    pCreated.textContent = `Entry created by user ${createdBy} on: ${parsedCreate} EST`;
+    timestamp.appendChild(pCreated);
+  }
+
+  if (!(updatedAt == undefined)) {
+    const parsedUpdate = parseTime(updatedAt);
+    pUpdated.classList.add("timestamped");
+    pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`;
+    timestamp.appendChild(pUpdated);
   }
 }
 

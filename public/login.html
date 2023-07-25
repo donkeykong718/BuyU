@@ -19,8 +19,8 @@
         <nav>
           <!-- <img src="ulbl_logo.png" alt="Union Label logo" height="91px"> -->
           <a id="homeindex" href="./index.html">Home</a>
-          <a id="aboutindex" href="./about.html">About</a>
-          <a id="contactindex" href="./contact.html">Contact</a>
+          <a id="aboutindex">About</a>
+          <a id="contactindex">Contact</a>
           <a id="logout" href="./login.html">Log Out</a>
         </nav>
       </div>
@@ -30,9 +30,9 @@
       <div id="logincontainer" class="container">
         <h3>Log-In</h3>
         <form id="loginform">
-          <label
-            >Username or E-mail: <input id="loginUser" type="text" value="Demo" required
-          /></label>
+          <label for="loginuser">Username or E-mail:</label> 
+            <input name="loginuser" id="loginUser" type="text" value="Demo" required
+          />
           <label>Password: <input id="loginPassword" type="password" value="demo"/></label>
           <button id="loginbutton">Click to Log-In</button>
         </form>
