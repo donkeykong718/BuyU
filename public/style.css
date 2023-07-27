@@ -74,6 +74,15 @@ button {
   padding: 2px 5px 2px 5px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+#crButton {
+  margin-top: 2em;
+  color: blue;
+}
+
 .wrapper {
   padding: 5px;
 }

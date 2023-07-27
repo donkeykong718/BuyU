@@ -470,7 +470,7 @@ async function displayProduct(productList, hasButtons, display) {
     timestamp.appendChild(pCreated);
   }
 
-  if (!(updatedAt == undefined)) {
+  if (!(updatedAt == undefined) && !(updatedAt === createdAt)) {
     const parsedUpdate = parseTime(updatedAt);
     pUpdated.classList.add("timestamped");
     pUpdated.textContent = `Last updated by user ${updatedBy} on: ${parsedUpdate} EST`;
